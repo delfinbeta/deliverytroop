@@ -49,6 +49,16 @@ h1, h2, h3, h4, h5, h6 {
 	color: #FFBE00;
 }
 
+.boton-amarillo {
+	background-color: #FFBE00;
+	color: #FFFFFF;
+}
+
+.boton-amarillo:hover {
+	background-color: transparent;
+	color: #FFBE00;
+}
+
 .separador {
 	border: 0;
 	height: 2px;
@@ -86,6 +96,22 @@ h1, h2, h3, h4, h5, h6 {
 	color: #FFFFFF;
 }
 
+.contact-home {
+	padding-bottom: 1em;
+}
+
+.contact-home a {
+	color: #333333;
+	text-decoration: none;
+}
+
+.contact-home .icono {
+	color: #FFBE00;
+	display: block;
+	font-size: 3em;
+	margin-bottom: 10px;
+}
+
 /*********************************************/
 /*****              Portada              *****/
 /*********************************************/
@@ -110,6 +136,7 @@ h1, h2, h3, h4, h5, h6 {
 	background-color: #999999;
 	color: #FFFFFF;
 	padding: 40px 0;
+	text-align: center;
 }
 
 .piepag a {
@@ -135,4 +162,13 @@ h1, h2, h3, h4, h5, h6 {
 .piepag ul li a {
   display: block;
   padding: 10px 0;
+}
+
+/*********************************************/
+/*****           MEDIA QUERIES           *****/
+/*********************************************/
+@media screen and (min-width: 768px) {
+	.piepag {
+		text-align: left;
+	}
 }
