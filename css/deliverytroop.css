@@ -1,0 +1,138 @@
+/*********************************************/
+/*****                                   *****/
+/*****  Documento CSS                    *****/
+/*****                                   *****/
+/*****  Fecha: 07/11/2016                *****/
+/*****  Autor: Lcda. Dayan Betancourt    *****/
+/*****                                   *****/
+/*********************************************/
+@import "https://fonts.googleapis.com/css?family=Lato:300,400|Raleway:300,400";
+
+/*********************************************/
+/*****        Etiquetas Globales         *****/
+/*********************************************/
+body {
+	font-family: "Lato", sans-serif;
+	font-size: 16px;
+	font-weight: 300;
+	line-height: 22px;
+	padding-top: 70px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	color: #333333;
+	font-family: "Raleway", sans-serif;
+	font-weight: 200;
+}
+
+/*********************************************/
+/*****        Etiquetas Generales        *****/
+/*********************************************/
+.navbar-brand {
+  padding: 4px 15px;
+}
+
+.navbar .logo {
+	width: 100px;
+}
+
+.boton-transparente {
+	background-color: transparent;
+	border: 2px solid #FFFFFF;
+	color: #FFFFFF;
+	font-size: 16px;
+	padding: 15px 20px;
+}
+
+.boton-transparente:hover {
+	border: 2px solid #FFFFFF;
+	color: #FFBE00;
+}
+
+.separador {
+	border: 0;
+	height: 2px;
+	text-align: center;
+	background: #CECECE; /* Old browsers */
+	background: -moz-linear-gradient(left,  #ffffff 0%, #CECECE 50%, #ffffff 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, right top, color-stop(0%,#ffffff), color-stop(50%,#CECECE), color-stop(100%,#ffffff)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(left,  #ffffff 0%,#CECECE 50%,#ffffff 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(left,  #ffffff 0%,#CECECE 50%,#ffffff 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(left,  #ffffff 0%,#CECECE 50%,#ffffff 100%); /* IE10+ */
+	background: linear-gradient(to right,  #ffffff 0%,#CECECE 50%,#ffffff 100%); /* W3C */
+}
+
+.separador2 {
+	border: 0;
+	height: 2px;
+	text-align: center;
+	background: #FFFFFF; /* Old browsers */
+	background: -moz-linear-gradient(left,  #CCCCCC 0%, #FFFFFF 50%, #CCCCCC 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, right top, color-stop(0%,#CCCCCC), color-stop(50%,#FFFFFF), color-stop(100%,#CCCCCC)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(left,  #CCCCCC 0%,#FFFFFF 50%,#CCCCCC 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(left,  #CCCCCC 0%,#FFFFFF 50%,#CCCCCC 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(left,  #CCCCCC 0%,#FFFFFF 50%,#CCCCCC 100%); /* IE10+ */
+	background: linear-gradient(to right,  #CCCCCC 0%,#FFFFFF 50%,#CCCCCC 100%); /* W3C */
+}
+
+.franja-gris {
+	background-color: #BBBBBB;
+	color: #FFFFFF;
+}
+
+.franja-gris h1,
+.franja-gris h2,
+.franja-gris h3 {
+	color: #FFFFFF;
+}
+
+/*********************************************/
+/*****              Portada              *****/
+/*********************************************/
+.portada {
+	background-attachment: fixed;
+	background-image: url("../img/bg-oficina.jpg");
+	background-position: center center;
+	background-repeat: no-repeat;
+	-webkit-background-size: cover;
+		 -moz-background-size: cover;
+		 	 -o-background-size: cover;
+		 	 		background-size: cover;
+	color: #FFFFFF;
+	height: 100vh;
+	overflow: hidden;
+}
+
+/*********************************************/
+/*****           PIE DE PÁGINA           *****/
+/*********************************************/
+.piepag {
+	background-color: #999999;
+	color: #FFFFFF;
+	padding: 40px 0;
+}
+
+.piepag a {
+	color: #FFFFFF;
+}
+
+.piepag .copy {
+	border-right: 1px solid #FFFFFF;
+	font-size: .8em;
+	text-align: center;
+}
+
+.piepag ul {
+	margin: 0;
+	margin-left: 10px;
+	padding: 0;
+}
+
+.piepag ul li {
+	list-style-type: none;
+}
+
+.piepag ul li a {
+  display: block;
+  padding: 10px 0;
+}
