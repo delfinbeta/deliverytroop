@@ -38,8 +38,40 @@
 		</div>
 	</nav>
 
-	<h1>Delivery Troop</h1>
-	<h2>Access prohibited</h2>
+	<section class="portada">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12 col-sm-6 col-sm-offset-3 text-center">
+					<a href="index.html"><img src="img/DeliveryTroop.svg" alt="Delivery Troop" title="Delivery Troop" class="img-responsive logo" /></a>
+					<p class="eslogan">On Demand Delivery Service</p>
+
+					<form id="form_zipcode" name="form_zipcode" method="post">
+						<div class="form-group">
+							<label for="zipcode" class="control-label sr-only">Zipcode</label>
+							<div class="input-group">
+								<div class="input-group-addon"><i class="fa fa-map-marker" style="font-size: 1.4em;"></i></div>
+								<input type="text" class="form-control" name="zipcode" placeholder="Zipcode" aria-describedby="bloqueErrorZipcode" />
+								<span class="input-group-btn">
+									<button type="submit" name="enviar" class="btn btn-default boton-amarillo">Enter Your Zipcode <i class="fa fa-chevron-right"></i></button>
+								</span>
+							</div>
+							<span class="help-block" id="bloqueErrorZipcode"></span>
+						</div>
+					</form>
+
+					<p>Delivery Hours: Every day 11:30am - 11:30pm</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="home">
+		<div class="container">
+			<p align="center">Delivery Troop is the service that gives you the ability to shop from local merchants or restaurants.</p>
+			<p align="center">Food Delivery / Dry Cleaning / Beverages / Pharmacy / and more...</p>
+			<p align="center">Delivered in under an hour 7 Days a Week!</p>
+		</div>
+	</section>
 
 	<section class="franja-gris">
 		<div class="container">
@@ -72,7 +104,7 @@
 						<label for="nombre" class="control-label sr-only">Name</label>
 						<div class="input-group">
 							<div class="input-group-addon"><i class="fa fa-user"></i></div>
-							<input type="text" class="form-control" placeholder="Name" aria-describedby="bloqueErrorNombre" />
+							<input type="text" class="form-control" name="nombre" placeholder="Name" aria-describedby="bloqueErrorNombre" />
 						</div>
 						<span class="help-block" id="bloqueErrorNombre"></span>
 					</div>
@@ -80,7 +112,7 @@
 						<label for="email" class="control-label sr-only">Email</label>
 						<div class="input-group">
 							<div class="input-group-addon"><i class="fa fa-envelope"></i></div>
-							<input type="email" class="form-control" placeholder="Email" aria-describedby="bloqueErrorEmail" />
+							<input type="email" class="form-control" name="email" placeholder="Email" aria-describedby="bloqueErrorEmail" />
 						</div>
 						<span class="help-block" id="bloqueErrorEmail"></span>
 					</div>
@@ -103,30 +135,32 @@
 
 	<footer class="piepag">
 		<div class="container">
-			<div class="col-xs-12 col-sm-6 col-md-3 copy">
-				<img src="img/deliverytroop.png" alt="Delivery Troop" title="Delivery Troop" class="img-responsive" />
-				<p>On Demand Delivery Service<br />
-					7 days a Week</p>
-				<p>&copy; 2016 Delivery Troop</p>
-			</div>
-			<div class="col-xs-12 col-sm-6 col-md-3">
-				<ul>
-					<li><a href="restaurants.html">Restaurant Owners</a></li>
-					<li><a href="partner.html">Become a Partner</a></li>
-					<li><a href="shipping_policy.html">Shipping Policy</a></li>
-					<li><a href="terms.html">Terms and Conditions</a></li>
-				</ul>
-			</div>
-			<div class="col-xs-12 col-sm-6 col-md-3">
-				<ul>
-					<li><a target="_blank" href="https://www.instagram.com/deliverytroop/"><i class="fa fa-fw fa-instagram"></i> Instagram</a></li>
-					<li><a target="_blank" href="https://www.facebook.com/deliverytroop/"><i class="fa fa-fw fa-facebook"></i> Facebook</a></li>
-					<li><a target="_blank" href="https://twitter.com/deliverytroop"><i class="fa fa-fw fa-twitter"></i> Twitter</a></li>
-				</ul>
-			</div>
-			<div class="col-xs-12 col-sm-6 col-md-3">
-				<a href="driver.html"><img src="img/icono_blanco.png" width="80" alt="Become Driver" title="Become Driver" /></a><br />
-				<a href="driver.html" class="btn btn-default boton-transparente">BECOME A DRIVER</a>
+			<div class="row">
+				<div class="col-xs-12 col-sm-6 col-md-3 copy">
+					<img src="img/deliverytroop.png" alt="Delivery Troop" title="Delivery Troop" class="img-responsive" />
+					<p>On Demand Delivery Service<br />
+						7 days a Week</p>
+					<p>&copy; 2016 Delivery Troop</p>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-md-3" style="min-height: 210px;">
+					<ul>
+						<li><a href="restaurants.html">Restaurant Owners</a></li>
+						<li><a href="partner.html">Become a Partner</a></li>
+						<li><a href="shipping_policy.html">Shipping Policy</a></li>
+						<li><a href="terms.html">Terms and Conditions</a></li>
+					</ul>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-md-3">
+					<ul>
+						<li><a target="_blank" href="https://www.instagram.com/deliverytroop/"><i class="fa fa-fw fa-instagram"></i> Instagram</a></li>
+						<li><a target="_blank" href="https://www.facebook.com/deliverytroop/"><i class="fa fa-fw fa-facebook"></i> Facebook</a></li>
+						<li><a target="_blank" href="https://twitter.com/deliverytroop"><i class="fa fa-fw fa-twitter"></i> Twitter</a></li>
+					</ul>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-md-3">
+					<a href="driver.html"><img src="img/icono_blanco.png" width="80" alt="Become Driver" title="Become Driver" /></a><br />
+					<a href="driver.html" class="btn btn-default boton-transparente">BECOME A DRIVER</a>
+				</div>
 			</div>
 		</div>
 	</footer>
