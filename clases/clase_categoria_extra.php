@@ -1,5 +1,5 @@
 <?php
-class CategoriaExtra extends Seguridad {
+class CategoriaExtra {
 	########################################  Atributos  ########################################
 	
 	private $id;
@@ -10,6 +10,7 @@ class CategoriaExtra extends Seguridad {
 	private $fecha_actualizacion;
 	private $usuario_actualizacion;
 	private $conexion;
+	private $seguridad;
 	public  $error = NULL;
 	
 	#######################################  Operaciones  #######################################
@@ -17,11 +18,12 @@ class CategoriaExtra extends Seguridad {
 	function __construct($conexion) {
 		$this->error = NULL;
 		$this->conexion = $conexion;
+		$this->seguridad = new Seguridad($conexion);
 	}
 	
 	// Insertar un CategoriaExtra a la Base de Datos
 	public function insertar($nombre) {
-		if(!$nombre = parent::texto_seguro($this->conexion, $nombre)) {
+		if(!$nombre = $this->seguridad->texto_seguro($this->conexion, $nombre)) {
 			$this->error = "Nombre no es Seguro";
 			return false;
 		}
@@ -38,7 +40,7 @@ class CategoriaExtra extends Seguridad {
 	
 	// Actualizar un CategoriaExtra a la Base de Datos identificado por su id
 	public function actualizar($id, $nombre) {
-		if(!$nombre = parent::texto_seguro($this->conexion, $nombre)) {
+		if(!$nombre = $this->seguridad->texto_seguro($this->conexion, $nombre)) {
 			$this->error = "Nombre no es Seguro";
 			return false;
 		}
@@ -55,7 +57,7 @@ class CategoriaExtra extends Seguridad {
 	
 	// Eliminar un CategoriaExtra de la Base de Datos identificado por su id
 	private function eliminar($id) {
-		if(!$id = parent::entero_seguro($id)) {
+		if(!$id = $this->seguridad->entero_seguro($id)) {
 			$this->error = "ID no es Seguro";
 			return false;
 		}
@@ -72,7 +74,7 @@ class CategoriaExtra extends Seguridad {
 	
 	// Desactivar un CategoriaExtra de la Base de Datos identificado por su id
 	public function desactivar($id) {
-		if(!$id = parent::entero_seguro($id)) {
+		if(!$id = $this->seguridad->entero_seguro($id)) {
 			$this->error = "ID no es Seguro";
 			return false;
 		}
@@ -89,7 +91,7 @@ class CategoriaExtra extends Seguridad {
 	
 	// Obtener datos de un CategoriaExtra identifiado por su id
 	public function datos($id) {
-		if(!$id = parent::entero_seguro($id)) {
+		if(!$id = $this->seguridad->entero_seguro($id)) {
 			$this->error = "ID no es Seguro";
 			return false;
 		}
@@ -137,7 +139,7 @@ class CategoriaExtra extends Seguridad {
 	
 	// Obtener listado de todos los CategoriaExtras
 	public function listado($estado=-1) {
-		if(!is_int($estado = parent::entero_seguro($estado))) {
+		if(!is_int($estado = $this->seguridad->entero_seguro($estado))) {
 			$this->error = "Estado no es Seguro";
 			return false;
 		}
@@ -169,17 +171,17 @@ class CategoriaExtra extends Seguridad {
 	
 	// Obtener listado de todos los CategoriaExtras paginados
 	public function listado_paginado($estado=-1, $inicio, $fin) {
-		if(!is_int($estado = parent::entero_seguro($estado))) {
+		if(!is_int($estado = $this->seguridad->entero_seguro($estado))) {
 			$this->error = "Estado no es Seguro";
 			return false;
 		}
 		
-		if(!is_int($inicio = parent::entero_seguro($inicio))) {
+		if(!is_int($inicio = $this->seguridad->entero_seguro($inicio))) {
 			$this->error = "N&uacute;mero de Inicio no es Seguro";
 			return false;
 		}
 		
-		if(!is_int($fin = parent::entero_seguro($fin))) {
+		if(!is_int($fin = $this->seguridad->entero_seguro($fin))) {
 			$this->error = "N&uacute;mero de Fin no es Seguro";
 			return false;
 		}
@@ -214,7 +216,7 @@ class CategoriaExtra extends Seguridad {
 	
 	// Contar el total de CategoriaExtras
 	public function total_listado($estado=-1) {
-		if(!is_int($estado = parent::entero_seguro($estado))) {
+		if(!is_int($estado = $this->seguridad->entero_seguro($estado))) {
 			$this->error = "Estado no es Seguro";
 			return false;
 		}

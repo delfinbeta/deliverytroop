@@ -17,6 +17,7 @@ class Usuario extends Seguridad {
 	private $fecha_actualizacion;
 	private $usuario_actualizacion;
 	private $conexion;
+	private $seguridad;
 	public  $error;
 	
 	#######################################  Operaciones  #######################################
@@ -24,46 +25,47 @@ class Usuario extends Seguridad {
 	function __construct($conexion) {
 		$this->error = NULL;
 		$this->conexion = $conexion;
+		$this->seguridad = new Seguridad();
 	}
 	
 	// Insertar un Usuario a la Base de Datos
 	public function insertar($usuario, $contrasena, $nombre, $apellido, $email, $foto, $sexo, $tipo) {
-		if(!$usuario = parent::texto_seguro($this->conexion, $usuario)) {
+		if(!$usuario = $this->seguridad->texto_seguro($this->conexion, $usuario)) {
 			$this->error = "Nombre no es Seguro";
 			return false;
 		}
 		
-		if(!$contrasena = parent::texto_seguro($this->conexion, $contrasena)) {
+		if(!$contrasena = $this->seguridad->texto_seguro($this->conexion, $contrasena)) {
 			$this->error = "Nombre no es Seguro";
 			return false;
 		}
 		
-		if(!$nombre = parent::texto_seguro($this->conexion, $nombre)) {
+		if(!$nombre = $this->seguridad->texto_seguro($this->conexion, $nombre)) {
 			$this->error = "Nombre no es Seguro";
 			return false;
 		}
 		
-		if(!$apellido = parent::texto_seguro($this->conexion, $apellido)) {
+		if(!$apellido = $this->seguridad->texto_seguro($this->conexion, $apellido)) {
 			$this->error = "Apellido no es Seguro";
 			return false;
 		}
 		
-		if(!$email = parent::texto_seguro($this->conexion, $email)) {
+		if(!$email = $this->seguridad->texto_seguro($this->conexion, $email)) {
 			$this->error = "Email no es Seguro";
 			return false;
 		}
 		
-		if(!is_string($foto = parent::texto_seguro($this->conexion, $foto))) {
+		if(!is_string($foto = $this->seguridad->texto_seguro($this->conexion, $foto))) {
 			$this->error = "Foto no es Seguro";
 			return false;
 		}
 		
-		if(!$sexo = parent::entero_seguro($sexo)) {
+		if(!$sexo = $this->seguridad->entero_seguro($sexo)) {
 			$this->error = "Sexo no es Seguro";
 			return false;
 		}
 		
-		if(!$tipo = parent::entero_seguro($tipo)) {
+		if(!$tipo = $this->seguridad->entero_seguro($tipo)) {
 			$this->error = "Tipo no es Seguro";
 			return false;
 		}
@@ -80,37 +82,37 @@ class Usuario extends Seguridad {
 	
 	// Actualizar un Usuario a la Base de Datos identificado por su id
 	public function actualizar($id, $nombre, $apellido, $email, $foto, $sexo, $tipo) {
-		if(!$id = parent::entero_seguro($id)) {
+		if(!$id = $this->seguridad->entero_seguro($id)) {
 			$this->error = "ID no es Seguro";
 			return false;
 		}
 		
-		if(!$nombre = parent::texto_seguro($this->conexion, $nombre)) {
+		if(!$nombre = $this->seguridad->texto_seguro($this->conexion, $nombre)) {
 			$this->error = "Nombre no es Seguro";
 			return false;
 		}
 		
-		if(!$apellido = parent::texto_seguro($this->conexion, $apellido)) {
+		if(!$apellido = $this->seguridad->texto_seguro($this->conexion, $apellido)) {
 			$this->error = "Apellido no es Seguro";
 			return false;
 		}
 		
-		if(!$email = parent::texto_seguro($this->conexion, $email)) {
+		if(!$email = $this->seguridad->texto_seguro($this->conexion, $email)) {
 			$this->error = "Email no es Seguro";
 			return false;
 		}
 		
-		if(($foto != "") && (!$foto = parent::texto_seguro($this->conexion, $foto))) {
+		if(($foto != "") && (!$foto = $this->seguridad->texto_seguro($this->conexion, $foto))) {
 			$this->error = "Foto no es Seguro";
 			return false;
 		}
 		
-		if(!$sexo = parent::entero_seguro($sexo)) {
+		if(!$sexo = $this->seguridad->entero_seguro($sexo)) {
 			$this->error = "Sexo no es Seguro";
 			return false;
 		}
 		
-		if(!$tipo = parent::entero_seguro($tipo)) {
+		if(!$tipo = $this->seguridad->entero_seguro($tipo)) {
 			$this->error = "Tipo no es Seguro";
 			return false;
 		}
@@ -127,7 +129,7 @@ class Usuario extends Seguridad {
 	
 	// Eliminar un Usuario de la Base de Datos identificado por su id
 	private function eliminar($id) {
-		if(!$id = parent::entero_seguro($id)) {
+		if(!$id = $this->seguridad->entero_seguro($id)) {
 			$this->error = "ID no es Seguro";
 			return false;
 		}
@@ -144,7 +146,7 @@ class Usuario extends Seguridad {
 	
 	// Desactivar un Usuario de la Base de Datos identificado por su id
 	public function desactivar($id) {
-		if(!$id = parent::entero_seguro($id)) {
+		if(!$id = $this->seguridad->entero_seguro($id)) {
 			$this->error = "ID no es Seguro";
 			return false;
 		}
@@ -161,12 +163,12 @@ class Usuario extends Seguridad {
 	
 	// Autenticar Usuario
 	public function autenticar($usuario, $contrasena) {
-		if(!$usuario = parent::texto_seguro($this->conexion, $usuario)) {
+		if(!$usuario = $this->seguridad->texto_seguro($this->conexion, $usuario)) {
 			$this->error = "Usuario no es Seguro";
 			return false;
 		}
 		
-		if(!$contrasena = parent::texto_seguro($this->conexion, $contrasena)) {
+		if(!$contrasena = $this->seguridad->texto_seguro($this->conexion, $contrasena)) {
 			$this->error = "Contrasena no es Seguro";
 			return false;
 		}
@@ -234,7 +236,7 @@ class Usuario extends Seguridad {
 	
 	// Obtener datos de un Usuario identifiado por su id
 	public function datos($id) {
-		if(!$id = parent::entero_seguro($id)) {
+		if(!$id = $this->seguridad->entero_seguro($id)) {
 			$this->error = "ID no es Seguro";
 			return false;
 		}
@@ -316,17 +318,17 @@ class Usuario extends Seguridad {
 	
 	// Obtener listado de todos los Usuarios
 	public function listado($sexo=0, $tipo=0, $estado=-1) {
-		if(!is_int($sexo = parent::entero_seguro($sexo))) {
+		if(!is_int($sexo = $this->seguridad->entero_seguro($sexo))) {
 			$this->error = "Sexo no es Seguro";
 			return false;
 		}
 		
-		if(!is_int($tipo = parent::entero_seguro($tipo))) {
+		if(!is_int($tipo = $this->seguridad->entero_seguro($tipo))) {
 			$this->error = "Tipo no es Seguro";
 			return false;
 		}
 		
-		if(!is_int($estado = parent::entero_seguro($estado))) {
+		if(!is_int($estado = $this->seguridad->entero_seguro($estado))) {
 			$this->error = "Estado no es Seguro";
 			return false;
 		}
@@ -368,27 +370,27 @@ class Usuario extends Seguridad {
 	
 	// Obtener listado de todos los Usuarios paginados
 	public function listado_paginado($sexo=0, $tipo=0, $estado=-1, $inicio, $fin) {
-		if(!is_int($sexo = parent::entero_seguro($sexo))) {
+		if(!is_int($sexo = $this->seguridad->entero_seguro($sexo))) {
 			$this->error = "Sexo no es Seguro";
 			return false;
 		}
 		
-		if(!is_int($tipo = parent::entero_seguro($tipo))) {
+		if(!is_int($tipo = $this->seguridad->entero_seguro($tipo))) {
 			$this->error = "Tipo no es Seguro";
 			return false;
 		}
 		
-		if(!is_int($estado = parent::entero_seguro($estado))) {
+		if(!is_int($estado = $this->seguridad->entero_seguro($estado))) {
 			$this->error = "Estado no es Seguro";
 			return false;
 		}
 		
-		if(!is_int($inicio = parent::entero_seguro($inicio))) {
+		if(!is_int($inicio = $this->seguridad->entero_seguro($inicio))) {
 			$this->error = "N&uacute;mero de Inicio no es Seguro";
 			return false;
 		}
 		
-		if(!is_int($fin = parent::entero_seguro($fin))) {
+		if(!is_int($fin = $this->seguridad->entero_seguro($fin))) {
 			$this->error = "N&uacute;mero de Fin no es Seguro";
 			return false;
 		}
@@ -433,17 +435,17 @@ class Usuario extends Seguridad {
 	
 	// Contar el total de Usuarios
 	public function total_listado($sexo=0, $tipo=0, $estado=-1) {
-		if(!is_int($sexo = parent::entero_seguro($sexo))) {
+		if(!is_int($sexo = $this->seguridad->entero_seguro($sexo))) {
 			$this->error = "Sexo no es Seguro";
 			return false;
 		}
 		
-		if(!is_int($tipo = parent::entero_seguro($tipo))) {
+		if(!is_int($tipo = $this->seguridad->entero_seguro($tipo))) {
 			$this->error = "Tipo no es Seguro";
 			return false;
 		}
 		
-		if(!is_int($estado = parent::entero_seguro($estado))) {
+		if(!is_int($estado = $this->seguridad->entero_seguro($estado))) {
 			$this->error = "Estado no es Seguro";
 			return false;
 		}
@@ -478,12 +480,12 @@ class Usuario extends Seguridad {
 	
 	// Verificar si e-mail ya existe
 	public function email_existe($email, $id) {
-		if(!$email = parent::texto_seguro($this->conexion, $email)) {
+		if(!$email = $this->seguridad->texto_seguro($this->conexion, $email)) {
 			$this->error = "Email no es Seguro";
 			return false;
 		}
 		
-		if(!is_int($id = parent::entero_seguro($id))) {
+		if(!is_int($id = $this->seguridad->entero_seguro($id))) {
 			$this->error = "ID no es Seguro";
 			return false;
 		}
@@ -501,12 +503,12 @@ class Usuario extends Seguridad {
 	
 	// Verificar si foto ya existe
 	public function foto_existe($foto, $id) {
-		if(!$foto = parent::texto_seguro($this->conexion, $foto)) {
+		if(!$foto = $this->seguridad->texto_seguro($this->conexion, $foto)) {
 			$this->error = "Foto no es Seguro";
 			return false;
 		}
 		
-		if(!is_int($id = parent::entero_seguro($id))) {
+		if(!is_int($id = $this->seguridad->entero_seguro($id))) {
 			$this->error = "ID no es Seguro";
 			return false;
 		}
@@ -543,12 +545,12 @@ class Usuario extends Seguridad {
 	
 	// Recuperar Contraseña de un Usuario
 	public function recuperar_contrasena($email, $contrasena) {
-		if(!$email = parent::texto_seguro($this->conexion, $email)) {
+		if(!$email = $this->seguridad->texto_seguro($this->conexion, $email)) {
 			$this->error = "Email no es Seguro";
 			return false;
 		}
 		
-		if(!$contrasena = parent::texto_seguro($this->conexion, $contrasena)) {
+		if(!$contrasena = $this->seguridad->texto_seguro($this->conexion, $contrasena)) {
 			$this->error = "Contrase&ntilde;a no es Segura";
 			return false;
 		}

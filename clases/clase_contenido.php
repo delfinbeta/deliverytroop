@@ -1,5 +1,5 @@
 <?php
-class Contenido extends Seguridad {
+class Contenido {
 	########################################  Atributos  ########################################
 	
 	private $id;
@@ -11,6 +11,7 @@ class Contenido extends Seguridad {
 	private $fecha_actualizacion;
 	private $usuario_actualizacion;
 	private $conexion;
+	private $seguridad;
 	public  $error = NULL;
 	
 	#######################################  Operaciones  #######################################
@@ -18,16 +19,17 @@ class Contenido extends Seguridad {
 	function __construct($conexion) {
 		$this->error = NULL;
 		$this->conexion = $conexion;
+		$this->seguridad = new Seguridad($conexion);
 	}
 	
 	// Insertar un Contenido a la Base de Datos
 	public function insertar($nombre, $descripcion) {
-		if(!$nombre = parent::texto_seguro($this->conexion, $nombre)) {
+		if(!$nombre = $this->seguridad->texto_seguro($this->conexion, $nombre)) {
 			$this->error = "Nombre Español no es Seguro";
 			return false;
 		}
 		
-		if(!is_string($descripcion = parent::texto_seguro($this->conexion, $descripcion))) {
+		if(!is_string($descripcion = $this->seguridad->texto_seguro($this->conexion, $descripcion))) {
 			$this->error = "Descripción Español no es Seguro";
 			return false;
 		}
@@ -44,12 +46,12 @@ class Contenido extends Seguridad {
 	
 	// Actualizar un Contenido a la Base de Datos identificado por su id
 	public function actualizar($id, $nombre, $descripcion) {
-		if(!$nombre = parent::texto_seguro($this->conexion, $nombre)) {
+		if(!$nombre = $this->seguridad->texto_seguro($this->conexion, $nombre)) {
 			$this->error = "Nombre Español no es Seguro";
 			return false;
 		}
 		
-		if(!is_string($descripcion = parent::texto_seguro($this->conexion, $descripcion))) {
+		if(!is_string($descripcion = $this->seguridad->texto_seguro($this->conexion, $descripcion))) {
 			$this->error = "Descripción Español no es Seguro";
 			return false;
 		}
@@ -66,7 +68,7 @@ class Contenido extends Seguridad {
 	
 	// Eliminar un Contenido de la Base de Datos identificado por su id
 	private function eliminar($id) {
-		if(!$id = parent::entero_seguro($id)) {
+		if(!$id = $this->seguridad->entero_seguro($id)) {
 			$this->error = "ID no es Seguro";
 			return false;
 		}
@@ -83,7 +85,7 @@ class Contenido extends Seguridad {
 	
 	// Desactivar un Contenido de la Base de Datos identificado por su id
 	public function desactivar($id) {
-		if(!$id = parent::entero_seguro($id)) {
+		if(!$id = $this->seguridad->entero_seguro($id)) {
 			$this->error = "ID no es Seguro";
 			return false;
 		}
@@ -100,7 +102,7 @@ class Contenido extends Seguridad {
 	
 	// Obtener datos de un Contenido identifiado por su id
 	public function datos($id) {
-		if(!$id = parent::entero_seguro($id)) {
+		if(!$id = $this->seguridad->entero_seguro($id)) {
 			$this->error = "ID no es Seguro";
 			return false;
 		}
@@ -149,7 +151,7 @@ class Contenido extends Seguridad {
 	
 	// Obtener listado de todos los Contenidos
 	public function listado($estado=-1) {
-		if(!is_int($estado = parent::entero_seguro($estado))) {
+		if(!is_int($estado = $this->seguridad->entero_seguro($estado))) {
 			$this->error = "Estado no es Seguro";
 			return false;
 		}
@@ -181,17 +183,17 @@ class Contenido extends Seguridad {
 	
 	// Obtener listado de todos los Contenidos paginados
 	public function listado_paginado($estado=-1, $inicio, $fin) {
-		if(!is_int($estado = parent::entero_seguro($estado))) {
+		if(!is_int($estado = $this->seguridad->entero_seguro($estado))) {
 			$this->error = "Estado no es Seguro";
 			return false;
 		}
 		
-		if(!is_int($inicio = parent::entero_seguro($inicio))) {
+		if(!is_int($inicio = $this->seguridad->entero_seguro($inicio))) {
 			$this->error = "N&uacute;mero de Inicio no es Seguro";
 			return false;
 		}
 		
-		if(!is_int($fin = parent::entero_seguro($fin))) {
+		if(!is_int($fin = $this->seguridad->entero_seguro($fin))) {
 			$this->error = "N&uacute;mero de Fin no es Seguro";
 			return false;
 		}
@@ -226,7 +228,7 @@ class Contenido extends Seguridad {
 	
 	// Contar el total de Contenidos
 	public function total_listado($estado=-1) {
-		if(!is_int($estado = parent::entero_seguro($estado))) {
+		if(!is_int($estado = $this->seguridad->entero_seguro($estado))) {
 			$this->error = "Estado no es Seguro";
 			return false;
 		}

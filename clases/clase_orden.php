@@ -1,5 +1,5 @@
 <?php
-class Orden extends Seguridad {
+class Orden {
 	########################################  Atributos  ########################################
 	
 	private $id;
@@ -17,6 +17,7 @@ class Orden extends Seguridad {
 	private $fecha_actualizacion;
 	private $usuario_actualizacion;
 	private $conexion;
+	private $seguridad;
 	public  $error = NULL;
 	
 	#######################################  Operaciones  #######################################
@@ -24,46 +25,47 @@ class Orden extends Seguridad {
 	function __construct($conexion) {
 		$this->error = NULL;
 		$this->conexion = $conexion;
+		$this->seguridad = new Seguridad($conexion);
 	}
 	
 	// Insertar un Orden a la Base de Datos
 	public function insertar($nombre, $email, $telefono, $direccion, $zipcode, $ciudad, $instrucciones, $total) {
-		if(!$nombre = parent::texto_seguro($this->conexion, $nombre)) {
+		if(!$nombre = $this->seguridad->texto_seguro($this->conexion, $nombre)) {
 			$this->error = "Nombre no es Seguro";
 			return false;
 		}
 
-		if(!$email = parent::texto_seguro($this->conexion, $email)) {
+		if(!$email = $this->seguridad->texto_seguro($this->conexion, $email)) {
 			$this->error = "Email no es Seguro";
 			return false;
 		}
 
-		if(!$telefono = parent::texto_seguro($this->conexion, $telefono)) {
+		if(!$telefono = $this->seguridad->texto_seguro($this->conexion, $telefono)) {
 			$this->error = "Telefono no es Seguro";
 			return false;
 		}
 
-		if(!$direccion = parent::texto_seguro($this->conexion, $direccion)) {
+		if(!$direccion = $this->seguridad->texto_seguro($this->conexion, $direccion)) {
 			$this->error = "Direccion no es Seguro";
 			return false;
 		}
 
-		if(!$zipcode = parent::texto_seguro($this->conexion, $zipcode)) {
+		if(!$zipcode = $this->seguridad->texto_seguro($this->conexion, $zipcode)) {
 			$this->error = "Zipcode no es Seguro";
 			return false;
 		}
 
-		if(!$ciudad = parent::texto_seguro($this->conexion, $ciudad)) {
+		if(!$ciudad = $this->seguridad->texto_seguro($this->conexion, $ciudad)) {
 			$this->error = "Ciudad no es Seguro";
 			return false;
 		}
 
-		if(!is_string($instrucciones = parent::texto_seguro($this->conexion, $instrucciones))) {
+		if(!is_string($instrucciones = $this->seguridad->texto_seguro($this->conexion, $instrucciones))) {
 			$this->error = "Instrucciones no es Seguro";
 			return false;
 		}
 
-		if(!is_float($total = parent::float_seguro($total))) {
+		if(!is_float($total = $this->seguridad->float_seguro($total))) {
 			$this->error = "Total no es Seguro";
 			return false;
 		}
@@ -83,42 +85,42 @@ class Orden extends Seguridad {
 	
 	// Actualizar un Orden a la Base de Datos identificado por su id
 	public function actualizar($id, $nombre, $email, $telefono, $direccion, $zipcode, $ciudad, $instrucciones, $total) {
-		if(!$nombre = parent::texto_seguro($this->conexion, $nombre)) {
+		if(!$nombre = $this->seguridad->texto_seguro($this->conexion, $nombre)) {
 			$this->error = "Nombre no es Seguro";
 			return false;
 		}
 
-		if(!$email = parent::texto_seguro($this->conexion, $email)) {
+		if(!$email = $this->seguridad->texto_seguro($this->conexion, $email)) {
 			$this->error = "Email no es Seguro";
 			return false;
 		}
 
-		if(!$telefono = parent::texto_seguro($this->conexion, $telefono)) {
+		if(!$telefono = $this->seguridad->texto_seguro($this->conexion, $telefono)) {
 			$this->error = "Telefono no es Seguro";
 			return false;
 		}
 
-		if(!$direccion = parent::texto_seguro($this->conexion, $direccion)) {
+		if(!$direccion = $this->seguridad->texto_seguro($this->conexion, $direccion)) {
 			$this->error = "Direccion no es Seguro";
 			return false;
 		}
 
-		if(!$zipcode = parent::texto_seguro($this->conexion, $zipcode)) {
+		if(!$zipcode = $this->seguridad->texto_seguro($this->conexion, $zipcode)) {
 			$this->error = "Zipcode no es Seguro";
 			return false;
 		}
 
-		if(!$ciudad = parent::texto_seguro($this->conexion, $ciudad)) {
+		if(!$ciudad = $this->seguridad->texto_seguro($this->conexion, $ciudad)) {
 			$this->error = "Ciudad no es Seguro";
 			return false;
 		}
 
-		if(!is_string($instrucciones = parent::texto_seguro($this->conexion, $instrucciones))) {
+		if(!is_string($instrucciones = $this->seguridad->texto_seguro($this->conexion, $instrucciones))) {
 			$this->error = "Instrucciones no es Seguro";
 			return false;
 		}
 
-		if(!is_float($total = parent::float_seguro($total))) {
+		if(!is_float($total = $this->seguridad->float_seguro($total))) {
 			$this->error = "Total no es Seguro";
 			return false;
 		}
@@ -138,12 +140,12 @@ class Orden extends Seguridad {
 	
 	// Cambiar Estado de una Orden de la Base de Datos identificado por su id
 	public function actualizar_estado($id, $estado) {
-		if(!$id = parent::entero_seguro($id)) {
+		if(!$id = $this->seguridad->entero_seguro($id)) {
 			$this->error = "ID no es Seguro";
 			return false;
 		}
 
-		if(!is_int($estado = parent::entero_seguro($estado))) {
+		if(!is_int($estado = $this->seguridad->entero_seguro($estado))) {
 			$this->error = "Estado no es Seguro";
 			return false;
 		}
@@ -163,7 +165,7 @@ class Orden extends Seguridad {
 	
 	// Eliminar un Orden de la Base de Datos identificado por su id
 	private function eliminar($id) {
-		if(!$id = parent::entero_seguro($id)) {
+		if(!$id = $this->seguridad->entero_seguro($id)) {
 			$this->error = "ID no es Seguro";
 			return false;
 		}
@@ -180,7 +182,7 @@ class Orden extends Seguridad {
 	
 	// Desactivar un Orden de la Base de Datos identificado por su id
 	public function desactivar($id) {
-		if(!$id = parent::entero_seguro($id)) {
+		if(!$id = $this->seguridad->entero_seguro($id)) {
 			$this->error = "ID no es Seguro";
 			return false;
 		}
@@ -197,7 +199,7 @@ class Orden extends Seguridad {
 	
 	// Obtener datos de un Orden identifiado por su id
 	public function datos($id) {
-		if(!$id = parent::entero_seguro($id)) {
+		if(!$id = $this->seguridad->entero_seguro($id)) {
 			$this->error = "ID no es Seguro";
 			return false;
 		}
@@ -258,17 +260,17 @@ class Orden extends Seguridad {
 	
 	// Obtener listado de Ordenes
 	public function listado($nombre='', $email='', $estado=-1) {
-		if(!is_string($nombre = parent::texto_seguro($this->conexion, $nombre))) {
+		if(!is_string($nombre = $this->seguridad->texto_seguro($this->conexion, $nombre))) {
 			$this->error = "Nombre no es Seguro";
 			return false;
 		}
 		
-		if(!is_string($email = parent::texto_seguro($this->conexion, $email))) {
+		if(!is_string($email = $this->seguridad->texto_seguro($this->conexion, $email))) {
 			$this->error = "Email no es Seguro";
 			return false;
 		}
 		
-		if(!is_int($estado = parent::entero_seguro($estado))) {
+		if(!is_int($estado = $this->seguridad->entero_seguro($estado))) {
 			$this->error = "Estado no es Seguro";
 			return false;
 		}
@@ -311,27 +313,27 @@ class Orden extends Seguridad {
 	
 	// Obtener listado de Ordenes Paginado
 	public function listado_paginado($nombre='', $email='', $estado=-1, $inicio, $fin) {
-		if(!is_string($nombre = parent::texto_seguro($this->conexion, $nombre))) {
+		if(!is_string($nombre = $this->seguridad->texto_seguro($this->conexion, $nombre))) {
 			$this->error = "Nombre no es Seguro";
 			return false;
 		}
 		
-		if(!is_string($email = parent::texto_seguro($this->conexion, $email))) {
+		if(!is_string($email = $this->seguridad->texto_seguro($this->conexion, $email))) {
 			$this->error = "Email no es Seguro";
 			return false;
 		}
 		
-		if(!is_int($estado = parent::entero_seguro($estado))) {
+		if(!is_int($estado = $this->seguridad->entero_seguro($estado))) {
 			$this->error = "Estado no es Seguro";
 			return false;
 		}
 		
-		if(!is_int($inicio = parent::entero_seguro($inicio))) {
+		if(!is_int($inicio = $this->seguridad->entero_seguro($inicio))) {
 			$this->error = "N&uacute;mero de Inicio no es Seguro";
 			return false;
 		}
 		
-		if(!is_int($fin = parent::entero_seguro($fin))) {
+		if(!is_int($fin = $this->seguridad->entero_seguro($fin))) {
 			$this->error = "N&uacute;mero de Fin no es Seguro";
 			return false;
 		}
@@ -377,17 +379,17 @@ class Orden extends Seguridad {
 	
 	// Contar el total de Ordenes Listados
 	public function total_listado($nombre='', $email='', $estado=-1) {
-		if(!is_string($nombre = parent::texto_seguro($this->conexion, $nombre))) {
+		if(!is_string($nombre = $this->seguridad->texto_seguro($this->conexion, $nombre))) {
 			$this->error = "Nombre no es Seguro";
 			return false;
 		}
 		
-		if(!is_string($email = parent::texto_seguro($this->conexion, $email))) {
+		if(!is_string($email = $this->seguridad->texto_seguro($this->conexion, $email))) {
 			$this->error = "Email no es Seguro";
 			return false;
 		}
 		
-		if(!is_int($estado = parent::entero_seguro($estado))) {
+		if(!is_int($estado = $this->seguridad->entero_seguro($estado))) {
 			$this->error = "Estado no es Seguro";
 			return false;
 		}

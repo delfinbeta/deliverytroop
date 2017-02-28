@@ -1,5 +1,5 @@
 <?php
-class Plato extends Seguridad {
+class Plato {
 	########################################  Atributos  ########################################
 	
 	private $id;
@@ -17,6 +17,7 @@ class Plato extends Seguridad {
 	private $fecha_actualizacion;
 	private $usuario_actualizacion;
 	private $conexion;
+	private $seguridad;
 	public  $error = NULL;
 	
 	#######################################  Operaciones  #######################################
@@ -24,41 +25,42 @@ class Plato extends Seguridad {
 	function __construct($conexion) {
 		$this->error = NULL;
 		$this->conexion = $conexion;
+		$this->seguridad = new Seguridad($conexion);
 	}
 	
 	// Insertar un Plato a la Base de Datos
 	public function insertar($restaurante, $nombre, $precio, $resumen, $descripcion, $recomendado, $imagen) {
-		if(!$restaurante = parent::entero_seguro($restaurante)) {
+		if(!$restaurante = $this->seguridad->entero_seguro($restaurante)) {
 			$this->error = "Restaurante no es Seguro";
 			return false;
 		}
 
-		if(!$nombre = parent::texto_seguro($this->conexion, $nombre)) {
+		if(!$nombre = $this->seguridad->texto_seguro($this->conexion, $nombre)) {
 			$this->error = "Nombre no es Seguro";
 			return false;
 		}
 
-		if(!is_float($precio = parent::float_seguro($precio))) {
+		if(!is_float($precio = $this->seguridad->float_seguro($precio))) {
 			$this->error = "Precio no es Seguro";
 			return false;
 		}
 
-		if(!is_string($resumen = parent::texto_seguro($this->conexion, $resumen))) {
+		if(!is_string($resumen = $this->seguridad->texto_seguro($this->conexion, $resumen))) {
 			$this->error = "Descripción Corta no es Seguro";
 			return false;
 		}
 
-		if(!is_string($descripcion = parent::texto_seguro($this->conexion, $descripcion))) {
+		if(!is_string($descripcion = $this->seguridad->texto_seguro($this->conexion, $descripcion))) {
 			$this->error = "Descripcion no es Seguro";
 			return false;
 		}
 
-		if(!is_int($recomendado = parent::entero_seguro($recomendado))) {
+		if(!is_int($recomendado = $this->seguridad->entero_seguro($recomendado))) {
 			$this->error = "Recomendado no es Seguro";
 			return false;
 		}
 
-		if(!is_string($imagen = parent::texto_seguro($this->conexion, $imagen))) {
+		if(!is_string($imagen = $this->seguridad->texto_seguro($this->conexion, $imagen))) {
 			$this->error = "Imagen no es Seguro";
 			return false;
 		}
@@ -84,37 +86,37 @@ class Plato extends Seguridad {
 	
 	// Actualizar un Plato a la Base de Datos identificado por su id
 	public function actualizar($id, $nombre, $precio, $resumen, $descripcion, $recomendado, $imagen) {
-		if(!$id = parent::entero_seguro($id)) {
+		if(!$id = $this->seguridad->entero_seguro($id)) {
 			$this->error = "ID no es Seguro";
 			return false;
 		}
 
-		if(!$nombre = parent::texto_seguro($this->conexion, $nombre)) {
+		if(!$nombre = $this->seguridad->texto_seguro($this->conexion, $nombre)) {
 			$this->error = "Nombre no es Seguro";
 			return false;
 		}
 
-		if(!is_float($precio = parent::float_seguro($precio))) {
+		if(!is_float($precio = $this->seguridad->float_seguro($precio))) {
 			$this->error = "Precio no es Seguro";
 			return false;
 		}
 
-		if(!is_string($resumen = parent::texto_seguro($this->conexion, $resumen))) {
+		if(!is_string($resumen = $this->seguridad->texto_seguro($this->conexion, $resumen))) {
 			$this->error = "Descripción Corta no es Seguro";
 			return false;
 		}
 
-		if(!is_string($descripcion = parent::texto_seguro($this->conexion, $descripcion))) {
+		if(!is_string($descripcion = $this->seguridad->texto_seguro($this->conexion, $descripcion))) {
 			$this->error = "Descripcion no es Seguro";
 			return false;
 		}
 
-		if(!is_int($recomendado = parent::entero_seguro($recomendado))) {
+		if(!is_int($recomendado = $this->seguridad->entero_seguro($recomendado))) {
 			$this->error = "Recomendado no es Seguro";
 			return false;
 		}
 
-		if(!is_string($imagen = parent::texto_seguro($this->conexion, $imagen))) {
+		if(!is_string($imagen = $this->seguridad->texto_seguro($this->conexion, $imagen))) {
 			$this->error = "Imagen no es Seguro";
 			return false;
 		}
@@ -130,12 +132,12 @@ class Plato extends Seguridad {
 	}
 	
 	public function actualizar_orden($orden, $ordenamiento) {
-		if(!is_int($orden = parent::entero_seguro($orden))) {
+		if(!is_int($orden = $this->seguridad->entero_seguro($orden))) {
 			$this->error = "Orden no es Seguro";
 			return false;
 		}
 		
-		if(!is_string($ordenamiento = parent::texto_seguro($this->conexion, $ordenamiento))) {
+		if(!is_string($ordenamiento = $this->seguridad->texto_seguro($this->conexion, $ordenamiento))) {
 			$this->error = "Ordenamiento no es Seguro";
 			return false;
 		}
@@ -219,7 +221,7 @@ class Plato extends Seguridad {
 	
 	// Eliminar un Plato de la Base de Datos identificado por su id
 	private function eliminar($id) {
-		if(!$id = parent::entero_seguro($id)) {
+		if(!$id = $this->seguridad->entero_seguro($id)) {
 			$this->error = "ID no es Seguro";
 			return false;
 		}
@@ -236,7 +238,7 @@ class Plato extends Seguridad {
 	
 	// Desactivar un Plato de la Base de Datos identificado por su id
 	public function desactivar($id) {
-		if(!$id = parent::entero_seguro($id)) {
+		if(!$id = $this->seguridad->entero_seguro($id)) {
 			$this->error = "ID no es Seguro";
 			return false;
 		}
@@ -253,7 +255,7 @@ class Plato extends Seguridad {
 	
 	// Obtener datos de un Plato identifiado por su id
 	public function datos($id) {
-		if(!$id = parent::entero_seguro($id)) {
+		if(!$id = $this->seguridad->entero_seguro($id)) {
 			$this->error = "ID no es Seguro";
 			return false;
 		}
@@ -312,17 +314,17 @@ class Plato extends Seguridad {
 	
 	// Obtener listado de todos los Platos
 	public function listado($restaurante=0, $recomendado=-1, $estado=-1) {
-		if(!is_int($restaurante = parent::entero_seguro($restaurante))) {
+		if(!is_int($restaurante = $this->seguridad->entero_seguro($restaurante))) {
 			$this->error = "Restaurante no es Seguro";
 			return false;
 		}
 		
-		if(!is_int($recomendado = parent::entero_seguro($recomendado))) {
+		if(!is_int($recomendado = $this->seguridad->entero_seguro($recomendado))) {
 			$this->error = "Recomendado no es Seguro";
 			return false;
 		}
 		
-		if(!is_int($estado = parent::entero_seguro($estado))) {
+		if(!is_int($estado = $this->seguridad->entero_seguro($estado))) {
 			$this->error = "Estado no es Seguro";
 			return false;
 		}
@@ -364,27 +366,27 @@ class Plato extends Seguridad {
 	
 	// Obtener listado de todos los Platos paginados
 	public function listado_paginado($restaurante=0, $recomendado=-1, $estado=-1, $inicio, $fin) {
-		if(!is_int($restaurante = parent::entero_seguro($restaurante))) {
+		if(!is_int($restaurante = $this->seguridad->entero_seguro($restaurante))) {
 			$this->error = "Restaurante no es Seguro";
 			return false;
 		}
 		
-		if(!is_int($recomendado = parent::entero_seguro($recomendado))) {
+		if(!is_int($recomendado = $this->seguridad->entero_seguro($recomendado))) {
 			$this->error = "Recomendado no es Seguro";
 			return false;
 		}
 		
-		if(!is_int($estado = parent::entero_seguro($estado))) {
+		if(!is_int($estado = $this->seguridad->entero_seguro($estado))) {
 			$this->error = "Estado no es Seguro";
 			return false;
 		}
 		
-		if(!is_int($inicio = parent::entero_seguro($inicio))) {
+		if(!is_int($inicio = $this->seguridad->entero_seguro($inicio))) {
 			$this->error = "N&uacute;mero de Inicio no es Seguro";
 			return false;
 		}
 		
-		if(!is_int($fin = parent::entero_seguro($fin))) {
+		if(!is_int($fin = $this->seguridad->entero_seguro($fin))) {
 			$this->error = "N&uacute;mero de Fin no es Seguro";
 			return false;
 		}
@@ -429,17 +431,17 @@ class Plato extends Seguridad {
 	
 	// Contar el total de Platos
 	public function total_listado($restaurante=0, $recomendado=-1, $estado=-1) {
-		if(!is_int($restaurante = parent::entero_seguro($restaurante))) {
+		if(!is_int($restaurante = $this->seguridad->entero_seguro($restaurante))) {
 			$this->error = "Restaurante no es Seguro";
 			return false;
 		}
 		
-		if(!is_int($recomendado = parent::entero_seguro($recomendado))) {
+		if(!is_int($recomendado = $this->seguridad->entero_seguro($recomendado))) {
 			$this->error = "Recomendado no es Seguro";
 			return false;
 		}
 		
-		if(!is_int($estado = parent::entero_seguro($estado))) {
+		if(!is_int($estado = $this->seguridad->entero_seguro($estado))) {
 			$this->error = "Estado no es Seguro";
 			return false;
 		}
@@ -474,12 +476,12 @@ class Plato extends Seguridad {
 	
 	// Verificar si imagen ya existe
 	public function imagen_existe($imagen, $id) {
-		if(!$imagen = parent::texto_seguro($this->conexion, $imagen)) {
+		if(!$imagen = $this->seguridad->texto_seguro($this->conexion, $imagen)) {
 			$this->error = "Imagen no es Seguro";
 			return false;
 		}
 		
-		if(!is_int($id = parent::entero_seguro($id))) {
+		if(!is_int($id = $this->seguridad->entero_seguro($id))) {
 			$this->error = "ID no es Seguro";
 			return false;
 		}

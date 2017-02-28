@@ -1,5 +1,5 @@
 <?php
-class Comentario extends Seguridad {
+class Comentario {
 	########################################  Atributos  ########################################
 	
 	private $id;
@@ -14,6 +14,7 @@ class Comentario extends Seguridad {
 	private $fecha_actualizacion;
 	private $usuario_actualizacion;
 	private $conexion;
+	private $seguridad;
 	public  $error;
 	
 	#######################################  Operaciones  #######################################
@@ -21,21 +22,22 @@ class Comentario extends Seguridad {
 	function __construct($conexion) {
 		$this->error = NULL;
 		$this->conexion = $conexion;
+		$this->seguridad = new Seguridad($conexion);
 	}
 	
 	// Insertar un Registrado a la Base de Datos
 	public function insertar($nombre, $email, $comentario) {
-		if(!$nombre = parent::texto_seguro($this->conexion, $nombre)) {
+		if(!$nombre = $this->seguridad->texto_seguro($this->conexion, $nombre)) {
 			$this->error = "Nombre no es Seguro";
 			return false;
 		}
 		
-		if(!$email = parent::texto_seguro($this->conexion, $email)) {
+		if(!$email = $this->seguridad->texto_seguro($this->conexion, $email)) {
 			$this->error = "Email no es Seguro";
 			return false;
 		}
 		
-		if(!$comentario = parent::texto_seguro($this->conexion, $comentario)) {
+		if(!$comentario = $this->seguridad->texto_seguro($this->conexion, $comentario)) {
 			$this->error = "Comentario no es Seguro";
 			return false;
 		}
@@ -56,12 +58,12 @@ class Comentario extends Seguridad {
 	
 	// Marcar Comentario como respondido identificado por su id
 	public function responder($id, $respuesta) {
-		if(!$id = parent::entero_seguro($id)) {
+		if(!$id = $this->seguridad->entero_seguro($id)) {
 			$this->error = "ID no es Seguro";
 			return false;
 		}
 		
-		if(!is_string($respuesta = parent::texto_seguro($this->conexion, $respuesta))) {
+		if(!is_string($respuesta = $this->seguridad->texto_seguro($this->conexion, $respuesta))) {
 			$this->error = "Respuesta no es Seguro";
 			return false;
 		}
@@ -78,7 +80,7 @@ class Comentario extends Seguridad {
 	
 	// Eliminar un Comentario de la Base de Datos identificado por su id
 	private function eliminar($id) {
-		if(!$id = parent::entero_seguro($id)) {
+		if(!$id = $this->seguridad->entero_seguro($id)) {
 			$this->error = "ID no es Seguro";
 			return false;
 		}
@@ -95,7 +97,7 @@ class Comentario extends Seguridad {
 	
 	// Desactivar un Comentario de la Base de Datos identificado por su id
 	public function desactivar($id) {
-		if(!$id = parent::entero_seguro($id)) {
+		if(!$id = $this->seguridad->entero_seguro($id)) {
 			$this->error = "ID no es Seguro";
 			return false;
 		}
@@ -112,7 +114,7 @@ class Comentario extends Seguridad {
 	
 	// Obtener datos de un Comentario identifiado por su id
 	public function datos($id) {
-		if(!$id = parent::entero_seguro($id)) {
+		if(!$id = $this->seguridad->entero_seguro($id)) {
 			$this->error = "ID no es Seguro";
 			return false;
 		}
@@ -164,7 +166,7 @@ class Comentario extends Seguridad {
 	
 	// Obtener listado de todos los Comentarios
 	public function listado($estado=-1) {
-		if(!is_int($estado = parent::entero_seguro($estado))) {
+		if(!is_int($estado = $this->seguridad->entero_seguro($estado))) {
 			$this->error = "Estado no es Seguro";
 			return false;
 		}
@@ -196,17 +198,17 @@ class Comentario extends Seguridad {
 	
 	// Obtener listado de todos los Contenidos paginados
 	public function listado_paginado($estado=-1, $inicio, $fin) {
-		if(!is_int($estado = parent::entero_seguro($estado))) {
+		if(!is_int($estado = $this->seguridad->entero_seguro($estado))) {
 			$this->error = "Estado no es Seguro";
 			return false;
 		}
 		
-		if(!is_int($inicio = parent::entero_seguro($inicio))) {
+		if(!is_int($inicio = $this->seguridad->entero_seguro($inicio))) {
 			$this->error = "N&uacute;mero de Inicio no es Seguro";
 			return false;
 		}
 		
-		if(!is_int($fin = parent::entero_seguro($fin))) {
+		if(!is_int($fin = $this->seguridad->entero_seguro($fin))) {
 			$this->error = "N&uacute;mero de Fin no es Seguro";
 			return false;
 		}
@@ -241,7 +243,7 @@ class Comentario extends Seguridad {
 	
 	// Contar el total de Comentarios
 	public function total_listado($estado=-1) {
-		if(!is_int($estado = parent::entero_seguro($estado))) {
+		if(!is_int($estado = $this->seguridad->entero_seguro($estado))) {
 			$this->error = "Estado no es Seguro";
 			return false;
 		}

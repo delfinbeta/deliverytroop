@@ -1,5 +1,5 @@
 <?php
-class OrdenPlato extends Seguridad {
+class OrdenPlato {
 	########################################  Atributos  ########################################
 	
 	private $orden;
@@ -9,6 +9,7 @@ class OrdenPlato extends Seguridad {
 	public  $cantidad;
 	public  $costo;
 	private $conexion;
+	private $seguridad;
 	public  $error = NULL;
 	
 	#######################################  Operaciones  #######################################
@@ -16,36 +17,37 @@ class OrdenPlato extends Seguridad {
 	function __construct($conexion) {
 		$this->error = NULL;
 		$this->conexion = $conexion;
+		$this->seguridad = new Seguridad($conexion);
 	}
 	
 	// Insertar un OrdenPlato a la Base de Datos
 	public function insertar($orden, $tipo, $plato, $observaciones, $cantidad, $costo) {
-		if(!$orden = parent::entero_seguro($orden)) {
+		if(!$orden = $this->seguridad->entero_seguro($orden)) {
 			$this->error = "Orden no es Seguro";
 			return false;
 		}
 
-		if(!$tipo = parent::entero_seguro($tipo)) {
+		if(!$tipo = $this->seguridad->entero_seguro($tipo)) {
 			$this->error = "Tipo no es Seguro";
 			return false;
 		}
 
-		if(!$plato = parent::entero_seguro($plato)) {
+		if(!$plato = $this->seguridad->entero_seguro($plato)) {
 			$this->error = "Plato no es Seguro";
 			return false;
 		}
 
-		if(!is_string($observaciones = parent::texto_seguro($this->conexion, $observaciones))) {
+		if(!is_string($observaciones = $this->seguridad->texto_seguro($this->conexion, $observaciones))) {
 			$this->error = "Observaciones no es Seguro";
 			return false;
 		}
 
-		if(!$cantidad = parent::entero_seguro($cantidad)) {
+		if(!$cantidad = $this->seguridad->entero_seguro($cantidad)) {
 			$this->error = "Cantidad no es Seguro";
 			return false;
 		}
 
-		if(!is_float($costo = parent::float_seguro($costo))) {
+		if(!is_float($costo = $this->seguridad->float_seguro($costo))) {
 			$this->error = "Costo no es Seguro";
 			return false;
 		}
@@ -62,32 +64,32 @@ class OrdenPlato extends Seguridad {
 	
 	// Actualizar un OrdenPlato a la Base de Datos ordenentificado por su orden
 	public function actualizar($orden, $tipo, $plato, $observaciones, $cantidad, $costo) {
-		if(!$orden = parent::entero_seguro($orden)) {
+		if(!$orden = $this->seguridad->entero_seguro($orden)) {
 			$this->error = "Orden no es Seguro";
 			return false;
 		}
 
-		if(!$tipo = parent::entero_seguro($tipo)) {
+		if(!$tipo = $this->seguridad->entero_seguro($tipo)) {
 			$this->error = "Tipo no es Seguro";
 			return false;
 		}
 
-		if(!$plato = parent::entero_seguro($plato)) {
+		if(!$plato = $this->seguridad->entero_seguro($plato)) {
 			$this->error = "Plato no es Seguro";
 			return false;
 		}
 
-		if(!is_string($observaciones = parent::texto_seguro($this->conexion, $observaciones))) {
+		if(!is_string($observaciones = $this->seguridad->texto_seguro($this->conexion, $observaciones))) {
 			$this->error = "Observaciones no es Seguro";
 			return false;
 		}
 
-		if(!$cantidad = parent::entero_seguro($cantidad)) {
+		if(!$cantidad = $this->seguridad->entero_seguro($cantidad)) {
 			$this->error = "Cantidad no es Seguro";
 			return false;
 		}
 
-		if(!is_float($costo = parent::float_seguro($costo))) {
+		if(!is_float($costo = $this->seguridad->float_seguro($costo))) {
 			$this->error = "Costo no es Seguro";
 			return false;
 		}
@@ -104,17 +106,17 @@ class OrdenPlato extends Seguridad {
 	
 	// Eliminar un OrdenPlato de la Base de Datos ordenentificado por su orden
 	public function eliminar($orden, $tipo, $plato) {
-		if(!$orden = parent::entero_seguro($orden)) {
+		if(!$orden = $this->seguridad->entero_seguro($orden)) {
 			$this->error = "Orden no es Seguro";
 			return false;
 		}
 
-		if(!$tipo = parent::entero_seguro($tipo)) {
+		if(!$tipo = $this->seguridad->entero_seguro($tipo)) {
 			$this->error = "Tipo no es Seguro";
 			return false;
 		}
 
-		if(!$plato = parent::entero_seguro($plato)) {
+		if(!$plato = $this->seguridad->entero_seguro($plato)) {
 			$this->error = "Plato no es Seguro";
 			return false;
 		}
@@ -131,17 +133,17 @@ class OrdenPlato extends Seguridad {
 	
 	// Obtener datos de un OrdenPlato ordenentifiado por su orden
 	public function datos($orden, $tipo, $plato) {
-		if(!$orden = parent::entero_seguro($orden)) {
+		if(!$orden = $this->seguridad->entero_seguro($orden)) {
 			$this->error = "Orden no es Seguro";
 			return false;
 		}
 
-		if(!$tipo = parent::entero_seguro($tipo)) {
+		if(!$tipo = $this->seguridad->entero_seguro($tipo)) {
 			$this->error = "Tipo no es Seguro";
 			return false;
 		}
 
-		if(!$plato = parent::entero_seguro($plato)) {
+		if(!$plato = $this->seguridad->entero_seguro($plato)) {
 			$this->error = "Plato no es Seguro";
 			return false;
 		}
@@ -181,17 +183,17 @@ class OrdenPlato extends Seguridad {
 	
 	// Obtener listado de todos los OrdenPlatos
 	public function listado($orden=0, $tipo=0, $plato=0) {
-		if(!is_int($orden = parent::entero_seguro($orden))) {
+		if(!is_int($orden = $this->seguridad->entero_seguro($orden))) {
 			$this->error = "Orden no es Seguro";
 			return false;
 		}
 
-		if(!is_int($tipo = parent::entero_seguro($tipo))) {
+		if(!is_int($tipo = $this->seguridad->entero_seguro($tipo))) {
 			$this->error = "Tipo no es Seguro";
 			return false;
 		}
 
-		if(!is_int($plato = parent::entero_seguro($plato))) {
+		if(!is_int($plato = $this->seguridad->entero_seguro($plato))) {
 			$this->error = "Plato no es Seguro";
 			return false;
 		}
@@ -231,27 +233,27 @@ class OrdenPlato extends Seguridad {
 	
 	// Obtener listado de todos los OrdenPlatos paginados
 	public function listado_paginado($orden=0, $tipo=0, $plato=0, $inicio, $fin) {
-		if(!is_int($orden = parent::entero_seguro($orden))) {
+		if(!is_int($orden = $this->seguridad->entero_seguro($orden))) {
 			$this->error = "Orden no es Seguro";
 			return false;
 		}
 
-		if(!is_int($tipo = parent::entero_seguro($tipo))) {
+		if(!is_int($tipo = $this->seguridad->entero_seguro($tipo))) {
 			$this->error = "Tipo no es Seguro";
 			return false;
 		}
 
-		if(!is_int($plato = parent::entero_seguro($plato))) {
+		if(!is_int($plato = $this->seguridad->entero_seguro($plato))) {
 			$this->error = "Plato no es Seguro";
 			return false;
 		}
 		
-		if(!is_int($inicio = parent::entero_seguro($inicio))) {
+		if(!is_int($inicio = $this->seguridad->entero_seguro($inicio))) {
 			$this->error = "N&uacute;mero de Inicio no es Seguro";
 			return false;
 		}
 		
-		if(!is_int($fin = parent::entero_seguro($fin))) {
+		if(!is_int($fin = $this->seguridad->entero_seguro($fin))) {
 			$this->error = "N&uacute;mero de Fin no es Seguro";
 			return false;
 		}
@@ -294,17 +296,17 @@ class OrdenPlato extends Seguridad {
 	
 	// Contar el total de OrdenPlatos
 	public function total_listado($orden=0, $tipo=0, $plato=0) {
-		if(!is_int($orden = parent::entero_seguro($orden))) {
+		if(!is_int($orden = $this->seguridad->entero_seguro($orden))) {
 			$this->error = "Orden no es Seguro";
 			return false;
 		}
 
-		if(!is_int($tipo = parent::entero_seguro($tipo))) {
+		if(!is_int($tipo = $this->seguridad->entero_seguro($tipo))) {
 			$this->error = "Tipo no es Seguro";
 			return false;
 		}
 
-		if(!is_int($plato = parent::entero_seguro($plato))) {
+		if(!is_int($plato = $this->seguridad->entero_seguro($plato))) {
 			$this->error = "Plato no es Seguro";
 			return false;
 		}

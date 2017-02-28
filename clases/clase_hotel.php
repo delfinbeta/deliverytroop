@@ -1,5 +1,5 @@
 <?php
-class Hotel extends Seguridad {
+class Hotel {
 	########################################  Atributos  ########################################
 	
 	private $id;
@@ -15,6 +15,7 @@ class Hotel extends Seguridad {
 	private $fecha_actualizacion;
 	private $usuario_actualizacion;
 	private $conexion;
+	private $seguridad;
 	public  $error = NULL;
 	
 	#######################################  Operaciones  #######################################
@@ -22,31 +23,32 @@ class Hotel extends Seguridad {
 	function __construct($conexion) {
 		$this->error = NULL;
 		$this->conexion = $conexion;
+		$this->seguridad = new Seguridad($conexion);
 	}
 	
 	// Insertar un Hotel a la Base de Datos
 	public function insertar($nombre, $zipcode, $ciudad, $direccion, $imagen) {
-		if(!$nombre = parent::texto_seguro($this->conexion, $nombre)) {
+		if(!$nombre = $this->seguridad->texto_seguro($this->conexion, $nombre)) {
 			$this->error = "Nombre no es Seguro";
 			return false;
 		}
 		
-		if(!$zipcode = parent::texto_seguro($this->conexion, $zipcode)) {
+		if(!$zipcode = $this->seguridad->texto_seguro($this->conexion, $zipcode)) {
 			$this->error = "Zipcode no es Seguro";
 			return false;
 		}
 		
-		if(!$ciudad = parent::texto_seguro($this->conexion, $ciudad)) {
+		if(!$ciudad = $this->seguridad->texto_seguro($this->conexion, $ciudad)) {
 			$this->error = "Ciudad no es Seguro";
 			return false;
 		}
 		
-		if(!$direccion = parent::texto_seguro($this->conexion, $direccion)) {
+		if(!$direccion = $this->seguridad->texto_seguro($this->conexion, $direccion)) {
 			$this->error = "Direccion no es Seguro";
 			return false;
 		}
 		
-		if(!is_string($imagen = parent::texto_seguro($this->conexion, $imagen))) {
+		if(!is_string($imagen = $this->seguridad->texto_seguro($this->conexion, $imagen))) {
 			$this->error = "Imagen no es Seguro";
 			return false;
 		}
@@ -72,27 +74,27 @@ class Hotel extends Seguridad {
 	
 	// Actualizar un Hotel a la Base de Datos identificado por su id
 	public function actualizar($id, $nombre, $zipcode, $ciudad, $direccion, $imagen) {
-		if(!$nombre = parent::texto_seguro($this->conexion, $nombre)) {
+		if(!$nombre = $this->seguridad->texto_seguro($this->conexion, $nombre)) {
 			$this->error = "Nombre no es Seguro";
 			return false;
 		}
 		
-		if(!$zipcode = parent::texto_seguro($this->conexion, $zipcode)) {
+		if(!$zipcode = $this->seguridad->texto_seguro($this->conexion, $zipcode)) {
 			$this->error = "Zipcode no es Seguro";
 			return false;
 		}
 		
-		if(!$ciudad = parent::texto_seguro($this->conexion, $ciudad)) {
+		if(!$ciudad = $this->seguridad->texto_seguro($this->conexion, $ciudad)) {
 			$this->error = "Ciudad no es Seguro";
 			return false;
 		}
 		
-		if(!$direccion = parent::texto_seguro($this->conexion, $direccion)) {
+		if(!$direccion = $this->seguridad->texto_seguro($this->conexion, $direccion)) {
 			$this->error = "Direccion no es Seguro";
 			return false;
 		}
 		
-		if(!is_string($imagen = parent::texto_seguro($this->conexion, $imagen))) {
+		if(!is_string($imagen = $this->seguridad->texto_seguro($this->conexion, $imagen))) {
 			$this->error = "Imagen no es Seguro";
 			return false;
 		}
@@ -108,12 +110,12 @@ class Hotel extends Seguridad {
 	}
 	
 	public function actualizar_orden($orden, $ordenamiento) {
-		if(!is_int($orden = parent::entero_seguro($orden))) {
+		if(!is_int($orden = $this->seguridad->entero_seguro($orden))) {
 			$this->error = "Orden no es Seguro";
 			return false;
 		}
 		
-		if(!is_string($ordenamiento = parent::texto_seguro($this->conexion, $ordenamiento))) {
+		if(!is_string($ordenamiento = $this->seguridad->texto_seguro($this->conexion, $ordenamiento))) {
 			$this->error = "Ordenamiento no es Seguro";
 			return false;
 		}
@@ -197,7 +199,7 @@ class Hotel extends Seguridad {
 	
 	// Eliminar un Hotel de la Base de Datos identificado por su id
 	private function eliminar($id) {
-		if(!$id = parent::entero_seguro($id)) {
+		if(!$id = $this->seguridad->entero_seguro($id)) {
 			$this->error = "ID no es Seguro";
 			return false;
 		}
@@ -214,7 +216,7 @@ class Hotel extends Seguridad {
 	
 	// Desactivar un Hotel de la Base de Datos identificado por su id
 	public function desactivar($id) {
-		if(!$id = parent::entero_seguro($id)) {
+		if(!$id = $this->seguridad->entero_seguro($id)) {
 			$this->error = "ID no es Seguro";
 			return false;
 		}
@@ -231,7 +233,7 @@ class Hotel extends Seguridad {
 	
 	// Obtener datos de un Hotel identifiado por su id
 	public function datos($id) {
-		if(!$id = parent::entero_seguro($id)) {
+		if(!$id = $this->seguridad->entero_seguro($id)) {
 			$this->error = "ID no es Seguro";
 			return false;
 		}
@@ -284,12 +286,12 @@ class Hotel extends Seguridad {
 	
 	// Obtener listado de todos los Hotels
 	public function listado($zipcode='', $estado=-1) {
-		if(!is_string($zipcode = parent::texto_seguro($this->conexion, $zipcode))) {
+		if(!is_string($zipcode = $this->seguridad->texto_seguro($this->conexion, $zipcode))) {
 			$this->error = "Zipcode no es Seguro";
 			return false;
 		}
 
-		if(!is_int($estado = parent::entero_seguro($estado))) {
+		if(!is_int($estado = $this->seguridad->entero_seguro($estado))) {
 			$this->error = "Estado no es Seguro";
 			return false;
 		}
@@ -326,22 +328,22 @@ class Hotel extends Seguridad {
 	
 	// Obtener listado de todos los Hotels paginados
 	public function listado_paginado($zipcode='', $estado=-1, $inicio, $fin) {
-		if(!is_string($zipcode = parent::texto_seguro($this->conexion, $zipcode))) {
+		if(!is_string($zipcode = $this->seguridad->texto_seguro($this->conexion, $zipcode))) {
 			$this->error = "Zipcode no es Seguro";
 			return false;
 		}
 
-		if(!is_int($estado = parent::entero_seguro($estado))) {
+		if(!is_int($estado = $this->seguridad->entero_seguro($estado))) {
 			$this->error = "Estado no es Seguro";
 			return false;
 		}
 		
-		if(!is_int($inicio = parent::entero_seguro($inicio))) {
+		if(!is_int($inicio = $this->seguridad->entero_seguro($inicio))) {
 			$this->error = "N&uacute;mero de Inicio no es Seguro";
 			return false;
 		}
 		
-		if(!is_int($fin = parent::entero_seguro($fin))) {
+		if(!is_int($fin = $this->seguridad->entero_seguro($fin))) {
 			$this->error = "N&uacute;mero de Fin no es Seguro";
 			return false;
 		}
@@ -381,12 +383,12 @@ class Hotel extends Seguridad {
 	
 	// Contar el total de Hotels
 	public function total_listado($zipcode='', $estado=-1) {
-		if(!is_string($zipcode = parent::texto_seguro($this->conexion, $zipcode))) {
+		if(!is_string($zipcode = $this->seguridad->texto_seguro($this->conexion, $zipcode))) {
 			$this->error = "Zipcode no es Seguro";
 			return false;
 		}
 
-		if(!is_int($estado = parent::entero_seguro($estado))) {
+		if(!is_int($estado = $this->seguridad->entero_seguro($estado))) {
 			$this->error = "Estado no es Seguro";
 			return false;
 		}
@@ -416,12 +418,12 @@ class Hotel extends Seguridad {
 	
 	// Verificar si imagen ya existe
 	public function imagen_existe($imagen, $id) {
-		if(!$imagen = parent::texto_seguro($this->conexion, $imagen)) {
+		if(!$imagen = $this->seguridad->texto_seguro($this->conexion, $imagen)) {
 			$this->error = "Imagen no es Seguro";
 			return false;
 		}
 		
-		if(!is_int($id = parent::entero_seguro($id))) {
+		if(!is_int($id = $this->seguridad->entero_seguro($id))) {
 			$this->error = "ID no es Seguro";
 			return false;
 		}
