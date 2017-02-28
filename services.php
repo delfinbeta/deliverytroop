@@ -41,6 +41,7 @@ if($contenido->datos(1)) {
 	<section class="franja-gris">
 		<div class="container">
 			<h1><?=$titulo?></h1>
+			<hr class="separador2" />
 			<?=$descripcion?>
 		</div>
 	</section>
