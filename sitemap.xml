@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"> 
+  <url>
+    <loc>http://www.deliverytroop.com/index.php</loc> 
+  </url>
+  <url>
+  	<loc>http://www.deliverytroop.com/services.php</loc>
+  </url>
+  <url>
+  	<loc>http://www.deliverytroop.com/restaurants.php</loc>
+  </url>
+  <url>
+  	<loc>http://www.deliverytroop.com/contact.php</loc>
+  </url>
+  <url>
+  	<loc>http://www.deliverytroop.com/partner.php</loc>
+  </url>
+  <url>
+    <loc>http://www.deliverytroop.com/shipping_policy.php</loc>
+  </url>
+  <url>
+    <loc>http://www.deliverytroop.com/terms.php</loc>
+  </url>
+  <url>
+    <loc>http://www.deliverytroop.com/driver.php</loc>
+  </url>
+</urlset>

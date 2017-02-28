@@ -36,6 +36,12 @@ h1, h2, h3, h4, h5, h6 {
 	width: 100px;
 }
 
+.eslogan {
+	font-family: "Raleway", sans-serif;
+	font-size: 1.2em;
+	margin: 1em 0;
+}
+
 .boton-transparente {
 	background-color: transparent;
 	border: 2px solid #FFFFFF;
@@ -51,12 +57,12 @@ h1, h2, h3, h4, h5, h6 {
 
 .boton-amarillo {
 	background-color: #FFBE00;
-	color: #FFFFFF;
+	color: #FFFFFF !important;
 }
 
 .boton-amarillo:hover {
 	background-color: transparent;
-	color: #FFBE00;
+	color: #FFBE00 !important;
 }
 
 .separador {
@@ -88,28 +94,13 @@ h1, h2, h3, h4, h5, h6 {
 .franja-gris {
 	background-color: #BBBBBB;
 	color: #FFFFFF;
+	padding: 1em 0;
 }
 
 .franja-gris h1,
 .franja-gris h2,
 .franja-gris h3 {
 	color: #FFFFFF;
-}
-
-.contact-home {
-	padding-bottom: 1em;
-}
-
-.contact-home a {
-	color: #333333;
-	text-decoration: none;
-}
-
-.contact-home .icono {
-	color: #FFBE00;
-	display: block;
-	font-size: 3em;
-	margin-bottom: 10px;
 }
 
 /*********************************************/
@@ -136,10 +127,20 @@ h1, h2, h3, h4, h5, h6 {
 	width: 100%;
 }
 
-.portada .eslogan {
-	font-family: "Raleway", sans-serif;
-	font-size: 1.2em;
-	margin: 1em 0;
+/*********************************************/
+/*****             Encabezado            *****/
+/*********************************************/
+.encabezado {
+	background-image: url("../img/top.jpg");
+	background-position: center center;
+	background-repeat: no-repeat;
+	-webkit-background-size: cover;
+		 -moz-background-size: cover;
+		 	 -o-background-size: cover;
+		 	 		background-size: cover;
+	color: #FFFFFF;
+	overflow: hidden;
+	padding: 1em 0;
 }
 
 /*********************************************/
@@ -178,6 +179,37 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /*********************************************/
+/*****              Contacto             *****/
+/*********************************************/
+.contacto {
+	padding: 1em 0;
+}
+
+.contacto a {
+	color: #333333;
+	text-decoration: none;
+}
+
+.contacto .icono {
+	color: #FFBE00;
+	display: block;
+	font-size: 3em;
+	margin-bottom: 10px;
+}
+
+.contacto .info {
+	margin: 1em 0;
+}
+
+.contacto .boton1, .contacto .boton2 {
+	text-align: center;
+}
+
+.contacto .boton2 {
+	margin-top: 1em;
+}
+
+/*********************************************/
 /*****           MEDIA QUERIES           *****/
 /*********************************************/
 @media screen and (min-width: 568px) and (max-height: 768px) {
@@ -201,8 +233,17 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @media screen and (min-width: 768px) {
-	.portada .eslogan {
+	.eslogan {
 		font-size: 1.8em;
+	}
+
+	.contacto .boton1 {
+		text-align: right;
+	}
+
+	.contacto .boton2 {
+		margin: 0;
+		text-align: left;
 	}
 
 	.piepag {
@@ -211,7 +252,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @media screen and (min-width: 992px) {
-	.portada .eslogan {
+	.eslogan {
 		font-size: 2.2em;
 	}
 }

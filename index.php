@@ -1,8 +1,10 @@
+<?php require("configuracion/inicio.php"); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
 	<title>Delivery Troop</title>
+	<meta name="description" content="Delivery Troop, On Demand Delivery Service" />
 	<meta name="creator" content="www.delfinbeta.com.ve" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -14,35 +16,13 @@
 	<link rel="shortcut icon" href="img/favicon/favicon.ico" />
 </head>
 <body>
-	<nav class="navbar navbar-inverse navbar-fixed-top encabezado" role="navigation">
-		<div class="container">
-			<div class="navbar-header">
-				<button id="botonMenu" type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menuWeb" aria-expanded="false">
-	        <span class="sr-only">Toggle navigation</span>
-	        <span class="icon-bar"></span>
-	        <span class="icon-bar"></span>
-	        <span class="icon-bar"></span>
-	      </button>
-				<a class="navbar-brand" href="index.html">
-					<img src="img/DeliveryTroop.svg" alt="Delivery Troop" title="Delivery Troop" class="logo" />
-				</a>
-			</div>
-			<div id="menuWeb" class="collapse navbar-collapse">
-				<ul class="nav navbar-nav navbar-right">
-					<li class="active"><a href="index.html">Home</a></li>
-					<li><a href="services.html">Services</a></li>
-					<li><a href="restaurants.html">ORDER NOW</a></li>
-					<li><a href="contact.html">Contact</a></li>
-				</ul>
-			</div>
-		</div>
-	</nav>
+	<?php require("plantillas/menu.php"); ?>
 
 	<section class="portada">
 		<div class="container">
 			<div class="row">
 				<div class="col-xs-12 col-sm-6 col-sm-offset-3 text-center">
-					<a href="index.html"><img src="img/DeliveryTroop.svg" alt="Delivery Troop" title="Delivery Troop" class="img-responsive logo" /></a>
+					<a href="<?=$GLOBALS['domain_root']?>/index.php"><img src="img/DeliveryTroop.svg" alt="Delivery Troop" title="Delivery Troop" class="img-responsive logo" /></a>
 					<p class="eslogan">On Demand Delivery Service</p>
 
 					<form id="form_zipcode" name="form_zipcode" method="post">
@@ -50,7 +30,7 @@
 							<label for="zipcode" class="control-label sr-only">Zipcode</label>
 							<div class="input-group">
 								<div class="input-group-addon"><i class="fa fa-map-marker" style="font-size: 1.4em;"></i></div>
-								<input type="text" class="form-control" name="zipcode" placeholder="Zipcode" aria-describedby="bloqueErrorZipcode" />
+								<input type="text" class="form-control" name="zipcode" value="<?=$_SESSION['zipcode']?>" placeholder="Zipcode" aria-describedby="bloqueErrorZipcode" />
 								<span class="input-group-btn">
 									<button type="submit" name="enviar" class="btn btn-default boton-amarillo">Enter Your Zipcode <i class="fa fa-chevron-right"></i></button>
 								</span>
@@ -79,7 +59,7 @@
 		</div>
 	</section>
 
-	<section class="contact-home">
+	<section class="contacto">
 		<div class="container text-center">
 			<h2>Contact Us</h2>
 			<hr class="separador" />
@@ -97,7 +77,7 @@
 					</a>
 				</div>
 			</div>
-			<p style="margin: 1em 0;">Want to order form multiple restaurants? No problem! Need to feed a large group and you don't want to hassle with cooking, picking up and preparing, or paying inflated prices for a full service caterer? We got you. Hotel guest looking for better options then overpriced room service? We're on it</p>
+			<p class="info">Want to order form multiple restaurants? No problem! Need to feed a large group and you don't want to hassle with cooking, picking up and preparing, or paying inflated prices for a full service caterer? We got you. Hotel guest looking for better options then overpriced room service? We're on it</p>
 			<form id="form_contact" class="form_contact" method="post">
 				<div class="row">
 					<div class="col-xs-12 col-sm-6 form-group">
@@ -133,37 +113,7 @@
 		</div>
 	</section>
 
-	<footer class="piepag">
-		<div class="container">
-			<div class="row">
-				<div class="col-xs-12 col-sm-6 col-md-3 copy">
-					<img src="img/deliverytroop.png" alt="Delivery Troop" title="Delivery Troop" class="img-responsive" />
-					<p>On Demand Delivery Service<br />
-						7 days a Week</p>
-					<p>&copy; 2016 Delivery Troop</p>
-				</div>
-				<div class="col-xs-12 col-sm-6 col-md-3" style="min-height: 210px;">
-					<ul>
-						<li><a href="restaurants.html">Restaurant Owners</a></li>
-						<li><a href="partner.html">Become a Partner</a></li>
-						<li><a href="shipping_policy.html">Shipping Policy</a></li>
-						<li><a href="terms.html">Terms and Conditions</a></li>
-					</ul>
-				</div>
-				<div class="col-xs-12 col-sm-6 col-md-3">
-					<ul>
-						<li><a target="_blank" href="https://www.instagram.com/deliverytroop/"><i class="fa fa-fw fa-instagram"></i> Instagram</a></li>
-						<li><a target="_blank" href="https://www.facebook.com/deliverytroop/"><i class="fa fa-fw fa-facebook"></i> Facebook</a></li>
-						<li><a target="_blank" href="https://twitter.com/deliverytroop"><i class="fa fa-fw fa-twitter"></i> Twitter</a></li>
-					</ul>
-				</div>
-				<div class="col-xs-12 col-sm-6 col-md-3">
-					<a href="driver.html"><img src="img/icono_blanco.png" width="80" alt="Become Driver" title="Become Driver" /></a><br />
-					<a href="driver.html" class="btn btn-default boton-transparente">BECOME A DRIVER</a>
-				</div>
-			</div>
-		</div>
-	</footer>
+	<?php require("plantillas/piepag.php"); ?>
 
 	<!-- jQuery -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
