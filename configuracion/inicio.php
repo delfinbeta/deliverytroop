@@ -17,6 +17,8 @@ mysqli_set_charset($conexion, "utf8");
 // Menú
 $menu = array('class="active"', '', '', '');
 
+if(!isset($_SESSION['zipcode'])) { $_SESSION['zipcode'] = ''; }
+
 // Clases Obligatorias
 require_once($GLOBALS['app_root']."/clases/clase_seguridad.php");
 ?>

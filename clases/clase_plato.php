@@ -5,7 +5,6 @@ class Plato {
 	private $id;
 	private $restaurante;
 	public  $nombre;
-	public  $precio;
 	public  $resumen;
 	public  $descripcion;
 	public  $recomendado;
@@ -29,7 +28,7 @@ class Plato {
 	}
 	
 	// Insertar un Plato a la Base de Datos
-	public function insertar($restaurante, $nombre, $precio, $resumen, $descripcion, $recomendado, $imagen) {
+	public function insertar($restaurante, $nombre, $resumen, $descripcion, $recomendado, $imagen) {
 		if(!$restaurante = $this->seguridad->entero_seguro($restaurante)) {
 			$this->error = "Restaurante no es Seguro";
 			return false;
@@ -37,11 +36,6 @@ class Plato {
 
 		if(!$nombre = $this->seguridad->texto_seguro($this->conexion, $nombre)) {
 			$this->error = "Nombre no es Seguro";
-			return false;
-		}
-
-		if(!is_float($precio = $this->seguridad->float_seguro($precio))) {
-			$this->error = "Precio no es Seguro";
 			return false;
 		}
 
@@ -65,7 +59,7 @@ class Plato {
 			return false;
 		}
 		
-		$sql = sprintf("INSERT INTO platos(restaurante, nombre, precio, resumen, descripcion, recomendado, imagen, estado, fecha_registro, usuario_registro, fecha_actualizacion, usuario_actualizacion) VALUES('%d', '%s', '%f', '%s', '%s', '%d', '%s', 1, CURDATE(), '%d', CURDATE(), '%d')", $restaurante, $nombre, $precio, $resumen, $descripcion, $recomendado, $imagen, $_SESSION['usuario_id'], $_SESSION['usuario_id']);
+		$sql = sprintf("INSERT INTO platos(restaurante, nombre, resumen, descripcion, recomendado, imagen, estado, fecha_registro, usuario_registro, fecha_actualizacion, usuario_actualizacion) VALUES('%d', '%s', '%s', '%s', '%d', '%s', 1, CURDATE(), '%d', CURDATE(), '%d')", $restaurante, $nombre, $resumen, $descripcion, $recomendado, $imagen, $_SESSION['usuario_id'], $_SESSION['usuario_id']);
 		
 		if($inserto = mysqli_query($this->conexion, $sql)) {
 			$id_restaurante = mysqli_insert_id($this->conexion);
@@ -85,7 +79,7 @@ class Plato {
 	}
 	
 	// Actualizar un Plato a la Base de Datos identificado por su id
-	public function actualizar($id, $nombre, $precio, $resumen, $descripcion, $recomendado, $imagen) {
+	public function actualizar($id, $nombre, $resumen, $descripcion, $recomendado, $imagen) {
 		if(!$id = $this->seguridad->entero_seguro($id)) {
 			$this->error = "ID no es Seguro";
 			return false;
@@ -93,11 +87,6 @@ class Plato {
 
 		if(!$nombre = $this->seguridad->texto_seguro($this->conexion, $nombre)) {
 			$this->error = "Nombre no es Seguro";
-			return false;
-		}
-
-		if(!is_float($precio = $this->seguridad->float_seguro($precio))) {
-			$this->error = "Precio no es Seguro";
 			return false;
 		}
 
@@ -121,7 +110,7 @@ class Plato {
 			return false;
 		}
 		
-		$sql = sprintf("UPDATE platos SET nombre='%s', precio='%f', resumen='%s', descripcion='%s', recomendado='%d', imagen='%s', fecha_actualizacion=CURDATE(), usuario_actualizacion='%d' WHERE id='%d'", $nombre, $precio, $resumen, $descripcion, $recomendado, $imagen, $_SESSION['usuario_id'], $id);
+		$sql = sprintf("UPDATE platos SET nombre='%s', resumen='%s', descripcion='%s', recomendado='%d', imagen='%s', fecha_actualizacion=CURDATE(), usuario_actualizacion='%d' WHERE id='%d'", $nombre, $resumen, $descripcion, $recomendado, $imagen, $_SESSION['usuario_id'], $id);
 		
 		if($actualizo = mysqli_query($this->conexion, $sql)) {
 			return true;
@@ -267,7 +256,6 @@ class Plato {
 				$this->id = $rplato['id'];
 				$this->restaurante = $rplato['restaurante'];
 				$this->nombre = $rplato['nombre'];
-				$this->precio = $rplato['precio'];
 				$this->resumen = $rplato['resumen'];
 				$this->descripcion = $rplato['descripcion'];
 				$this->recomendado = $rplato['recomendado'];
