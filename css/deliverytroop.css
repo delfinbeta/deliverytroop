@@ -65,6 +65,16 @@ h1, h2, h3, h4, h5, h6 {
 	color: #FFBE00 !important;
 }
 
+.boton-amarillo2 {
+	background-color: #FFBE00;
+	color: #FFFFFF !important;
+}
+
+.boton-amarillo2:hover {
+	background-color: #FFFFFF;
+	color: #FFBE00 !important;
+}
+
 .separador {
 	border: 0;
 	height: 2px;
@@ -181,7 +191,7 @@ h1, h2, h3, h4, h5, h6 {
 /*********************************************/
 /*****              Contacto             *****/
 /*********************************************/
-.contacto {
+.contacto, .contacto2 {
 	padding: 1em 0;
 }
 
@@ -190,14 +200,19 @@ h1, h2, h3, h4, h5, h6 {
 	text-decoration: none;
 }
 
-.contacto .icono {
+.contacto2 a {
+	color: #FFFFFF;
+	text-decoration: none;
+}
+
+.contacto .icono, .contacto2 .icono {
 	color: #FFBE00;
 	display: block;
 	font-size: 3em;
 	margin-bottom: 10px;
 }
 
-.contacto .info {
+.contacto .info, .contacto2 .info {
 	margin: 1em 0;
 }
 
