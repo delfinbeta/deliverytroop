@@ -25,14 +25,14 @@
 	<?php if($_SESSION['error'] == 2) { ?>
 	<script language="javascript" type="text/javascript">
 	  alert("¡Usted pasó mucho tiempo inactivo!");
-	  location.href = "salida.php";
+	  location.href = "logout.php";
 	</script>
 	<?php } ?>
 
 	<?php if($_SESSION['error'] == 3) { ?>
 	<script language="javascript" type="text/javascript">
 	  alert("¡Usted no tiene permisos suficientes!");
-	  location.href = "salida.php";
+	  location.href = "logout.php";
 	</script>
 	<?php } ?>
 </body>

@@ -1,5 +1,6 @@
 <?php
 require("../configuracion/inicio_admin.php");
+require("sesion.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,15 +21,18 @@ require("../configuracion/inicio_admin.php");
 <body>
 	<div class="container-fluid">
 		<div class="row row-offcanvas row-offcanvas-left">
-			<div class="col-sm-3 col-md-2 sidebar-offcanvas">
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis pariatur commodi cumque at aspernatur autem tempore blanditiis ab! Doloribus aliquid minus explicabo saepe consequatur maiores. Omnis veniam nihil, rerum sequi.</p>
-			</div>
+			<?php require("../plantillas/menu_admin.php"); ?>
 			<div class="col-sm-9 col-md-10 main">
 				<div class="visible-xs">
-					<button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
+					<button type="button" class="btn btn-warning btn-xs" data-toggle="offcanvas"><i class="fa fa-bars"></i> Menu</button>
 				</div>
 				<h1>Admin</h1>
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis pariatur commodi cumque at aspernatur autem tempore blanditiis ab! Doloribus aliquid minus explicabo saepe consequatur maiores. Omnis veniam nihil, rerum sequi.</p>
+				<div class="panel panel-default">
+				  <div class="panel-heading">Welcome <?=$_SESSION['usuario_nombre']?> <?=$_SESSION['usuario_apellido']?></div>
+				  <div class="panel-body">
+				    Panel content
+				  </div>
+				</div>
 			</div>
 		</div>
 	</div>

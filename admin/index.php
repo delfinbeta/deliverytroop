@@ -1,5 +1,7 @@
 <?php
 require("../configuracion/inicio_admin.php");
+
+if(isset($_SESSION['autorizado']) && $_SESSION['autorizado']) { header("location: home.php"); }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -84,7 +86,7 @@ require("../configuracion/inicio_admin.php");
 					if(data.error) {
 						$("#login-error").removeClass('hidden').html(data.mensaje);
 					} else {
-						location.href = "inicio.php";
+						location.href = "home.php";
 					}
 				}, "json");
 			}

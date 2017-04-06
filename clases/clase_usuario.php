@@ -70,7 +70,7 @@ class Usuario extends Seguridad {
 			return false;
 		}
 		
-		$sql = sprintf("INSERT INTO usuarios(usuario, contrasena, nombre, apellido, email, foto, sexo, tipo, estado, fecha_registro, usuario_registro, fecha_actualizacion, usuario_actualizacion) VALUES('%s', SHA1('%s'), '%s', '%s', '%s', '%s', '%d', '%d', 1, CURDATE(), '%d', CURDATE(), '%d')", $usuario, $contrasena, $nombre, $apellido, $email, $foto, $sexo, $tipo, $_SESSION['usuario_id'], $_SESSION['usuario_id']);
+		$sql = sprintf("INSERT INTO usuarios(usuario, contrasena, nombre, apellido, email, foto, sexo, tipo, estado, fecha_registro) VALUES('%s', SHA1('%s'), '%s', '%s', '%s', '%s', '%d', '%d', 1, CURDATE())", $usuario, $contrasena, $nombre, $apellido, $email, $foto, $sexo, $tipo);
 		
 		if($inserto = mysqli_query($this->conexion, $sql)) {
 			return true;
@@ -117,7 +117,7 @@ class Usuario extends Seguridad {
 			return false;
 		}
 		
-		$sql = sprintf("UPDATE usuarios SET nombre='%s', apellido='%s', email='%s', foto='%s', sexo='%d', tipo='%d', fecha_actualizacion=CURDATE(), usuario_actualizacion='%d' WHERE id='%d'", $nombre, $apellido, $email, $foto, $sexo, $tipo, $_SESSION['usuario_id'], $id);
+		$sql = sprintf("UPDATE usuarios SET nombre='%s', apellido='%s', email='%s', foto='%s', sexo='%d', tipo='%d' WHERE id='%d'", $nombre, $apellido, $email, $foto, $sexo, $tipo, $id);
 		
 		if($actualizo = mysqli_query($this->conexion, $sql)) {
 			return true;
@@ -151,7 +151,7 @@ class Usuario extends Seguridad {
 			return false;
 		}
 		
-		$sql = sprintf("UPDATE usuarios SET estado=0, fecha_actualizacion=CURDATE(), usuario_actualizacion='%d' WHERE id='%d'", $_SESSION['usuario_id'], $id);
+		$sql = sprintf("UPDATE usuarios SET estado=0 WHERE id='%d'", $id);
 		
 		if($desactivo = mysqli_query($this->conexion, $sql)) {
 			return true;
@@ -174,13 +174,35 @@ class Usuario extends Seguridad {
 		}
 		
 		if(($usuario != "") && ($contrasena != "")) {
-			$sql = sprintf("SELECT id, nombre, apellido, tipo, estado FROM usuarios WHERE usuario='%s' AND contrasena=SHA1('%s') AND estado!=0", $usuario, $contrasena);
+			$sql = sprintf("SELECT * FROM usuarios WHERE usuario='%s' AND contrasena=SHA1('%s') AND estado!=0", $usuario, $contrasena);
 			if($query = mysqli_query($this->conexion, $sql)) {
 				if($rusuario = mysqli_fetch_assoc($query)) {
 					$_SESSION['autorizado'] = true;
 					$_SESSION['usuario_id'] = $rusuario['id'];
+					$_SESSION['usuario_usuario'] = $rusuario['usuario'];
 					$_SESSION['usuario_nombre'] = $rusuario['nombre'];
 					$_SESSION['usuario_apellido'] = $rusuario['apellido'];
+					$_SESSION['usuario_email'] = $rusuario['email'];
+
+					$_SESSION['usuario_sexo'] = $rusuario['sexo'];
+					switch($rusuario['sexo']) {
+						case 1: $_SESSION['usuario_csexo'] = "Femenino"; break;
+						case 2: $_SESSION['usuario_csexo'] = "Masculino"; break;
+						case 3: $_SESSION['usuario_csexo'] = "Otro"; break;
+						default: $_SESSION['usuario_csexo'] = "---"; break;
+					}
+
+					$_SESSION['usuario_foto'] = $rusuario['foto'];
+					if($rusuario['foto'] == '') {
+						if($rusuario['sexo'] == 1) {
+							$_SESSION['usuario_rutafoto'] = $GLOBALS['domain_root']."/img/usuario_mujer.jpg";
+						} else {
+							$_SESSION['usuario_rutafoto'] = $GLOBALS['domain_root']."/img/usuario_hombre.jpg";
+						}
+						
+					} else {
+						$_SESSION['usuario_rutafoto'] = $GLOBALS['domain_root']."/archivos_usuarios/".$rusuario['foto'];
+					}
 					
 					$_SESSION['usuario_tipo'] = $rusuario['tipo'];
 					switch($rusuario['tipo']) {
@@ -256,9 +278,6 @@ class Usuario extends Seguridad {
 				$this->tipo = $rusuario['tipo'];
 				$this->estado = $rusuario['estado'];
 				$this->fecha_registro = $rusuario['fecha_registro'];
-				$this->usuario_registro = $rusuario['usuario_registro'];
-				$this->fecha_actualizacion = $rusuario['fecha_actualizacion'];
-				$this->usuario_actualizacion = $rusuario['usuario_actualizacion'];
 				return true;
 			} else {
 				$this->error = "ID no aroja resultados";
@@ -274,13 +293,21 @@ class Usuario extends Seguridad {
 		return $this->id;
 	}
 	
+	public function obtener_usuario() {
+		return $this->usuario;
+	}
+	
 	public function obtener_codSexo() {
 		return $this->sexo;
 	}
 	
 	public function obtener_sexo() {
-		if($this->sexo == 1) { $sexo = "Femenino"; }
-		else { $sexo = "Masculino"; }
+		switch($this->sexo) {
+			case 1: $sexo = "Femenino"; break;
+			case 2: $sexo = "Masculino"; break;
+			case 3: $sexo = "Otro"; break;
+			default: $sexo = "---"; break;
+		}
 		
 		return $sexo;
 	}
@@ -527,7 +554,7 @@ class Usuario extends Seguridad {
 	// Cargar archivo de la imagen
 	public function cargar_archivo($nombre_archivo, $temporal) {
 		if($nombre_archivo != "") {
-			$ruta = $GLOBALS['app_root']."/imagenes_usuarios/".$nombre_archivo;
+			$ruta = $GLOBALS['app_root']."/archivos_usuarios/".$nombre_archivo;
 			
 			if(is_uploaded_file($temporal)) {
 				move_uploaded_file($temporal, $ruta);
