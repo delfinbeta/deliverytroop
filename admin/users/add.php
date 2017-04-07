@@ -15,8 +15,6 @@ require("../sesion.php");
 	<link rel="stylesheet" href="../../css/bootstrap.min.css" />
 	<!-- Font-Awesome-4.7.0 -->
 	<link rel="stylesheet" href="../../font-awesome-4.7.0/css/font-awesome.min.css" />
-	<!-- DataTables -->
-	<link rel="stylesheet" href="../../DataTables-master/media/css/dataTables.bootstrap.min.css" />
 	<link rel="stylesheet" href="../../css/admin.css" />
 	<link rel="shortcut icon" href="../../img/favicon/favicon.ico" />
 </head>
@@ -121,9 +119,6 @@ require("../sesion.php");
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <!-- Bootstrap -->
   <script src="../../js/bootstrap.min.js"></script>
-  <!-- DataTables -->
-  <script src="../../DataTables-master/media/js/jquery.dataTables.min.js"></script>
-  <script src="../../DataTables-master/media/js/dataTables.bootstrap.min.js"></script>
   <script src="../../js/admin.js"></script>
   <script src="../../js/admin_users.js"></script>
 </body>

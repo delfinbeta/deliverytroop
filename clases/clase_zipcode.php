@@ -7,9 +7,6 @@ class Zipcode {
 	public  $codigo;
 	private $estado;
 	private $fecha_registro;
-	private $usuario_registro;
-	private $fecha_actualizacion;
-	private $usuario_actualizacion;
 	private $conexion;
 	private $seguridad;
 	public  $error = NULL;
@@ -34,7 +31,7 @@ class Zipcode {
 			return false;
 		}
 		
-		$sql = sprintf("INSERT INTO zipcodes(nombre, codigo, estado, fecha_registro, usuario_registro, fecha_actualizacion, usuario_actualizacion) VALUES('%s', '%s', 1, CURDATE(), '%d', CURDATE(), '%d')", $nombre, $codigo, $_SESSION['usuario_id'], $_SESSION['usuario_id']);
+		$sql = sprintf("INSERT INTO zipcodes(nombre, codigo, estado, fecha_registro) VALUES('%s', '%s', 1, CURDATE())", $nombre, $codigo);
 		
 		if($inserto = mysqli_query($this->conexion, $sql)) {
 			return true;
@@ -56,7 +53,7 @@ class Zipcode {
 			return false;
 		}
 		
-		$sql = sprintf("UPDATE zipcodes SET nombre='%s', codigo='%s', fecha_actualizacion=CURDATE(), usuario_actualizacion='%d' WHERE id='%d'", $nombre, $codigo, $_SESSION['usuario_id'], $id);
+		$sql = sprintf("UPDATE zipcodes SET nombre='%s', codigo='%s' WHERE id='%d'", $nombre, $codigo, $id);
 		
 		if($actualizo = mysqli_query($this->conexion, $sql)) {
 			return true;
@@ -90,7 +87,7 @@ class Zipcode {
 			return false;
 		}
 		
-		$sql = sprintf("UPDATE zipcodes SET estado=0, fecha_actualizacion=CURDATE(), usuario_actualizacion='%d' WHERE id='%d'", $_SESSION['usuario_id'], $id);
+		$sql = sprintf("UPDATE zipcodes SET estado=0 WHERE id='%d'", $id);
 		
 		if($desactivo = mysqli_query($this->conexion, $sql)) {
 			return true;
@@ -116,9 +113,6 @@ class Zipcode {
 				$this->codigo = $rzipcode['codigo'];
 				$this->estado = $rzipcode['estado'];
 				$this->fecha_registro = $rzipcode['fecha_registro'];
-				$this->usuario_registro = $rzipcode['usuario_registro'];
-				$this->fecha_actualizacion = $rzipcode['fecha_actualizacion'];
-				$this->usuario_actualizacion = $rzipcode['usuario_actualizacion'];
 				return true;
 			} else {
 				$this->error = "ID no aroja resultados";
@@ -146,9 +140,6 @@ class Zipcode {
 				$this->codigo = $rzipcode['codigo'];
 				$this->estado = $rzipcode['estado'];
 				$this->fecha_registro = $rzipcode['fecha_registro'];
-				$this->usuario_registro = $rzipcode['usuario_registro'];
-				$this->fecha_actualizacion = $rzipcode['fecha_actualizacion'];
-				$this->usuario_actualizacion = $rzipcode['usuario_actualizacion'];
 				return true;
 			} else {
 				$this->error = "ID no aroja resultados";

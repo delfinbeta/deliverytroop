@@ -3,20 +3,20 @@ require("../../configuracion/inicio_admin.php");
 require("../sesion.php");
 
 // Clases
-require("../../clases/clase_usuario.php");
+require("../../clases/clase_categoria.php");
 
 // Objetos
-$usuario = new Usuario($conexion);
+$categoria = new Categoria($conexion);
 
-// Listar Usuarios
-$listado = $usuario->listado(0, 0, -1);
-$total = $usuario->total_listado(0, 0, -1);
+// Listar Categorias
+$listado = $categoria->listado(0, 1);
+$total = $categoria->total_listado(0, 1);
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
-	<title>Users :: Delivery Troop</title>
+	<title>Categories :: Delivery Troop</title>
 	<meta name="description" content="Delivery Troop, On Demand Delivery Service" />
 	<meta name="creator" content="www.delfinbeta.com.ve" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -38,21 +38,21 @@ $total = $usuario->total_listado(0, 0, -1);
 				<div class="visible-xs">
 					<button type="button" class="btn btn-warning btn-xs" data-toggle="offcanvas"><i class="fa fa-bars"></i> Menu</button>
 				</div>
-				<h1>Users</h1>
+				<h1>Categories</h1>
 				<div class="panel panel-default">
 				  <div class="panel-heading">
-				  	<div class="pull-left">User list</div>
-				  	<div class="pull-right"><a href="add.php" class="btn btn-success"><i class="fa fa-plus"></i> Add User</a></div>
+				  	<div class="pull-left">Category list</div>
+				  	<div class="pull-right"><a href="add.php" class="btn btn-success"><i class="fa fa-plus"></i> Add Category</a></div>
 				  	<div class="clearfix"></div>
 				  </div>
 				  <div class="panel-body">
 				  	<?php if(isset($_GET['m'])) { ?>
-          	<div id="exito" class="alert alert-success " role="alert">
+          	<div id="exito" class="alert alert-success" role="alert">
               <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
               <i class="fa fa-check"></i>
-              <?php if($_GET['m'] == "I") { echo "Admin User added"; }
-              			if($_GET['m'] == "M") { echo "Admin User edited"; }
-              			if($_GET['m'] == "E") { echo "Admin User deleted"; } ?>
+              <?php if($_GET['m'] == "I") { echo "Category added"; }
+              			if($_GET['m'] == "M") { echo "Category edited"; }
+              			if($_GET['m'] == "E") { echo "Category deleted"; } ?>
             </div>
             <?php } ?>
             <div id="error" class="alert alert-danger hidden" role="alert">
@@ -63,36 +63,18 @@ $total = $usuario->total_listado(0, 0, -1);
 					    <?php if($total > 0) { ?>
 					    <thead>
 				        <tr>
-                  <th width="100">Picture</th>
-                  <th>User</th>
                   <th>Name</th>
-                  <th>Last name</th>
-                  <th>Email</th>
-                  <th>Gender</th>
                   <th>Type</th>
                   <th width="26">&nbsp;</th>
                   <th width="26">&nbsp;</th>
                 </tr>
 					    </thead>
 					    <tbody>
-					    	<?php foreach($listado as $registro) {
-	                      if($registro->foto == '') {
-	                        if($registro->obtener_codSexo() == 1) { $ruta_img = $GLOBALS['domain_root']."/img/usuario_mujer.jpg"; }
-	                        else { $ruta_img = $GLOBALS['domain_root']."/img/usuario_hombre.jpg"; }
-	                      } else {
-	                        $ruta_img = $GLOBALS['domain_root']."/archivos_usuarios/".$registro->foto;
-	                      } ?>
+					    	<?php foreach($listado as $registro) { ?>
 	              <tr>
-	                <td>
-	                  <a href="user.php?id=<?=$registro->obtener_id()?>"><img src="<?=$ruta_img?>" width="100" alt="<?=$registro->nombre?> <?=$registro->apellido?>" title="<?=$registro->nombre?> <?=$registro->apellido?>" /></a>
-	                </td>
-	                <td><a href="user.php?id=<?=$registro->obtener_id()?>"><?=$registro->obtener_usuario()?></a></td>
-	                <td><?=$registro->nombre?></td>
-	                <td><?=$registro->apellido?></td>
-	                <td><?=$registro->email?></td>
-	                <td><?=$registro->obtener_sexo()?></td>
+	                <td><a href="category.php?id=<?=$registro->obtener_id()?>"><?=$registro->nombre?></a></td>
 	                <td><?=$registro->obtener_tipo()?></td>
-	                <td><a href="user.php?id=<?=$registro->obtener_id()?>"><i class="icono fa fa-file-text-o"></i></a></td>
+	                <td><a href="category.php?id=<?=$registro->obtener_id()?>"><i class="icono fa fa-file-text-o"></i></a></td>
 	                <td><a href="#" class="boton-eliminar" data-reg="<?=$registro->obtener_id()?>"><i class="icono fa fa-remove"></i></a></td>
 	              </tr>
 	              <?php } ?>
@@ -113,18 +95,13 @@ $total = $usuario->total_listado(0, 0, -1);
   <script src="../../DataTables-master/media/js/jquery.dataTables.min.js"></script>
   <script src="../../DataTables-master/media/js/dataTables.bootstrap.min.js"></script>
   <script src="../../js/admin.js"></script>
-  <script src="../../js/admin_users.js"></script>
+  <script src="../../js/admin_categories.js"></script>
   <script>
   	$(document).ready(function() {
 	    $('#tabla').DataTable({
 	    	"scrollX": true,
 	      "order": [[ 1, "asc" ]],
 	      "columns": [
-	        { "orderable": false },
-	        null,
-	        null,
-	        null,
-	        null,
 	        null,
 	        null,
 	        { "orderable": false },

@@ -1,14 +1,12 @@
 <?php
-class Categoria{
+class Categoria {
 	########################################  Atributos  ########################################
 	
 	private $id;
+	private $tipo;
 	public  $nombre;
 	private $estado;
 	private $fecha_registro;
-	private $usuario_registro;
-	private $fecha_actualizacion;
-	private $usuario_actualizacion;
 	private $conexion;
 	private $seguridad;
 	public  $error = NULL;
@@ -22,13 +20,18 @@ class Categoria{
 	}
 	
 	// Insertar un Categoria a la Base de Datos
-	public function insertar($nombre) {
+	public function insertar($tipo, $nombre) {
+		if(!$tipo = $this->seguridad->entero_seguro($tipo)) {
+			$this->error = "Tipo no es Seguro";
+			return false;
+		}
+		
 		if(!$nombre = $this->seguridad->texto_seguro($this->conexion, $nombre)) {
 			$this->error = "Nombre no es Seguro";
 			return false;
 		}
 		
-		$sql = sprintf("INSERT INTO categorias(nombre, estado, fecha_registro, usuario_registro, fecha_actualizacion, usuario_actualizacion) VALUES('%s', 1, CURDATE(), '%d', CURDATE(), '%d')", $nombre, $_SESSION['usuario_id'], $_SESSION['usuario_id']);
+		$sql = sprintf("INSERT INTO categorias(tipo, nombre, estado, fecha_registro) VALUES('%d', '%s', 1, CURDATE())", $tipo, $nombre);
 		
 		if($inserto = mysqli_query($this->conexion, $sql)) {
 			return true;
@@ -39,13 +42,23 @@ class Categoria{
 	}
 	
 	// Actualizar un Categoria a la Base de Datos identificado por su id
-	public function actualizar($id, $nombre) {
+	public function actualizar($id, $tipo, $nombre) {
+		if(!$id = $this->seguridad->entero_seguro($id)) {
+			$this->error = "ID no es Seguro";
+			return false;
+		}
+		
+		if(!$tipo = $this->seguridad->entero_seguro($tipo)) {
+			$this->error = "Tipo no es Seguro";
+			return false;
+		}
+		
 		if(!$nombre = $this->seguridad->texto_seguro($this->conexion, $nombre)) {
 			$this->error = "Nombre no es Seguro";
 			return false;
 		}
 		
-		$sql = sprintf("UPDATE categorias SET nombre='%s', fecha_actualizacion=CURDATE(), usuario_actualizacion='%d' WHERE id='%d'", $nombre, $_SESSION['usuario_id'], $id);
+		$sql = sprintf("UPDATE categorias SET tipo='%d', nombre='%s' WHERE id='%d'", $tipo, $nombre, $id);
 		
 		if($actualizo = mysqli_query($this->conexion, $sql)) {
 			return true;
@@ -79,7 +92,7 @@ class Categoria{
 			return false;
 		}
 		
-		$sql = sprintf("UPDATE categorias SET estado=0, fecha_actualizacion=CURDATE(), usuario_actualizacion='%d' WHERE id='%d'", $_SESSION['usuario_id'], $id);
+		$sql = sprintf("UPDATE categorias SET estado=0 WHERE id='%d'", $id);
 		
 		if($desactivo = mysqli_query($this->conexion, $sql)) {
 			return true;
@@ -101,12 +114,10 @@ class Categoria{
 		if($query = mysqli_query($this->conexion, $sql)) {
 			if($rcategoria = mysqli_fetch_assoc($query)) {
 				$this->id = $rcategoria['id'];
+				$this->tipo = $rcategoria['tipo'];
 				$this->nombre = $rcategoria['nombre'];
 				$this->estado = $rcategoria['estado'];
 				$this->fecha_registro = $rcategoria['fecha_registro'];
-				$this->usuario_registro = $rcategoria['usuario_registro'];
-				$this->fecha_actualizacion = $rcategoria['fecha_actualizacion'];
-				$this->usuario_actualizacion = $rcategoria['usuario_actualizacion'];
 				return true;
 			} else {
 				$this->error = "ID no aroja resultados";
@@ -120,6 +131,21 @@ class Categoria{
 	
 	public function obtener_id() {
 		return $this->id;
+	}
+	
+	public function obtener_codTipo() {
+		return $this->tipo;
+	}
+	
+	public function obtener_tipo() {
+		switch($this->tipo) {
+			case 1: $tipo = "Restaurants"; break;
+			case 2: $tipo = "Drinks"; break;
+			case 3: $tipo = "Others"; break;
+			default: $tipo = "---"; break;
+		}
+		
+		return $tipo;
 	}
 	
 	public function obtener_codEstado() {
@@ -138,7 +164,12 @@ class Categoria{
 	}
 	
 	// Obtener listado de todos los Categorias
-	public function listado($estado=-1) {
+	public function listado($tipo=0, $estado=-1) {
+		if(!is_int($tipo = $this->seguridad->entero_seguro($tipo))) {
+			$this->error = "Tipo no es Seguro";
+			return false;
+		}
+		
 		if(!is_int($estado = $this->seguridad->entero_seguro($estado))) {
 			$this->error = "Estado no es Seguro";
 			return false;
@@ -146,6 +177,11 @@ class Categoria{
 		
 		$formato = "SELECT id FROM categorias WHERE 1=1 ";
 		$argumentos = array();
+		
+		if($tipo > 0) {
+			$formato .= "AND tipo='%d' ";
+			$argumentos[] = $tipo;
+		}
 		
 		if($estado == -1) {
 			$formato .= "AND estado!=0 ";
@@ -170,7 +206,12 @@ class Categoria{
 	}
 	
 	// Obtener listado de todos los Categorias paginados
-	public function listado_paginado($estado=-1, $inicio, $fin) {
+	public function listado_paginado($tipo=0, $estado=-1, $inicio, $fin) {
+		if(!is_int($tipo = $this->seguridad->entero_seguro($tipo))) {
+			$this->error = "Tipo no es Seguro";
+			return false;
+		}
+		
 		if(!is_int($estado = $this->seguridad->entero_seguro($estado))) {
 			$this->error = "Estado no es Seguro";
 			return false;
@@ -188,6 +229,11 @@ class Categoria{
 		
 		$formato = "SELECT id FROM categorias WHERE 1=1 ";
 		$argumentos = array();
+		
+		if($tipo > 0) {
+			$formato .= "AND tipo='%d' ";
+			$argumentos[] = $tipo;
+		}
 		
 		if($estado == -1) {
 			$formato .= "AND estado!=0 ";
@@ -215,7 +261,12 @@ class Categoria{
 	}
 	
 	// Contar el total de Categorias
-	public function total_listado($estado=-1) {
+	public function total_listado($tipo=0, $estado=-1) {
+		if(!is_int($tipo = $this->seguridad->entero_seguro($tipo))) {
+			$this->error = "Tipo no es Seguro";
+			return false;
+		}
+		
 		if(!is_int($estado = $this->seguridad->entero_seguro($estado))) {
 			$this->error = "Estado no es Seguro";
 			return false;
@@ -223,6 +274,11 @@ class Categoria{
 		
 		$formato = "SELECT id FROM categorias WHERE 1=1 ";
 		$argumentos = array();
+		
+		if($tipo > 0) {
+			$formato .= "AND tipo='%d' ";
+			$argumentos[] = $tipo;
+		}
 		
 		if($estado == -1) {
 			$formato .= "AND estado!=0 ";
