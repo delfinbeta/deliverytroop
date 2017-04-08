@@ -10,9 +10,6 @@ class Comentario {
 	public  $respuesta;
 	private $estado;
 	private $fecha_registro;
-	private $usuario_registro;
-	private $fecha_actualizacion;
-	private $usuario_actualizacion;
 	private $conexion;
 	private $seguridad;
 	public  $error;
@@ -42,11 +39,7 @@ class Comentario {
 			return false;
 		}
 		
-		$usuario_id = 0;
-		if(isset($_SESSION['usuario_id'])) { $usuario_id = $_SESSION['usuario_id']; }
-		if(isset($_SESSION['registrado_id'])) { $usuario_id = $_SESSION['registrado_id']; }
-		
-		$sql = sprintf("INSERT INTO comentarios(nombre, email, comentario, respondido, respuesta, estado, fecha_registro, usuario_registro, fecha_actualizacion, usuario_actualizacion) VALUES('%s', '%s', '%s', 0, '', 1, CURDATE(), '%d', CURDATE(), '%d')", $nombre, $email, $comentario, $usuario_id, $usuario_id);
+		$sql = sprintf("INSERT INTO comentarios(nombre, email, comentario, respondido, respuesta, estado, fecha_registro) VALUES('%s', '%s', '%s', 0, '', 1, CURDATE())", $nombre, $email, $comentario);
 		
 		if($inserto = mysqli_query($this->conexion, $sql)) {
 			return true;
@@ -68,7 +61,7 @@ class Comentario {
 			return false;
 		}
 		
-		$sql = sprintf("UPDATE comentarios SET respondido=1, respuesta='%s', fecha_actualizacion=CURDATE(), usuario_actualizacion='%d' WHERE id='$id'", $respuesta, $_SESSION['usuario_id'], $id);
+		$sql = sprintf("UPDATE comentarios SET respondido=1, respuesta='%s' WHERE id='%d'", $respuesta, $id);
 		
 		if($actualizo = mysqli_query($this->conexion, $sql)) {
 			return true;
@@ -102,7 +95,7 @@ class Comentario {
 			return false;
 		}
 		
-		$sql = sprintf("UPDATE comentarios SET estado=0, fecha_actualizacion=CURDATE(), usuario_actualizacion='%d' WHERE id='%d'", $_SESSION['usuario_id'], $id);
+		$sql = sprintf("UPDATE comentarios SET estado=0 WHERE id='%d'", $id);
 
 		if($desactivo = mysqli_query($this->conexion, $sql)) {
 			return true;
@@ -131,9 +124,6 @@ class Comentario {
 				$this->respuesta = $comentario['respuesta'];
 				$this->estado = $comentario['estado'];
 				$this->fecha_registro = $comentario['fecha_registro'];
-				$this->usuario_registro = $comentario['usuario_registro'];
-				$this->fecha_actualizacion = $comentario['fecha_actualizacion'];
-				$this->usuario_actualizacion = $comentario['usuario_actualizacion'];
 				return true;
 			} else {
 				$this->error = "ID no aroja resultados";
@@ -164,6 +154,10 @@ class Comentario {
 		return $estado;
 	}
 	
+	public function obtener_fecha_registro() {
+		return $this->fecha_registro;
+	}
+	
 	// Obtener listado de todos los Comentarios
 	public function listado($estado=-1) {
 		if(!is_int($estado = $this->seguridad->entero_seguro($estado))) {
@@ -181,7 +175,7 @@ class Comentario {
 			$argumentos[] = $estado;
 		}
 		
-		$formato .= "ORDER BY fechar_registro DESC, id DESC";
+		$formato .= "ORDER BY fecha_registro DESC, id DESC";
 		$sql = vsprintf($formato, $argumentos);
 
 		$arreglo = array();

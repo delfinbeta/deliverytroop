@@ -18,6 +18,7 @@
 		<li><a href="<?=$GLOBALS['domain_root']?>/admin/categories"><i class="fa fa-tags pull-right"></i> Categories</a></li>
 		<li><a href="#">xxxxxxxxxxx</a></li>
 		<li><a href="#">xxxxxxxxxxx</a></li>
+		<li><a href="<?=$GLOBALS['domain_root']?>/admin/messages"><i class="fa fa-envelope pull-right"></i> Messages</a></li>
 	</ul>
 	<ul class="nav nav-pills nav-stacked">
 		<li><a href="<?=$GLOBALS['domain_root']?>/admin/profile.php"><i class="fa fa-user pull-right"></i> Profile</a></li>
