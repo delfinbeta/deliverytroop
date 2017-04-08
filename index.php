@@ -79,6 +79,14 @@
 			</div>
 			<p class="info">Want to order form multiple restaurants? No problem! Need to feed a large group and you don't want to hassle with cooking, picking up and preparing, or paying inflated prices for a full service caterer? We got you. Hotel guest looking for better options then overpriced room service? We're on it</p>
 			<form id="form_contact" class="form_contact" method="post">
+				<div id="exito" class="alert alert-success hidden" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+          <i class="fa fa-check"></i> <span id="msjExito">Exito</span>
+        </div>
+        <div id="error" class="alert alert-danger hidden" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+          <i class="fa fa-times"></i> <span id="msjError">Error</span>
+        </div>
 				<div class="row">
 					<div class="col-xs-12 col-sm-6 form-group">
 						<label for="nombre" class="control-label sr-only">Name</label>
@@ -119,6 +127,8 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <!-- Bootstrap -->
   <script src="js/bootstrap.min.js"></script>
+  <!-- Custom -->
+  <script src="js/deliverytroop.js"></script>
   <!-- Google Analytics -->
   <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
