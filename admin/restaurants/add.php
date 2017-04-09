@@ -1,6 +1,12 @@
 <?php
 require("../../configuracion/inicio_admin.php");
 require("../sesion.php");
+
+// Clases
+require("../../clases/clase_categoria.php");
+
+// Objetos
+$categoria = new Categoria($conexion);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -45,28 +51,42 @@ require("../sesion.php");
               </div>
               <div class="row">
               	<div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-            			<label for="nombre" class="sr-only">Name:</label>
-            			<div class="input-group">
-            				<div class="input-group-addon"><i class="fa fa-tags"></i></div>
-            				<input type="text" class="form-control" name="nombre" placeholder="Name" aria-describedby="bloqueErrorNombre"  />
-            			</div>
-            			<span id="bloqueErrorNombre" class="help-block"></span>
+            			<label for="categoria" class="sr-only">Category:</label>
+            			<select name="categoria" class="form-control">
+                    <?php // Listar Categorias
+                          $listado_categorias = $categoria->listado(1, 1);
+                          $total_categorias = $categoria->total_listado(1, 1);
+
+                          if($total_categorias > 0) {
+                            foreach($listado_categorias as $reg_categoria) { ?>
+                    <option value="<?=$reg_categoria->obtener_id()?>"><?=$reg_categoria->nombre?></option>
+                    <?php   }
+                          } ?>
+                  </select>
             		</div>
             		<div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-            			<label for="zipcode" class="sr-only">Zipcode:</label>
-            			<div class="input-group">
-            				<input type="text" class="form-control" name="zipcode" placeholder="Zipcode" aria-describedby="bloqueErrorZipcode"  />
-            				<div class="input-group-addon"><i class="fa fa-map-marker"></i></div>
-            			</div>
-            			<span id="bloqueErrorZipcode" class="help-block"></span>
+            			<label for="nombre" class="sr-only">Name:</label>
+                  <div class="input-group">
+                    <input type="text" class="form-control" name="nombre" placeholder="Name" aria-describedby="bloqueErrorNombre"  />
+                    <div class="input-group-addon"><i class="fa fa-tags"></i></div>
+                  </div>
+                  <span id="bloqueErrorNombre" class="help-block"></span>
             		</div>
               </div>
               <div class="row">
-          			<div class="col-xs-12 form-group has-feedback">
+                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                  <label for="zipcode" class="sr-only">Zipcode:</label>
+                  <div class="input-group">
+                    <div class="input-group-addon"><i class="fa fa-map-marker"></i></div>
+                    <input type="text" class="form-control" name="zipcode" placeholder="Zipcode" aria-describedby="bloqueErrorZipcode"  />
+                  </div>
+                  <span id="bloqueErrorZipcode" class="help-block"></span>
+                </div>
+          			<div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
             			<label for="direccion" class="sr-only">Address:</label>
             			<div class="input-group">
+                    <input type="text" class="form-control" name="direccion" placeholder="Address" aria-describedby="bloqueErrorDireccion"  />
             				<div class="input-group-addon"><i class="fa fa-building"></i></div>
-            				<input type="text" class="form-control" name="direccion" placeholder="Address" aria-describedby="bloqueErrorDireccion"  />
             			</div>
             			<span id="bloqueErrorDireccion" class="help-block"></span>
             		</div>

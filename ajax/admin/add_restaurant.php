@@ -8,6 +8,7 @@ require_once("../../clases/clase_restaurante.php");
 $restaurante = new Restaurante($conexion);
 
 // Recibir Datos
+if(isset($_POST['categoria'])) { $id_categoria = $_POST['categoria']; } else { $id_categoria = 0; }
 if(isset($_POST['nombre'])) { $nombre = $_POST['nombre']; } else { $nombre = ''; }
 if(isset($_POST['zipcode'])) { $zipcode = $_POST['zipcode']; } else { $zipcode = ''; }
 if(isset($_POST['direccion'])) { $direccion = $_POST['direccion']; } else { $direccion = ''; }
@@ -53,7 +54,7 @@ if(!$nombre_imagen == "") {
 }
 
 if(!$error) {
-	if($restaurante->insertar($nombre, $zipcode, $direccion, $hora_inicio, $hora_fin, $nombre_imagen)) {
+	if($restaurante->insertar($id_categoria, $nombre, $zipcode, $direccion, $hora_inicio, $hora_fin, $nombre_imagen)) {
 		echo json_encode(array("error" => false, "mensaje" => 'Restaurante Agregado'));
 	} else {
 		echo json_encode(array("error" => true, "mensaje" => $restaurante->error));

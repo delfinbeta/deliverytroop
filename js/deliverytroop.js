@@ -58,7 +58,7 @@ $(document).ready(function() {
 	//----------------------------------------------------
 
 	//----------------------------------------------------
-	//  Insertar
+	//  Contacto
 	//----------------------------------------------------
 	$("#form_contact").submit(function(ev) {
 		ev.preventDefault();
@@ -122,6 +122,17 @@ $(document).ready(function() {
 		    $('#msjError').html("Ha ocurrido un error. Contacte a Sistemas.");
 		  });
 		}
+	});
+	//----------------------------------------------------
+
+	//----------------------------------------------------
+	//  Menu Select
+	//----------------------------------------------------
+	$(".menu_select").change(function() {
+		var valor = $(this).val();
+		var url = $(this).data('url');
+
+		location.href = url + '=' + valor;
 	});
 	//----------------------------------------------------
 });

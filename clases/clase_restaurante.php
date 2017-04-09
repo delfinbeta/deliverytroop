@@ -3,6 +3,7 @@ class Restaurante {
 	########################################  Atributos  ########################################
 	
 	private $id;
+	private $categoria;
 	public  $nombre;
 	public  $zipcode;
 	public  $direccion;
@@ -25,7 +26,12 @@ class Restaurante {
 	}
 	
 	// Insertar un Restaurante a la Base de Datos
-	public function insertar($nombre, $zipcode, $direccion, $hora_inicio, $hora_fin, $imagen) {
+	public function insertar($categoria, $nombre, $zipcode, $direccion, $hora_inicio, $hora_fin, $imagen) {
+		if(!$categoria = $this->seguridad->entero_seguro($categoria)) {
+			$this->error = "Categoria no es Seguro";
+			return false;
+		}
+		
 		if(!$nombre = $this->seguridad->texto_seguro($this->conexion, $nombre)) {
 			$this->error = "Nombre no es Seguro";
 			return false;
@@ -56,7 +62,7 @@ class Restaurante {
 			return false;
 		}
 		
-		$sql = sprintf("INSERT INTO restaurantes(nombre, zipcode, direccion, hora_inicio, hora_fin, imagen, estado, fecha_registro) VALUES('%s', '%s', '%s', '%s', '%s', '%s', 1, CURDATE())", $nombre, $zipcode, $direccion, $hora_inicio, $hora_fin, $imagen);
+		$sql = sprintf("INSERT INTO restaurantes(categoria, nombre, zipcode, direccion, hora_inicio, hora_fin, imagen, estado, fecha_registro) VALUES('%d', '%s', '%s', '%s', '%s', '%s', '%s', 1, CURDATE())", $categoria, $nombre, $zipcode, $direccion, $hora_inicio, $hora_fin, $imagen);
 		
 		if($inserto = mysqli_query($this->conexion, $sql)) {
 			$id_restaurante = mysqli_insert_id($this->conexion);
@@ -76,7 +82,17 @@ class Restaurante {
 	}
 	
 	// Actualizar un Restaurante a la Base de Datos identificado por su id
-	public function actualizar($id, $nombre, $zipcode, $direccion, $hora_inicio, $hora_fin, $imagen) {
+	public function actualizar($id, $categoria, $nombre, $zipcode, $direccion, $hora_inicio, $hora_fin, $imagen) {
+		if(!$id = $this->seguridad->entero_seguro($id)) {
+			$this->error = "ID no es Seguro";
+			return false;
+		}
+		
+		if(!$categoria = $this->seguridad->entero_seguro($categoria)) {
+			$this->error = "Categoria no es Seguro";
+			return false;
+		}
+		
 		if(!$nombre = $this->seguridad->texto_seguro($this->conexion, $nombre)) {
 			$this->error = "Nombre no es Seguro";
 			return false;
@@ -107,7 +123,7 @@ class Restaurante {
 			return false;
 		}
 		
-		$sql = sprintf("UPDATE restaurantes SET nombre='%s', zipcode='%s', direccion='%s', hora_inicio='%s', hora_fin='%s', imagen='%s' WHERE id='%d'", $nombre, $zipcode, $direccion, $hora_inicio, $hora_fin, $imagen, $id);
+		$sql = sprintf("UPDATE restaurantes SET categoria='%d', nombre='%s', zipcode='%s', direccion='%s', hora_inicio='%s', hora_fin='%s', imagen='%s' WHERE id='%d'", $categoria, $nombre, $zipcode, $direccion, $hora_inicio, $hora_fin, $imagen, $id);
 		
 		if($actualizo = mysqli_query($this->conexion, $sql)) {
 			return true;
@@ -251,6 +267,7 @@ class Restaurante {
 		if($query = mysqli_query($this->conexion, $sql)) {
 			if($rrestaurante = mysqli_fetch_assoc($query)) {
 				$this->id = $rrestaurante['id'];
+				$this->categoria = $rrestaurante['categoria'];
 				$this->nombre = $rrestaurante['nombre'];
 				$this->zipcode = $rrestaurante['zipcode'];
 				$this->direccion = $rrestaurante['direccion'];
@@ -275,6 +292,10 @@ class Restaurante {
 		return $this->id;
 	}
 	
+	public function obtener_categoria() {
+		return $this->categoria;
+	}
+	
 	public function obtener_codEstado() {
 		return $this->estado;
 	}
@@ -291,7 +312,12 @@ class Restaurante {
 	}
 	
 	// Obtener listado de todos los Restaurantes
-	public function listado($zipcode='', $estado=-1) {
+	public function listado($categoria=0, $zipcode='', $estado=-1) {
+		if(!is_int($categoria = $this->seguridad->entero_seguro($categoria))) {
+			$this->error = "ID no es Seguro";
+			return false;
+		}
+		
 		if(!is_string($zipcode = $this->seguridad->texto_seguro($this->conexion, $zipcode))) {
 			$this->error = "Zipcode no es Seguro";
 			return false;
@@ -305,6 +331,11 @@ class Restaurante {
 		$formato = "SELECT id FROM restaurantes WHERE 1=1 ";
 		$argumentos = array();
 
+		if($categoria > 0) {
+			$formato .= "AND categoria='%d' ";
+			$argumentos[] = $categoria;
+		}
+		
 		if($zipcode != '') {
 			$formato .= "AND zipcode='%s' ";
 			$argumentos[] = $zipcode;
@@ -333,7 +364,12 @@ class Restaurante {
 	}
 	
 	// Obtener listado de todos los Restaurantes paginados
-	public function listado_paginado($zipcode='', $estado=-1, $inicio, $fin) {
+	public function listado_paginado($categoria=0, $zipcode='', $estado=-1, $inicio, $fin) {
+		if(!is_int($categoria = $this->seguridad->entero_seguro($categoria))) {
+			$this->error = "ID no es Seguro";
+			return false;
+		}
+		
 		if(!is_string($zipcode = $this->seguridad->texto_seguro($this->conexion, $zipcode))) {
 			$this->error = "Zipcode no es Seguro";
 			return false;
@@ -357,6 +393,11 @@ class Restaurante {
 		$formato = "SELECT id FROM restaurantes WHERE 1=1 ";
 		$argumentos = array();
 
+		if($categoria > 0) {
+			$formato .= "AND categoria='%d' ";
+			$argumentos[] = $categoria;
+		}
+		
 		if($zipcode != '') {
 			$formato .= "AND zipcode='%s' ";
 			$argumentos[] = $zipcode;
@@ -388,7 +429,12 @@ class Restaurante {
 	}
 	
 	// Contar el total de Restaurantes
-	public function total_listado($zipcode='', $estado=-1) {
+	public function total_listado($categoria=0, $zipcode='', $estado=-1) {
+		if(!is_int($categoria = $this->seguridad->entero_seguro($categoria))) {
+			$this->error = "ID no es Seguro";
+			return false;
+		}
+		
 		if(!is_string($zipcode = $this->seguridad->texto_seguro($this->conexion, $zipcode))) {
 			$this->error = "Zipcode no es Seguro";
 			return false;
@@ -402,6 +448,11 @@ class Restaurante {
 		$formato = "SELECT id FROM restaurantes WHERE 1=1 ";
 		$argumentos = array();
 
+		if($categoria > 0) {
+			$formato .= "AND categoria='%d' ";
+			$argumentos[] = $categoria;
+		}
+		
 		if($zipcode != '') {
 			$formato .= "AND zipcode='%s' ";
 			$argumentos[] = $zipcode;

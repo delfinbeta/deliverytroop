@@ -4,9 +4,11 @@ require("../sesion.php");
 
 // Clases
 require("../../clases/clase_restaurante.php");
+require("../../clases/clase_categoria.php");
 
 // Objetos
 $restaurante = new Restaurante($conexion);
+$categoria = new Categoria($conexion);
 
 if(isset($_GET['id'])) { $id_restaurante = $_GET['id']; } else { $id_restaurante = 0; }
 ?>
@@ -45,7 +47,9 @@ if(isset($_GET['id'])) { $id_restaurante = $_GET['id']; } else { $id_restaurante
 				</ol>
 				<?php if($restaurante->datos($id_restaurante)) {
 								if($restaurante->imagen == '') { $ruta_img = $GLOBALS['domain_root']."/img/no_img.jpg"; }
-								else { $ruta_img = $GLOBALS['domain_root']."/archivos_restaurantes/".$restaurante->imagen; } ?>
+								else { $ruta_img = $GLOBALS['domain_root']."/archivos_restaurantes/".$restaurante->imagen; }
+
+								$id_categoria = $restaurante->obtener_categoria(); ?>
 				<div class="panel panel-default">
 					<div class="panel-heading">Edit:</div>
 					<div class="panel-body">
@@ -61,35 +65,49 @@ if(isset($_GET['id'])) { $id_restaurante = $_GET['id']; } else { $id_restaurante
 	              <input type="hidden" name="id" value="<?=$id_restaurante?>" />
 	              <div class="row">
 	              	<div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-	            			<label for="nombre" class="sr-only">Name:</label>
+	            			<label for="categoria">Category:</label>
+	            			<select name="categoria" class="form-control">
+	                    <?php // Listar Categorias
+	                          $listado_categorias = $categoria->listado(1, 1);
+	                          $total_categorias = $categoria->total_listado(1, 1);
+
+	                          if($total_categorias > 0) {
+	                            foreach($listado_categorias as $reg_categoria) { ?>
+	                    <option value="<?=$reg_categoria->obtener_id()?>" <?php if($reg_categoria->obtener_id() == $id_categoria) { echo 'selected'; } ?>><?=$reg_categoria->nombre?></option>
+	                    <?php   }
+	                          } ?>
+	                  </select>
+	            		</div>
+	            		<div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+	            			<label for="nombre">Name:</label>
 	            			<div class="input-group">
-	            				<div class="input-group-addon"><i class="fa fa-tags"></i></div>
 	            				<input type="text" class="form-control" name="nombre" placeholder="Name" value="<?=$restaurante->nombre?>" aria-describedby="bloqueErrorNombre"  />
+	            				<div class="input-group-addon"><i class="fa fa-tags"></i></div>
 	            			</div>
 	            			<span id="bloqueErrorNombre" class="help-block"></span>
 	            		</div>
-	            		<div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-	            			<label for="zipcode" class="sr-only">Zipcode:</label>
-	            			<div class="input-group">
-	            				<input type="text" class="form-control" name="zipcode" placeholder="Zipcode" value="<?=$restaurante->zipcode?>" aria-describedby="bloqueErrorZipcode"  />
-	            				<div class="input-group-addon"><i class="fa fa-map-marker"></i></div>
-	            			</div>
-	            			<span id="bloqueErrorZipcode" class="help-block"></span>
-	            		</div>
 	              </div>
 	              <div class="row">
-	          			<div class="col-xs-12 form-group has-feedback">
-	            			<label for="direccion" class="sr-only">Address:</label>
+	              	<div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+	              		<label for="zipcode">Zipcode:</label>
 	            			<div class="input-group">
-	            				<div class="input-group-addon"><i class="fa fa-building"></i></div>
+	            				<div class="input-group-addon"><i class="fa fa-map-marker"></i></div>
+	            				<input type="text" class="form-control" name="zipcode" placeholder="Zipcode" value="<?=$restaurante->zipcode?>" aria-describedby="bloqueErrorZipcode"  />
+	            			</div>
+	            			<span id="bloqueErrorZipcode" class="help-block"></span>
+	              	</div>
+	          			<div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+	            			<label for="direccion">Address:</label>
+	            			<div class="input-group">
 	            				<input type="text" class="form-control" name="direccion" placeholder="Address" value="<?=$restaurante->direccion?>" aria-describedby="bloqueErrorDireccion"  />
+	            				<div class="input-group-addon"><i class="fa fa-building"></i></div>
 	            			</div>
 	            			<span id="bloqueErrorDireccion" class="help-block"></span>
 	            		</div>
 	          		</div>
 	              <div class="row">
 	              	<div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-	            			<label for="hora_inicio" class="sr-only">Start time:</label>
+	            			<label for="hora_inicio">Start time:</label>
 	            			<div class="input-group">
 	            				<div class="input-group-addon"><i class="fa fa-clock-o"></i></div>
 	            				<input type="text" class="form-control" name="hora_inicio" id="hora_inicio" value="<?=date("h:i a", strtotime($restaurante->hora_inicio))?>" placeholder="Start time" aria-describedby="bloqueErrorHoraInicio"  />
@@ -97,7 +115,7 @@ if(isset($_GET['id'])) { $id_restaurante = $_GET['id']; } else { $id_restaurante
 	            			<span id="bloqueErrorHoraInicio" class="help-block"></span>
 	            		</div>
 	            		<div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-	            			<label for="hora_fin" class="sr-only">End time:</label>
+	            			<label for="hora_fin">End time:</label>
 	            			<div class="input-group">
 	            				<input type="text" class="form-control" name="hora_fin" id="hora_fin" value="<?=date("h:i a", strtotime($restaurante->hora_fin))?>" placeholder="End time" aria-describedby="bloqueErrorHoraFin"  />
 	            				<div class="input-group-addon"><i class="fa fa-clock-o"></i></div>
@@ -107,7 +125,7 @@ if(isset($_GET['id'])) { $id_restaurante = $_GET['id']; } else { $id_restaurante
 	              </div>
 	          		<div class="row">
 	          			<div class="col-xs-12 form-group has-feedback">
-	            			<label for="imagen" class="sr-only">Picture:</label>
+	            			<label for="imagen">Picture:</label>
 	            			<div class="input-group">
 	            				<div class="input-group-addon"><i class="fa fa-camera"></i></div>
 	            				<input type="file" class="form-control" name="imagen" placeholder="Picture" />

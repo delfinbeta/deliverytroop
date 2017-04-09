@@ -4,13 +4,15 @@ require("../sesion.php");
 
 // Clases
 require("../../clases/clase_restaurante.php");
+require("../../clases/clase_categoria.php");
 
 // Objetos
 $restaurante = new Restaurante($conexion);
+$categoria = new Categoria($conexion);
 
 // Listar Restaurantes
-$listado = $restaurante->listado('', 1);
-$total = $restaurante->total_listado('', 1);
+$listado = $restaurante->listado(0, '', 1);
+$total = $restaurante->total_listado(0, '', 1);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -65,6 +67,7 @@ $total = $restaurante->total_listado('', 1);
 				        <tr>
 				        	<th width="100"></th>
                   <th>Restaurante</th>
+				        	<th>Category</th>
                   <th width="26">&nbsp;</th>
                   <th width="26">&nbsp;</th>
                   <th width="26">&nbsp;</th>
@@ -73,12 +76,16 @@ $total = $restaurante->total_listado('', 1);
 					    <tbody>
 					    	<?php foreach($listado as $registro) {
 					    					if($registro->imagen == '') { $ruta_img = $GLOBALS['domain_root']."/img/no_img.jpg"; }
-					    					else { $ruta_img = $GLOBALS['domain_root']."/archivos_restaurantes/".$registro->imagen; } ?>
+					    					else { $ruta_img = $GLOBALS['domain_root']."/archivos_restaurantes/".$registro->imagen; }
+
+					    					if($categoria->datos($registro->obtener_categoria())) { $nombre_categoria = $categoria->nombre; }
+					    					else { $nombre_categoria = '---'; } ?>
 	              <tr>
 	                <td>
 	                	<a href="restaurant.php?id=<?=$registro->obtener_id()?>"><img src="<?=$ruta_img?>" width="100" alt="<?=$registro->nombre?>" title="<?=$registro->nombre?>" /></a>
 	                </td>
 	                <td><a href="restaurant.php?id=<?=$registro->obtener_id()?>"><?=$registro->nombre?></a></td>
+	                <td><?=$nombre_categoria?></td>
 	                <td><a href="../food/index.php?id=<?=$registro->obtener_id()?>"><i class="icono fa fa-cutlery"></i></a></td>
 	                <td><a href="restaurant.php?id=<?=$registro->obtener_id()?>"><i class="icono fa fa-file-text-o"></i></a></td>
 	                <td><a href="#" class="boton-eliminar" data-reg="<?=$registro->obtener_id()?>"><i class="icono fa fa-remove"></i></a></td>
@@ -108,6 +115,7 @@ $total = $restaurante->total_listado('', 1);
 	    	"scrollX": true,
 	      "order": [[ 1, "asc" ]],
 	      "columns": [
+	        null,
 	        null,
 	        null,
 	        { "orderable": false },

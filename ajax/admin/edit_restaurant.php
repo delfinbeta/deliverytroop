@@ -9,6 +9,7 @@ $restaurante = new Restaurante($conexion);
 
 // Recibir Datos
 if(isset($_POST['id'])) { $id_restaurante = $_POST['id']; } else { $id_restaurante = ''; }
+if(isset($_POST['categoria'])) { $id_categoria = $_POST['categoria']; } else { $id_categoria = 0; }
 if(isset($_POST['nombre'])) { $nombre = $_POST['nombre']; } else { $nombre = ''; }
 if(isset($_POST['zipcode'])) { $zipcode = $_POST['zipcode']; } else { $zipcode = ''; }
 if(isset($_POST['direccion'])) { $direccion = $_POST['direccion']; } else { $direccion = ''; }
@@ -59,7 +60,7 @@ if($restaurante->datos($id_restaurante)) {
 }
 
 if(!$error) {
-	if($restaurante->actualizar($id_restaurante, $nombre, $zipcode, $direccion, $hora_inicio, $hora_fin, $nombre_imagen)) {
+	if($restaurante->actualizar($id_restaurante, $id_categoria, $nombre, $zipcode, $direccion, $hora_inicio, $hora_fin, $nombre_imagen)) {
 		echo json_encode(array("error" => false, "mensaje" => 'Restaurante Actualizado'));
 	} else {
 		echo json_encode(array("error" => true, "mensaje" => $restaurante->error));
