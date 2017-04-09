@@ -23,6 +23,7 @@ $menu[3] = 'class="active"';
 <body>
 	<?php require("plantillas/menu.php"); ?>
 	<?php require("plantillas/encabezado.php"); ?>
+	<?php require("plantillas/navegacion.php"); ?>
 
 	<section class="franja-gris">
 		<div class="container">

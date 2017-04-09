@@ -13,7 +13,6 @@ if(!$zipcode->datos2($_SESSION['zipcode'])) { header("location: index.php"); }
 
 $menu[0] = '';
 $menu[2] = 'class="active"';
-$navegacion[0] = 'class="active"';
 
 // Listar Restaurantes
 $listado_restaurantes = $restaurante->listado('', 1);
@@ -38,7 +37,6 @@ $total_restaurantes = $restaurante->total_listado('', 1);
 <body>
 	<?php require("plantillas/menu.php"); ?>
 	<?php require("plantillas/encabezado.php"); ?>
-	<?php require("plantillas/navegacion.php"); ?>
 
 	<section class="franja-gris">
 		<div class="container">

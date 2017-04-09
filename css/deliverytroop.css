@@ -123,6 +123,38 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /*********************************************/
+/*****            Navegacion             *****/
+/*********************************************/
+.navegacion {
+	background-color: #EEEEEE;
+	padding: 1em;
+}
+
+.navegacion .nav-pills>li>a {
+	border: 2px solid #FFBE00;
+	color: #FFBE00;
+	font-weight: bold;
+	margin: 0 4px;
+}
+
+.navegacion .nav>li>a:focus, .navegacion .nav>li>a:hover {
+	border-color: #FFBE00;
+  background-color: #FFBE00;
+  color: #FFFFFF;
+  font-weight: normal;
+  text-decoration: none;
+}
+
+.navegacion .nav-pills>li.active>a, 
+.navegacion .nav-pills>li.active>a:focus, 
+.navegacion .nav-pills>li.active>a:hover {
+	border-color: #D93600;
+  background-color: #D93600;
+  color: #FFFFFF;
+  font-weight: normal;
+}
+
+/*********************************************/
 /*****              Portada              *****/
 /*********************************************/
 .portada {

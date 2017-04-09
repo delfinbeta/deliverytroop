@@ -16,6 +16,7 @@ mysqli_set_charset($conexion, "utf8");
 
 // Menú
 $menu = array('class="active"', '', '', '');
+$navegacion = array('', '', '');
 
 if(!isset($_SESSION['zipcode'])) { $_SESSION['zipcode'] = ''; }
 
