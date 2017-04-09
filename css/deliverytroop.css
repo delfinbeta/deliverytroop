@@ -113,6 +113,15 @@ h1, h2, h3, h4, h5, h6 {
 	color: #FFFFFF;
 }
 
+.opaco {
+	background-color: #CCCCCC;
+	-webkit-opacity: 0.3;
+	   -moz-opacity: 0.3;
+	   	-ms-opacity: 0.3;
+	   	 -o-opacity: 0.3;
+					opacity: 0.3;
+}
+
 /*********************************************/
 /*****              Portada              *****/
 /*********************************************/
@@ -222,6 +231,15 @@ h1, h2, h3, h4, h5, h6 {
 
 .contacto .boton2 {
 	margin-top: 1em;
+}
+
+/*********************************************/
+/*****            Restaurante            *****/
+/*********************************************/
+.restaurante {
+	color: #000000;
+	margin-bottom: 1em;
+  text-align: center;
 }
 
 /*********************************************/

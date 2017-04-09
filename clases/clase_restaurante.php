@@ -56,7 +56,7 @@ class Restaurante {
 			return false;
 		}
 		
-		$sql = sprintf("INSERT INTO restaurantes(nombre, zipcode, direccion, hora_inicio, hora_fin, imagen, estado, fecha_registro, usuario_registro, fecha_actualizacion, usuario_actualizacion) VALUES('%s', '%s', '%s', '%s', '%s', '%s', 1, CURDATE(), '%d', CURDATE(), '%d')", $nombre, $zipcode, $direccion, $hora_inicio, $hora_fin, $imagen, $_SESSION['usuario_id'], $_SESSION['usuario_id']);
+		$sql = sprintf("INSERT INTO restaurantes(nombre, zipcode, direccion, hora_inicio, hora_fin, imagen, estado, fecha_registro) VALUES('%s', '%s', '%s', '%s', '%s', '%s', 1, CURDATE())", $nombre, $zipcode, $direccion, $hora_inicio, $hora_fin, $imagen);
 		
 		if($inserto = mysqli_query($this->conexion, $sql)) {
 			$id_restaurante = mysqli_insert_id($this->conexion);
@@ -70,7 +70,7 @@ class Restaurante {
 				return false;
 			}
 		} else {
-			$this->error = "No se puede Insertar";
+			$this->error = "No se puede Insertar<br>".$sql;
 			return false;
 		}
 	}
@@ -107,7 +107,7 @@ class Restaurante {
 			return false;
 		}
 		
-		$sql = sprintf("UPDATE restaurantes SET nombre='%s', zipcode='%s', direccion='%s', hora_inicio='%s', hora_fin='%s', imagen='%s', fecha_actualizacion=CURDATE(), usuario_actualizacion='%d' WHERE id='%d'", $nombre, $zipcode, $direccion, $hora_inicio, $hora_fin, $imagen, $_SESSION['usuario_id'], $id);
+		$sql = sprintf("UPDATE restaurantes SET nombre='%s', zipcode='%s', direccion='%s', hora_inicio='%s', hora_fin='%s', imagen='%s' WHERE id='%d'", $nombre, $zipcode, $direccion, $hora_inicio, $hora_fin, $imagen, $id);
 		
 		if($actualizo = mysqli_query($this->conexion, $sql)) {
 			return true;
@@ -229,7 +229,7 @@ class Restaurante {
 			return false;
 		}
 		
-		$sql = sprintf("UPDATE restaurantes SET estado=0, fecha_actualizacion=CURDATE(), usuario_actualizacion='%d' WHERE id='%d'", $_SESSION['usuario_id'], $id);
+		$sql = sprintf("UPDATE restaurantes SET estado=0 WHERE id='%d'", $id);
 		
 		if($desactivo = mysqli_query($this->conexion, $sql)) {
 			return true;
@@ -260,9 +260,6 @@ class Restaurante {
 				$this->orden = $rrestaurante['orden'];
 				$this->estado = $rrestaurante['estado'];
 				$this->fecha_registro = $rrestaurante['fecha_registro'];
-				$this->usuario_registro = $rrestaurante['usuario_registro'];
-				$this->fecha_actualizacion = $rrestaurante['fecha_actualizacion'];
-				$this->usuario_actualizacion = $rrestaurante['usuario_actualizacion'];
 				return true;
 			} else {
 				$this->error = "ID no aroja resultados";

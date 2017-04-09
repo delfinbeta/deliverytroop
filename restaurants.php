@@ -3,14 +3,20 @@ require("configuracion/inicio.php");
 
 // Clases
 require("clases/clase_zipcode.php");
+require("clases/clase_restaurante.php");
 
 // Objetos
 $zipcode = new Zipcode($conexion);
+$restaurante = new Restaurante($conexion);
 
 if(!$zipcode->datos2($_SESSION['zipcode'])) { header("location: index.php"); }
 
 $menu[0] = '';
 $menu[2] = 'class="active"';
+
+// Listar Restaurantes
+$listado_restaurantes = $restaurante->listado('', 1);
+$total_restaurantes = $restaurante->total_listado('', 1);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,7 +42,37 @@ $menu[2] = 'class="active"';
 		<div class="container">
 			<h1>Restaurants</h1>
 			<hr class="separador2" />
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempore nostrum quae sit dicta consequuntur cumque, asperiores fugit! Reiciendis sed soluta, sequi itaque. Quisquam tempora blanditiis quod maxime sequi incidunt beatae.</p>
+			<?php if($total_restaurantes > 0) {
+							$hora_servidor = date("H:i:s");
+							$hora_servidor = date("H:i:s", strtotime("-5 hours")); // Hora en Weston
+							$hora_servidor = strtotime($hora_servidor); ?>
+			<div class="row">
+				<?php foreach($listado_restaurantes as $reg_restaurante) {
+								if($reg_restaurante->imagen != '') { $restaurante_img = "archivos_restaurantes/".$reg_restaurante->imagen; }
+								else { $restaurante_img = "img/no_img.jpg"; }
+								
+								$hora_inicio = strtotime($reg_restaurante->hora_inicio);
+								$hora_fin = strtotime($reg_restaurante->hora_fin);
+
+								if(($hora_servidor >= $hora_inicio) && ($hora_servidor <= $hora_fin)) {
+									$opaco = "";
+									$enlazar = true;
+								} else {
+									$opaco = "opaco";
+									$enlazar = false;
+								} ?>
+				<div class="col-sm-6 col-md-3">
+					<article class="restaurante <?=$opaco?>">
+						<?php if($enlazar) { ?>
+						<a href="restaurant.php?id=<?=$reg_restaurante->obtener_id()?>"><img src="<?=$restaurante_img?>" alt="<?=$reg_restaurante->nombre?>" title="<?=$reg_restaurante->nombre?>" class="img-responsive center-block" /></a>
+						<?php } else { ?>
+						<img src="<?=$restaurante_img?>" alt="<?=$reg_restaurante->nombre?>" title="<?=$reg_restaurante->nombre?>" class="img-responsive center-block" />
+						<?php } ?>
+					</article>
+				</div>
+				<?php } ?>
+			</div>
+			<?php } ?>
 		</div>
 	</section>
 
