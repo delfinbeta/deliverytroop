@@ -1,6 +1,14 @@
 <?php
 require("configuracion/inicio.php");
 
+// Clases
+require("clases/clase_zipcode.php");
+
+// Objetos
+$zipcode = new Zipcode($conexion);
+
+if(!$zipcode->datos2($_SESSION['zipcode'])) { header("location: index.php"); }
+
 $menu[0] = '';
 $menu[2] = 'class="active"';
 ?>

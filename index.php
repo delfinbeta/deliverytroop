@@ -26,6 +26,10 @@
 					<p class="eslogan">On Demand Delivery Service</p>
 
 					<form id="form_zipcode" name="form_zipcode" method="post">
+						<div id="errorZipcode" class="alert alert-danger hidden" role="alert">
+		          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+		          <i class="fa fa-times"></i> <span id="msjErrorZipcode">Error</span>
+		        </div>
 						<div class="form-group">
 							<label for="zipcode" class="control-label sr-only">Zipcode</label>
 							<div class="input-group">

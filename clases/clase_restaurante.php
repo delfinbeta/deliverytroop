@@ -12,9 +12,6 @@ class Restaurante {
 	public  $orden;
 	private $estado;
 	private $fecha_registro;
-	private $usuario_registro;
-	private $fecha_actualizacion;
-	private $usuario_actualizacion;
 	private $conexion;
 	private $seguridad;
 	public  $error = NULL;
