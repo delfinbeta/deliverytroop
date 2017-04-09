@@ -7,9 +7,6 @@ class Contenido {
 	public  $descripcion;
 	private $estado;
 	private $fecha_registro;
-	private $usuario_registro;
-	private $fecha_actualizacion;
-	private $usuario_actualizacion;
 	private $conexion;
 	private $seguridad;
 	public  $error = NULL;
@@ -25,16 +22,16 @@ class Contenido {
 	// Insertar un Contenido a la Base de Datos
 	public function insertar($nombre, $descripcion) {
 		if(!$nombre = $this->seguridad->texto_seguro($this->conexion, $nombre)) {
-			$this->error = "Nombre Español no es Seguro";
+			$this->error = "Nombre no es Seguro";
 			return false;
 		}
 		
 		if(!is_string($descripcion = $this->seguridad->texto_seguro($this->conexion, $descripcion))) {
-			$this->error = "Descripción Español no es Seguro";
+			$this->error = "Descripción no es Seguro";
 			return false;
 		}
 		
-		$sql = sprintf("INSERT INTO contenidos(nombre, descripcion, estado, fecha_registro, usuario_registro, fecha_actualizacion, usuario_actualizacion) VALUES('%s', '%s', 1, CURDATE(), '%d', CURDATE(), '%d')", $nombre, $descripcion, $_SESSION['usuario_id'], $_SESSION['usuario_id']);
+		$sql = sprintf("INSERT INTO contenidos(nombre, descripcion, estado, fecha_registro) VALUES('%s', '%s', 1, CURDATE())", $nombre, $descripcion);
 		
 		if($inserto = mysqli_query($this->conexion, $sql)) {
 			return true;
@@ -47,16 +44,16 @@ class Contenido {
 	// Actualizar un Contenido a la Base de Datos identificado por su id
 	public function actualizar($id, $nombre, $descripcion) {
 		if(!$nombre = $this->seguridad->texto_seguro($this->conexion, $nombre)) {
-			$this->error = "Nombre Español no es Seguro";
+			$this->error = "Nombre  no es Seguro";
 			return false;
 		}
 		
 		if(!is_string($descripcion = $this->seguridad->texto_seguro($this->conexion, $descripcion))) {
-			$this->error = "Descripción Español no es Seguro";
+			$this->error = "Descripción  no es Seguro";
 			return false;
 		}
 		
-		$sql = sprintf("UPDATE contenidos SET nombre='%s', descripcion='%s', fecha_actualizacion=CURDATE(), usuario_actualizacion='%d' WHERE id='%d'", $nombre, $descripcion, $_SESSION['usuario_id'], $id);
+		$sql = sprintf("UPDATE contenidos SET nombre='%s', descripcion='%s' WHERE id='%d'", $nombre, $descripcion, $id);
 		
 		if($actualizo = mysqli_query($this->conexion, $sql)) {
 			return true;
@@ -90,7 +87,7 @@ class Contenido {
 			return false;
 		}
 		
-		$sql = sprintf("UPDATE contenidos SET estado=0, fecha_actualizacion=CURDATE(), usuario_actualizacion='%d' WHERE id='%d'", $_SESSION['usuario_id'], $id);
+		$sql = sprintf("UPDATE contenidos SET estado=0 WHERE id='%d'", $id);
 		
 		if($desactivo = mysqli_query($this->conexion, $sql)) {
 			return true;
@@ -116,9 +113,6 @@ class Contenido {
 				$this->descripcion = $rcontenido['descripcion'];
 				$this->estado = $rcontenido['estado'];
 				$this->fecha_registro = $rcontenido['fecha_registro'];
-				$this->usuario_registro = $rcontenido['usuario_registro'];
-				$this->fecha_actualizacion = $rcontenido['fecha_actualizacion'];
-				$this->usuario_actualizacion = $rcontenido['usuario_actualizacion'];
 				return true;
 			} else {
 				$this->error = "ID no aroja resultados";
@@ -189,12 +183,12 @@ class Contenido {
 		}
 		
 		if(!is_int($inicio = $this->seguridad->entero_seguro($inicio))) {
-			$this->error = "N&uacute;mero de Inicio no es Seguro";
+			$this->error = "Número de Inicio no es Seguro";
 			return false;
 		}
 		
 		if(!is_int($fin = $this->seguridad->entero_seguro($fin))) {
-			$this->error = "N&uacute;mero de Fin no es Seguro";
+			$this->error = "Número de Fin no es Seguro";
 			return false;
 		}
 		
