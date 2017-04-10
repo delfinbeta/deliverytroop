@@ -60,10 +60,10 @@ $total_productos = $producto->total_listado($id_restaurante, -1, 1);
 			<h1><?=$restaurante->nombre?></h1>
 			<hr class="separador2" />
 			<div class="row restaurante">
-				<div class="col-md-2">
+				<div class="col-sm-2">
 					<img src="<?=$restaurante_img?>" alt="<?=$reg_restaurante->nombre?>" title="<?=$reg_restaurante->nombre?>" class="img-responsive center-block" />
 				</div>
-				<div class="col-md-10">
+				<div class="col-sm-10">
 					<h3><?=$restaurante->nombre?></h3>
 					<p>Restaurant hours: <?=date("h:i a", strtotime($restaurante->hora_inicio))?> - <?=date("h:i a", strtotime($restaurante->hora_fin))?></p>
 					<p><?=$restaurante->direccion?></p>
@@ -80,14 +80,14 @@ $total_productos = $producto->total_listado($id_restaurante, -1, 1);
 					<article class="producto-grilla">
 						<div class="imagen">
 							<img src="<?=$producto_img?>" alt="<?=$reg_producto->nombre?>" title="<?=$reg_producto->nombre?>" class="img-responsive center-block" />
-							<button type="button" class="boton_foto" name="ordenar" data-id="<?=$reg_producto->obtener_id()?>" data-nombre="<?=$reg_producto->nombre?>">Order Now</button>
+							<button type="button" class="boton_foto" name="ordenar" data-id="<?=$reg_producto->obtener_id()?>">Order Now</button>
 						</div>
 						<div class="info">
 							<div class="titulo"><?=$reg_producto->nombre?></div>
 							<div class="precio">$00.00</div>
 							<div class="resumen">
 								<?=$reg_producto->resumen?><br />
-								<a href="food.php?id=<?=$reg_producto->obtener_id()?>">More Details</a>
+								<a href="#" data-id="<?=$reg_producto->obtener_id()?>" class="food-details">More Details</a>
 							</div>
 						</div>
 					</article>
@@ -101,10 +101,34 @@ $total_productos = $producto->total_listado($id_restaurante, -1, 1);
 	<?php require("plantillas/contacto.php"); ?>
 	<?php require("plantillas/piepag.php"); ?>
 
+	<div id="ProductoDetalles" class="modal fade" tabindex="-1" role="dialog">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title">#PRODUCTO-NOMBRE#</h4>
+	      </div>
+	      <div class="modal-body">
+	        <div class="row">
+	        	<div class="col-xs-12 col-sm-6 col-sm-offset-3 prod-img">#PRODUCTO-IMG#</div>
+	        </div>
+	        <div class="row">
+	        	<div class="col-xs-12 prod-desc">#PRODUCTO-DESCRIPCION#</div>
+	        </div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
 	<!-- jQuery -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <!-- Bootstrap -->
   <script src="js/bootstrap.min.js"></script>
+  <!-- Custom -->
+  <script src="js/food.js"></script>
   <!-- Google Analytics -->
   <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
