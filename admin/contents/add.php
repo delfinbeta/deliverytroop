@@ -81,7 +81,9 @@ require("../sesion.php");
   <script src="../../js/admin.js"></script>
   <script src="../../js/admin_contents.js"></script>
   <script>
-  	$('.textarea').wysihtml5();
+  	$(document).ready(function() {
+	    $('.textarea').wysihtml5();
+	  });
   </script>
 </body>
 </html>

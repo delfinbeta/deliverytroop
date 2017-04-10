@@ -1,6 +1,6 @@
 <div class="col-sm-3 col-md-2 sidebar-offcanvas">
 	<div class="logo">
-		<a href="index.php"><img src="<?=$GLOBALS['domain_root']?>/img/deliverytroop.png" alt="Delivery Troop" title="Delivery Troop" class="img-responsive" /></a>
+		<a href="<?=$GLOBALS['domain_root']?>/admin/index.php"><img src="<?=$GLOBALS['domain_root']?>/img/deliverytroop.png" alt="Delivery Troop" title="Delivery Troop" class="img-responsive" /></a>
 	</div>
 	<div class="perfil">
 		<div class="perfil-marco text-center">
@@ -23,7 +23,7 @@
 	<ul class="nav nav-pills nav-stacked">
 		<li><a href="<?=$GLOBALS['domain_root']?>/admin/zipcodes"><i class="fa fa-map-marker pull-right"></i> Zipcodes</a></li>
 		<li><a href="<?=$GLOBALS['domain_root']?>/admin/restaurants"><i class="fa fa-coffee pull-right"></i> Restaurants</a></li>
-		<li><a href="<?=$GLOBALS['domain_root']?>/admin/restaurants"><i class="fa fa-cutlery pull-right"></i> Food</a></li>
+		<li><a href="<?=$GLOBALS['domain_root']?>/admin/food"><i class="fa fa-cutlery pull-right"></i> Food</a></li>
 	</ul>
 	<ul class="nav nav-pills nav-stacked">
 		<li><a href="<?=$GLOBALS['domain_root']?>/admin/users"><i class="fa fa-users pull-right"></i> Admin Users</a></li>

@@ -85,7 +85,7 @@ $total_restaurantes = $restaurante->total_listado($id_categoria, '', 1);
 									$enlazar = false;
 								} ?>
 				<div class="col-sm-6 col-md-3">
-					<article class="restaurante <?=$opaco?>">
+					<article class="restaurante-grilla <?=$opaco?>">
 						<?php if($enlazar) { ?>
 						<a href="restaurant.php?id=<?=$reg_restaurante->obtener_id()?>"><img src="<?=$restaurante_img?>" alt="<?=$reg_restaurante->nombre?>" title="<?=$reg_restaurante->nombre?>" class="img-responsive center-block" /></a>
 						<?php } else { ?>

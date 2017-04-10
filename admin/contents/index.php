@@ -60,7 +60,6 @@ $total = $contenido->total_listado(1);
               <i class="fa fa-times"></i> <span id="msjError">Error</span>
             </div>
 				    <table id="tabla" class="table table-striped table-bordered" cellspacing="0" width="100%">
-					    <?php if($total > 0) { ?>
 					    <thead>
 				        <tr>
                   <th>Content</th>
@@ -68,6 +67,7 @@ $total = $contenido->total_listado(1);
                   <th width="26">&nbsp;</th>
                 </tr>
 					    </thead>
+					    <?php if($total > 0) { ?>
 					    <tbody>
 					    	<?php foreach($listado as $registro) { ?>
 	              <tr>
