@@ -40,10 +40,10 @@ $restaurante = new Restaurante($conexion);
 				  <li><a href="index.php">Food</a></li>
 				  <li class="active">Add Food</li>
 				</ol>
-				<div class="panel panel-default">
-				  <div class="panel-heading">Add Food</div>
-				  <div class="panel-body">
-				  	<form id="form_insertar" name="form_insertar" method="post" enctype="multipart/form-data">
+        <form id="form_insertar" name="form_insertar" method="post" enctype="multipart/form-data">
+  				<div class="panel panel-default">
+  				  <div class="panel-heading">Add Food</div>
+  				  <div class="panel-body">
           		<div id="error" class="alert alert-danger hidden" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
                 <i class="fa fa-times"></i> <span id="msjError">Error</span>
@@ -107,12 +107,33 @@ $restaurante = new Restaurante($conexion);
             			</div>
             		</div>
           		</div>
-          		<div class="row text-center">
-        				<button type="submit" class="btn btn-primary">Add Restaurant</button>
-          		</div>
-          	</form>
-				  </div>
-				</div>
+  				  </div>
+  				</div>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <div class="pull-left">Presentations</div>
+              <div class="pull-right">
+                <button type="button" id="agregar-presentacion" class="btn btn-success"><i class="fa fa-plus"></i> Add Presentation</button>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+            <table id="presentaciones" class="table">
+              <thead>
+                <tr>
+                  <th width="30%">Option 1</th>
+                  <th width="30%">Option 2</th>
+                  <th width="30%">Price $</th>
+                  <th width="10%">&nbsp;</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+          <div class="row text-center">
+            <button type="submit" class="btn btn-primary">Add Restaurant</button>
+          </div>
+        </form>
 			</div>
 		</div>
 	</div>
@@ -130,8 +151,35 @@ $restaurante = new Restaurante($conexion);
   <script src="../../js/admin_food.js"></script>
   <script>
 	  $(document).ready(function() {
-	    $('.textarea').wysihtml5();
-	  });
+      var op1 = '';
+      var op2 = '';
+
+      $.post("../../ajax/admin/opciones1.php", function(data) {
+        op1 = data;
+      });
+
+      $.post("../../ajax/admin/opciones2.php", function(data) {
+        op2 = data;
+      });
+
+      $('.textarea').wysihtml5();
+
+      $('#agregar-presentacion').click(function() {
+        var fila = '<tr>';
+        fila += '<td>' + op1 + '</td>';
+        fila += '<td>' + op2 + '</td>';
+        fila += '<td><input type="text" class="form-control text-right" name="precio[]" placeholder="0.00" value="0.00" /></td>';
+        fila += '<td class="text-center"><a href="#" class="eliminar-presentacion"><i class="icono fa fa-remove"></i></a></td>';
+        fila += '</tr>';
+
+        $('#presentaciones > tbody').append(fila);
+      });
+
+      $(document).on('click', '.eliminar-presentacion', function (ev) {
+        ev.preventDefault();
+        $(this).closest('tr').remove();
+      });
+    });
   </script>
 </body>
 </html>

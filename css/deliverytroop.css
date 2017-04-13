@@ -347,6 +347,7 @@ h1, h2, h3, h4, h5, h6 {
 .producto-grilla .precio {
 	color: #FFFFFF;
 	font-weight: bold;
+	text-align: right;
 	vertical-align: top;
 }
 
@@ -400,6 +401,20 @@ h1, h2, h3, h4, h5, h6 {
 
 	.piepag {
 		text-align: left;
+	}
+
+	.producto-grilla .titulo {
+		float: left;
+		width: 70%;
+	}
+
+	.producto-grilla .precio {
+		float: left;
+		width: 30%;
+	}
+
+	.producto-grilla .resumen {
+		clear: both;
 	}
 }
 

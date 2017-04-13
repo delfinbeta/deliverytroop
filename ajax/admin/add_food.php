@@ -3,9 +3,11 @@ require_once("../../configuracion/inicio_admin.php");
 
 // Clases
 require_once("../../clases/clase_producto.php");
+require_once("../../clases/clase_presentacion.php");
 
 // Objetos
 $producto = new Producto($conexion);
+$presentacion = new Presentacion($conexion);
 
 // Recibir Datos
 if(isset($_POST['restaurante'])) { $id_restaurante = $_POST['restaurante']; } else { $id_restaurante = 0; }
@@ -54,6 +56,20 @@ if(!$nombre_imagen == "") {
 
 if(!$error) {
 	if($producto->insertar($id_restaurante, $nombre, $resumen, $descripcion, $recomendado, $nombre_imagen)) {
+    $id_producto = $producto->obtener_id();
+
+    if(isset($_POST['opcion1'])) {
+      $i = 0;
+      $opciones1 = $_POST['opcion1'];
+      $opciones2 = $_POST['opcion2'];
+      $precios = $_POST['precio'];
+      foreach($opciones1 as $reg_opc1) {
+        if($precios[$i] == '') { $precios[$i] = 0; }
+        $presentacion->insertar($id_producto, $reg_opc1, $opciones2[$i], $precios[$i]);
+        $i++;
+      }
+    }
+
 		echo json_encode(array("error" => false, "mensaje" => 'Producto Agregado'));
 	} else {
 		echo json_encode(array("error" => true, "mensaje" => $producto->error));

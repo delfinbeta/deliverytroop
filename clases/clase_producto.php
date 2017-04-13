@@ -59,9 +59,10 @@ class Producto {
 		$sql = sprintf("INSERT INTO productos(restaurante, nombre, resumen, descripcion, recomendado, imagen, estado, fecha_registro) VALUES('%d', '%s', '%s', '%s', '%d', '%s', 1, CURDATE())", $restaurante, $nombre, $resumen, $descripcion, $recomendado, $imagen);
 		
 		if($inserto = mysqli_query($this->conexion, $sql)) {
-			$id_restaurante = mysqli_insert_id($this->conexion);
+			$id_producto = mysqli_insert_id($this->conexion);
+			$this->id = $id_producto;
 			
-			$sql2 = sprintf("UPDATE productos SET orden='%d' WHERE id='%d'", $id_restaurante, $id_restaurante);
+			$sql2 = sprintf("UPDATE productos SET orden='%d' WHERE id='%d'", $id_producto, $id_producto);
 			
 			if($actualizo = mysqli_query($this->conexion, $sql2)) {
 				return true;

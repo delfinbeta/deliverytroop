@@ -5,11 +5,13 @@ require("configuracion/inicio.php");
 require("clases/clase_zipcode.php");
 require("clases/clase_restaurante.php");
 require("clases/clase_producto.php");
+require("clases/clase_presentacion.php");
 
 // Objetos
 $zipcode = new Zipcode($conexion);
 $restaurante = new Restaurante($conexion);
 $producto = new Producto($conexion);
+$presentacion = new Presentacion($conexion);
 
 if(!$zipcode->datos2($_SESSION['zipcode'])) { header("location: index.php"); }
 
@@ -54,6 +56,7 @@ $total_productos = $producto->total_listado($id_restaurante, -1, 1);
 <body>
 	<?php require("plantillas/menu.php"); ?>
 	<?php require("plantillas/encabezado.php"); ?>
+	<?php require("plantillas/navegacion.php"); ?>
 
 	<section class="franja-gris">
 		<div class="container">
@@ -74,20 +77,24 @@ $total_productos = $producto->total_listado($id_restaurante, -1, 1);
 			<?php if($total_productos > 0) { ?>
 			<div class="row">
 				<?php foreach($listado_productos as $reg_producto) {
+								$id_producto = $reg_producto->obtener_id();
+
 								if($reg_producto->imagen != '') { $producto_img = "archivos_productos/".$reg_producto->imagen; }
-								else { $producto_img = "img/no_img.jpg"; } ?>
+								else { $producto_img = "img/no_img.jpg"; }
+
+								$precio = $presentacion->precio_minimo($id_producto); ?>
 				<div class="col-sm-6 col-md-3">
 					<article class="producto-grilla">
 						<div class="imagen">
 							<img src="<?=$producto_img?>" alt="<?=$reg_producto->nombre?>" title="<?=$reg_producto->nombre?>" class="img-responsive center-block" />
-							<button type="button" class="boton_foto" name="ordenar" data-id="<?=$reg_producto->obtener_id()?>">Order Now</button>
+							<button type="button" class="boton_foto" name="ordenar" data-id="<?=$id_producto?>">Order Now</button>
 						</div>
 						<div class="info">
 							<div class="titulo"><?=$reg_producto->nombre?></div>
-							<div class="precio">$00.00</div>
+							<div class="precio">$<?=number_format($precio, 2)?></div>
 							<div class="resumen">
 								<?=$reg_producto->resumen?><br />
-								<a href="#" data-id="<?=$reg_producto->obtener_id()?>" class="food-details">More Details</a>
+								<a href="#" data-id="<?=$id_producto?>" class="food-details">More Details</a>
 							</div>
 						</div>
 					</article>

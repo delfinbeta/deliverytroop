@@ -5,10 +5,16 @@ require("../sesion.php");
 // Clases
 require("../../clases/clase_producto.php");
 require("../../clases/clase_restaurante.php");
+require("../../clases/clase_presentacion.php");
+require("../../clases/clase_opcion1.php");
+require("../../clases/clase_opcion2.php");
 
 // Objetos
 $producto = new Producto($conexion);
 $restaurante = new Restaurante($conexion);
+$presentacion = new Presentacion($conexion);
+$opcion1 = new Opcion1($conexion);
+$opcion2 = new Opcion2($conexion);
 
 if(isset($_GET['id'])) { $id_producto = $_GET['id']; } else { $id_producto = 0; }
 ?>
@@ -142,6 +148,78 @@ if(isset($_GET['id'])) { $id_producto = $_GET['id']; } else { $id_producto = 0; 
 						</div>
 					</div>
 				</div>
+
+				<form id="form_presentacionesM" name="form_presentacionesM" method="post" enctype="multipart/form-data">
+					<input type="hidden" name="producto" value="<?=$id_producto?>" />
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<div class="pull-left">Presentations</div>
+							<div class="pull-right">
+								<button type="button" id="agregar-presentacion" class="btn btn-success"><i class="fa fa-plus"></i> Add Presentation</button>
+							</div>
+							<div class="clearfix"></div>
+						</div>
+						<table id="presentaciones" class="table">
+							<thead>
+								<tr>
+									<th width="30%">Option 1</th>
+									<th width="30%">Option 2</th>
+									<th width="30%">Price $</th>
+									<th width="10%">&nbsp;</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php // Listar Presentaciones
+											$listado_presentaciones = $presentacion->listado($id_producto, 0, 0);
+											$total_presentaciones = $presentacion->total_listado($id_producto, 0, 0);
+
+											if($total_presentaciones > 0) {
+												foreach($listado_presentaciones as $reg_presentacion) {
+													$id_opc1 = $reg_presentacion->obtener_opcion1();
+													$id_opc2 = $reg_presentacion->obtener_opcion2(); ?>
+								<tr>
+									<td>
+										<select name="opcion1[]" class="form-control">
+											<option value="0">Select</option>
+											<?php // Listar Opciones 1
+														$listado_opciones1 = $opcion1->listado(1);
+														$total_opciones1 = $opcion1->total_listado(1);
+
+														if($total_opciones1 > 0) {
+															foreach($listado_opciones1 as $reg_opcion1) { ?>
+											<option value="<?=$reg_opcion1->obtener_id()?>" <?php if($reg_opcion1->obtener_id() == $id_opc1) { echo 'selected'; } ?>><?=$reg_opcion1->nombre?></option>
+											<?php 	}
+														} ?>
+										</select>
+									</td>
+									<td>
+										<select name="opcion2[]" class="form-control">
+											<option value="0">Select</option>
+											<?php // Listar Opciones 1
+														$listado_opciones2 = $opcion2->listado(1);
+														$total_opciones2 = $opcion2->total_listado(1);
+
+														if($total_opciones2 > 0) {
+															foreach($listado_opciones2 as $reg_opcion2) { ?>
+											<option value="<?=$reg_opcion2->obtener_id()?>" <?php if($reg_opcion2->obtener_id() == $id_opc2) { echo 'selected'; } ?>><?=$reg_opcion2->nombre?></option>
+											<?php 	}
+														} ?>
+										</select>
+									</td>
+									<td>
+										<input type="text" class="form-control text-right" name="precio[]" placeholder="0.00" value="<?=$reg_presentacion->precio?>" />
+									</td>
+									<td class="text-center"><a href="#" class="eliminar-presentacion"><i class="icono fa fa-remove"></i></a></td>
+								</tr>
+								<?php 	}
+											} ?>
+							</tbody>
+						</table>
+						<div class="row text-center">
+      				<button type="submit" class="btn btn-primary">Save</button>
+        		</div>
+					</div>
+				</form>
 				<?php } else { ?>
         <div class="alert alert-danger" role="alert">
           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
@@ -165,7 +243,34 @@ if(isset($_GET['id'])) { $id_producto = $_GET['id']; } else { $id_producto = 0; 
   <script src="../../js/admin_food.js"></script>
   <script>
 	  $(document).ready(function() {
+	  	var op1 = '';
+    	var op2 = '';
+
+      $.post("../../ajax/admin/opciones1.php", function(data) {
+      	op1 = data;
+      });
+
+      $.post("../../ajax/admin/opciones2.php", function(data) {
+      	op2 = data;
+      });
+
 	    $('.textarea').wysihtml5();
+
+	    $('#agregar-presentacion').click(function() {
+	    	var fila = '<tr>';
+	    	fila += '<td>' + op1 + '</td>';
+	    	fila += '<td>' + op2 + '</td>';
+	    	fila += '<td><input type="text" class="form-control text-right" name="precio[]" placeholder="0.00" value="0.00" /></td>';
+	    	fila += '<td class="text-center"><a href="#" class="eliminar-presentacion"><i class="icono fa fa-remove"></i></a></td>';
+	    	fila += '</tr>';
+
+	    	$('#presentaciones > tbody').append(fila);
+	    });
+
+	    $(document).on('click', '.eliminar-presentacion', function (ev) {
+	    	ev.preventDefault();
+	    	$(this).closest('tr').remove();
+	    });
 	  });
   </script>
 </body>
