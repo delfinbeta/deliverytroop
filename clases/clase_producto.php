@@ -3,6 +3,8 @@ class Producto {
 	########################################  Atributos  ########################################
 	
 	private $id;
+	private $tipo;
+	private $categoria;
 	private $restaurante;
 	public  $nombre;
 	public  $resumen;
@@ -25,8 +27,18 @@ class Producto {
 	}
 	
 	// Insertar un Producto a la Base de Datos
-	public function insertar($restaurante, $nombre, $resumen, $descripcion, $recomendado, $imagen) {
-		if(!$restaurante = $this->seguridad->entero_seguro($restaurante)) {
+	public function insertar($tipo, $categoria, $restaurante, $nombre, $resumen, $descripcion, $recomendado, $imagen) {
+		if(!$tipo = $this->seguridad->entero_seguro($tipo)) {
+			$this->error = "Tipo no es Seguro";
+			return false;
+		}
+
+		if(!is_int($categoria = $this->seguridad->entero_seguro($categoria))) {
+			$this->error = "Categoría no es Seguro";
+			return false;
+		}
+
+		if(!is_int($restaurante = $this->seguridad->entero_seguro($restaurante))) {
 			$this->error = "Restaurante no es Seguro";
 			return false;
 		}
@@ -56,7 +68,7 @@ class Producto {
 			return false;
 		}
 		
-		$sql = sprintf("INSERT INTO productos(restaurante, nombre, resumen, descripcion, recomendado, imagen, estado, fecha_registro) VALUES('%d', '%s', '%s', '%s', '%d', '%s', 1, CURDATE())", $restaurante, $nombre, $resumen, $descripcion, $recomendado, $imagen);
+		$sql = sprintf("INSERT INTO productos(tipo, categoria, restaurante, nombre, resumen, descripcion, recomendado, imagen, estado, fecha_registro) VALUES('%d', '%d', '%d', '%s', '%s', '%s', '%d', '%s', 1, CURDATE())", $tipo, $categoria, $restaurante, $nombre, $resumen, $descripcion, $recomendado, $imagen);
 		
 		if($inserto = mysqli_query($this->conexion, $sql)) {
 			$id_producto = mysqli_insert_id($this->conexion);
@@ -77,13 +89,23 @@ class Producto {
 	}
 	
 	// Actualizar un Producto a la Base de Datos identificado por su id
-	public function actualizar($id, $restaurante, $nombre, $resumen, $descripcion, $recomendado, $imagen) {
+	public function actualizar($id, $tipo, $categoria, $restaurante, $nombre, $resumen, $descripcion, $recomendado, $imagen) {
 		if(!$id = $this->seguridad->entero_seguro($id)) {
 			$this->error = "ID no es Seguro";
 			return false;
 		}
 
-		if(!$restaurante = $this->seguridad->entero_seguro($restaurante)) {
+		if(!$tipo = $this->seguridad->entero_seguro($tipo)) {
+			$this->error = "Tipo no es Seguro";
+			return false;
+		}
+
+		if(!is_int($categoria = $this->seguridad->entero_seguro($categoria))) {
+			$this->error = "Categoría no es Seguro";
+			return false;
+		}
+
+		if(!is_int($restaurante = $this->seguridad->entero_seguro($restaurante))) {
 			$this->error = "Restaurante no es Seguro";
 			return false;
 		}
@@ -113,7 +135,7 @@ class Producto {
 			return false;
 		}
 		
-		$sql = sprintf("UPDATE productos SET restaurante='%d', nombre='%s', resumen='%s', descripcion='%s', recomendado='%d', imagen='%s' WHERE id='%d'", $restaurante, $nombre, $resumen, $descripcion, $recomendado, $imagen, $id);
+		$sql = sprintf("UPDATE productos SET tipo='%d', categoria='%d', restaurante='%d', nombre='%s', resumen='%s', descripcion='%s', recomendado='%d', imagen='%s' WHERE id='%d'", $tipo, $categoria, $restaurante, $nombre, $resumen, $descripcion, $recomendado, $imagen, $id);
 		
 		if($actualizo = mysqli_query($this->conexion, $sql)) {
 			return true;
@@ -257,6 +279,8 @@ class Producto {
 		if($query = mysqli_query($this->conexion, $sql)) {
 			if($rproducto = mysqli_fetch_assoc($query)) {
 				$this->id = $rproducto['id'];
+				$this->tipo = $rproducto['tipo'];
+				$this->categoria = $rproducto['categoria'];
 				$this->restaurante = $rproducto['restaurante'];
 				$this->nombre = $rproducto['nombre'];
 				$this->resumen = $rproducto['resumen'];
@@ -281,6 +305,25 @@ class Producto {
 		return $this->id;
 	}
 	
+	public function obtener_codTipo() {
+		return $this->tipo;
+	}
+	
+	public function obtener_tipo() {
+		switch($this->tipo) {
+			case 1: $estado = "Restaurants"; break;
+			case 2: $estado = "Drinks"; break;
+			case 3: $estado = "Others"; break;
+			default: $estado = "---"; break;
+		}
+		
+		return $estado;
+	}
+	
+	public function obtener_categoria() {
+		return $this->categoria;
+	}
+	
 	public function obtener_restaurante() {
 		return $this->restaurante;
 	}
@@ -301,7 +344,17 @@ class Producto {
 	}
 	
 	// Obtener listado de todos los Productos
-	public function listado($restaurante=0, $recomendado=-1, $estado=-1) {
+	public function listado($tipo=0, $categoria=0, $restaurante=0, $recomendado=-1, $estado=-1) {
+		if(!is_int($tipo = $this->seguridad->entero_seguro($tipo))) {
+			$this->error = "Tipo no es Seguro";
+			return false;
+		}
+		
+		if(!is_int($categoria = $this->seguridad->entero_seguro($categoria))) {
+			$this->error = "Categoria no es Seguro";
+			return false;
+		}
+		
 		if(!is_int($restaurante = $this->seguridad->entero_seguro($restaurante))) {
 			$this->error = "Restaurante no es Seguro";
 			return false;
@@ -319,6 +372,16 @@ class Producto {
 		
 		$formato = "SELECT id FROM productos WHERE 1=1 ";
 		$argumentos = array();
+
+		if($tipo > 0) {
+			$formato .= "AND tipo='%d' ";
+			$argumentos[] = $tipo;
+		}
+
+		if($categoria > 0) {
+			$formato .= "AND categoria='%d' ";
+			$argumentos[] = $categoria;
+		}
 
 		if($restaurante > 0) {
 			$formato .= "AND restaurante='%d' ";
@@ -353,7 +416,17 @@ class Producto {
 	}
 	
 	// Obtener listado de todos los Productos paginados
-	public function listado_paginado($restaurante=0, $recomendado=-1, $estado=-1, $inicio, $fin) {
+	public function listado_paginado($tipo=0, $categoria=0, $restaurante=0, $recomendado=-1, $estado=-1, $inicio, $fin) {
+		if(!is_int($tipo = $this->seguridad->entero_seguro($tipo))) {
+			$this->error = "Tipo no es Seguro";
+			return false;
+		}
+		
+		if(!is_int($categoria = $this->seguridad->entero_seguro($categoria))) {
+			$this->error = "Categoria no es Seguro";
+			return false;
+		}
+		
 		if(!is_int($restaurante = $this->seguridad->entero_seguro($restaurante))) {
 			$this->error = "Restaurante no es Seguro";
 			return false;
@@ -381,6 +454,16 @@ class Producto {
 		
 		$formato = "SELECT id FROM productos WHERE 1=1 ";
 		$argumentos = array();
+
+		if($tipo > 0) {
+			$formato .= "AND tipo='%d' ";
+			$argumentos[] = $tipo;
+		}
+
+		if($categoria > 0) {
+			$formato .= "AND categoria='%d' ";
+			$argumentos[] = $categoria;
+		}
 
 		if($restaurante > 0) {
 			$formato .= "AND restaurante='%d' ";
@@ -418,7 +501,17 @@ class Producto {
 	}
 	
 	// Contar el total de Productos
-	public function total_listado($restaurante=0, $recomendado=-1, $estado=-1) {
+	public function total_listado($tipo=0, $categoria=0, $restaurante=0, $recomendado=-1, $estado=-1) {
+		if(!is_int($tipo = $this->seguridad->entero_seguro($tipo))) {
+			$this->error = "Tipo no es Seguro";
+			return false;
+		}
+		
+		if(!is_int($categoria = $this->seguridad->entero_seguro($categoria))) {
+			$this->error = "Categoria no es Seguro";
+			return false;
+		}
+		
 		if(!is_int($restaurante = $this->seguridad->entero_seguro($restaurante))) {
 			$this->error = "Restaurante no es Seguro";
 			return false;
@@ -436,6 +529,16 @@ class Producto {
 		
 		$formato = "SELECT id FROM productos WHERE 1=1 ";
 		$argumentos = array();
+
+		if($tipo > 0) {
+			$formato .= "AND tipo='%d' ";
+			$argumentos[] = $tipo;
+		}
+
+		if($categoria > 0) {
+			$formato .= "AND categoria='%d' ";
+			$argumentos[] = $categoria;
+		}
 
 		if($restaurante > 0) {
 			$formato .= "AND restaurante='%d' ";

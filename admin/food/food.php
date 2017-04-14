@@ -8,6 +8,7 @@ require("../../clases/clase_restaurante.php");
 require("../../clases/clase_presentacion.php");
 require("../../clases/clase_opcion1.php");
 require("../../clases/clase_opcion2.php");
+require("../../clases/clase_categoria.php");
 
 // Objetos
 $producto = new Producto($conexion);
@@ -15,6 +16,7 @@ $restaurante = new Restaurante($conexion);
 $presentacion = new Presentacion($conexion);
 $opcion1 = new Opcion1($conexion);
 $opcion2 = new Opcion2($conexion);
+$categoria = new Categoria($conexion);
 
 if(isset($_GET['id'])) { $id_producto = $_GET['id']; } else { $id_producto = 0; }
 ?>
@@ -54,6 +56,8 @@ if(isset($_GET['id'])) { $id_producto = $_GET['id']; } else { $id_producto = 0; 
 								if($producto->imagen == '') { $ruta_img = $GLOBALS['domain_root']."/img/no_img.jpg"; }
 								else { $ruta_img = $GLOBALS['domain_root']."/archivos_productos/".$producto->imagen; }
 
+								$tipo = $producto->obtener_codTipo();
+								$id_categoria = $producto->obtener_categoria();
 								$id_restaurante = $producto->obtener_restaurante();
 
 								$marca = array('', '');
@@ -74,21 +78,23 @@ if(isset($_GET['id'])) { $id_producto = $_GET['id']; } else { $id_producto = 0; 
 	              <input type="hidden" name="id" value="<?=$id_producto?>" />
 	              <div class="row">
 	              	<div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+	              		<label for="tipo">Type:</label>
+	                  <select name="tipo" class="form-control" required>
+	                    <option value="" selected>Select Type</option>
+	                    <option value="1" <?php if($tipo == 1) { echo 'selected'; } ?>>Restaurants</option>
+	                    <option value="2" <?php if($tipo == 2) { echo 'selected'; } ?>>Drinks</option>
+	                    <option value="3" <?php if($tipo == 3) { echo 'selected'; } ?>>Others</option>
+	                  </select>
+	                  <span id="bloqueErrorTipo" class="help-block"></span>
+	            		</div>
+	            		<div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback" id="opcion">
+	            			<?php if($tipo == 1) { ?>
 	            			<label for="restaurante">Restaurant:</label>
 	            			<select name="restaurante" class="form-control">
+	            				<option value="">Select Restaurant</option>
 	                    <?php // Listar Restaurantes
 	                          $listado_restaurantes = $restaurante->listado(0, '', 1);
 	                          $total_restaurantes = $restaurante->total_listado(0, '', 1);
-
-	                          if($total_restaurantes > 0) {
-	                            foreach($listado_restaurantes as $reg_restaurante) { ?>
-	                    <option value="<?=$reg_restaurante->obtener_id()?>"><?=$reg_restaurante->nombre?></option>
-	                    <?php   }
-	                          } ?>
-
-	                    <?php // Listar Restaurantes
-	                          $listado_restaurantes = $restaurante->listado(1, 1);
-	                          $total_restaurantes = $restaurante->total_listado(1, 1);
 
 	                          if($total_restaurantes > 0) {
 	                            foreach($listado_restaurantes as $reg_restaurante) { ?>
@@ -96,22 +102,40 @@ if(isset($_GET['id'])) { $id_producto = $_GET['id']; } else { $id_producto = 0; 
 	                    <?php   }
 	                          } ?>
 	                  </select>
-	            		</div>
-	            		<div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-	            			<label for="nombre">Name:</label>
-	            			<div class="input-group">
-	            				<input type="text" class="form-control" name="nombre" placeholder="Name" value="<?=$producto->nombre?>" aria-describedby="bloqueErrorNombre"  />
-	            				<div class="input-group-addon"><i class="fa fa-tags"></i></div>
-	            			</div>
-	            			<span id="bloqueErrorNombre" class="help-block"></span>
+	                  <span id="bloqueErrorRestaurante" class="help-block"></span>
+	                  <?php } ?>
+	                  <?php if($tipo > 1) { ?>
+	            			<label for="categoria">Category:</label>
+	            			<select name="categoria" class="form-control">
+	            				<option value="">Select Category</option>
+	                    <?php // Listar Categorias
+	                          $listado_categorias = $categoria->listado($tipo, 1);
+	                          $total_categorias = $categoria->total_listado($tipo, 1);
+
+	                          if($total_categorias > 0) {
+	                            foreach($listado_categorias as $reg_categoria) { ?>
+	                    <option value="<?=$reg_categoria->obtener_id()?>" <?php if($reg_categoria->obtener_id() == $id_categoria) { echo 'selected'; } ?>><?=$reg_categoria->nombre?></option>
+	                    <?php   }
+	                          } ?>
+	                  </select>
+	                  <span id="bloqueErrorCategoria" class="help-block"></span>
+	                  <?php } ?>
 	            		</div>
 	              </div>
 	              <div class="row">
-	                <div class="col-xs-12 form-group has-feedback">
+	              	<div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+	              		<label for="nombre">Name:</label>
+	            			<div class="input-group">
+	            				<div class="input-group-addon"><i class="fa fa-tags"></i></div>
+	            				<input type="text" class="form-control" name="nombre" placeholder="Name" value="<?=$producto->nombre?>" aria-describedby="bloqueErrorNombre"  />
+	            			</div>
+	            			<span id="bloqueErrorNombre" class="help-block"></span>
+	              	</div>
+	                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
 	                  <label for="resumen">Resume:</label>
 	                  <div class="input-group">
-	                    <div class="input-group-addon"><i class="fa fa-file"></i></div>
 	                    <input type="text" class="form-control" name="resumen" placeholder="Resumen" value="<?=$producto->resumen?>" aria-describedby="bloqueErrorResumen"  />
+	                    <div class="input-group-addon"><i class="fa fa-file"></i></div>
 	                  </div>
 	                  <span id="bloqueErrorResumen" class="help-block"></span>
 	                </div>
@@ -245,6 +269,7 @@ if(isset($_GET['id'])) { $id_producto = $_GET['id']; } else { $id_producto = 0; 
 	  $(document).ready(function() {
 	  	var op1 = '';
     	var op2 = '';
+      var $campoTipo = $(this).find('select[name="tipo"]');
 
       $.post("../../ajax/admin/opciones1.php", function(data) {
       	op1 = data;
@@ -252,6 +277,22 @@ if(isset($_GET['id'])) { $id_producto = $_GET['id']; } else { $id_producto = 0; 
 
       $.post("../../ajax/admin/opciones2.php", function(data) {
       	op2 = data;
+      });
+
+      $campoTipo.change(function() {
+        var valor = $(this).val();
+
+        if(valor == 1) {
+          $.post("../../ajax/admin/restaurants2.php", function(data) {
+            $('#opcion').html(data);
+          });
+        }
+
+        if(valor > 1) {
+          $.post("../../ajax/admin/categories2.php", { tipo: valor }, function(data) {
+            $('#opcion').html(data);
+          });
+        }
       });
 
 	    $('.textarea').wysihtml5();

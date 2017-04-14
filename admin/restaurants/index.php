@@ -86,7 +86,7 @@ $total = $restaurante->total_listado(0, '', 1);
 	                </td>
 	                <td><a href="restaurant.php?id=<?=$registro->obtener_id()?>"><?=$registro->nombre?></a></td>
 	                <td><?=$nombre_categoria?></td>
-	                <td><a href="../food/index.php?id=<?=$registro->obtener_id()?>"><i class="icono fa fa-cutlery"></i></a></td>
+	                <td><a href="../food/index.php?rest=<?=$registro->obtener_id()?>"><i class="icono fa fa-cutlery"></i></a></td>
 	                <td><a href="restaurant.php?id=<?=$registro->obtener_id()?>"><i class="icono fa fa-file-text-o"></i></a></td>
 	                <td><a href="#" class="boton-eliminar" data-reg="<?=$registro->obtener_id()?>"><i class="icono fa fa-remove"></i></a></td>
 	              </tr>

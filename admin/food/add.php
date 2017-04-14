@@ -49,40 +49,36 @@ $restaurante = new Restaurante($conexion);
                 <i class="fa fa-times"></i> <span id="msjError">Error</span>
               </div>
               <div class="row">
-              	<div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-            			<label for="restaurante" class="sr-only">Restaurant:</label>
-            			<select name="restaurante" class="form-control" required>
-                    <option value="">Select Restaurant</option>
-                    <?php // Listar Restaurantes
-                          $listado_restaurantes = $restaurante->listado(0, '', 1);
-                          $total_restaurantes = $restaurante->total_listado(0, '', 1);
-
-                          if($total_restaurantes > 0) {
-                            foreach($listado_restaurantes as $reg_restaurante) { ?>
-                    <option value="<?=$reg_restaurante->obtener_id()?>"><?=$reg_restaurante->nombre?></option>
-                    <?php   }
-                          } ?>
+                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                  <label for="tipo" class="sr-only">Type:</label>
+                  <select name="tipo" class="form-control" >
+                    <option value="" selected>Select Type</option>
+                    <option value="1">Restaurants</option>
+                    <option value="2">Drinks</option>
+                    <option value="3">Others</option>
                   </select>
-            		</div>
-            		<div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                  <span id="bloqueErrorTipo" class="help-block"></span>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback" id="opcion">&nbsp;</div>
+              </div>
+              <div class="row">
+              	<div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
             			<label for="nombre" class="sr-only">Name:</label>
                   <div class="input-group">
-                    <input type="text" class="form-control" name="nombre" placeholder="Name" aria-describedby="bloqueErrorNombre"  />
                     <div class="input-group-addon"><i class="fa fa-tags"></i></div>
+                    <input type="text" class="form-control" name="nombre" placeholder="Name" aria-describedby="bloqueErrorNombre"  />
                   </div>
                   <span id="bloqueErrorNombre" class="help-block"></span>
             		</div>
-              </div>
-              <div class="row">
-                <div class="col-xs-12 form-group has-feedback">
+            		<div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                   <label for="resumen" class="sr-only">Resume:</label>
                   <div class="input-group">
-                    <div class="input-group-addon"><i class="fa fa-file"></i></div>
                     <input type="text" class="form-control" name="resumen" placeholder="Resumen" aria-describedby="bloqueErrorResumen"  />
+                    <div class="input-group-addon"><i class="fa fa-file"></i></div>
                   </div>
                   <span id="bloqueErrorResumen" class="help-block"></span>
-                </div>
-          		</div>
+            		</div>
+              </div>
               <div class="row">
                 <div class="col-xs-12 form-group has-feedback">
                   <label for="descripcion" class="sr-only">Description:</label>
@@ -153,6 +149,7 @@ $restaurante = new Restaurante($conexion);
 	  $(document).ready(function() {
       var op1 = '';
       var op2 = '';
+      var $campoTipo = $(this).find('select[name="tipo"]');
 
       $.post("../../ajax/admin/opciones1.php", function(data) {
         op1 = data;
@@ -160,6 +157,22 @@ $restaurante = new Restaurante($conexion);
 
       $.post("../../ajax/admin/opciones2.php", function(data) {
         op2 = data;
+      });
+
+      $campoTipo.change(function() {
+        var valor = $(this).val();
+
+        if(valor == 1) {
+          $.post("../../ajax/admin/restaurants1.php", function(data) {
+            $('#opcion').html(data);
+          });
+        }
+
+        if(valor > 1) {
+          $.post("../../ajax/admin/categories1.php", { tipo: valor }, function(data) {
+            $('#opcion').html(data);
+          });
+        }
       });
 
       $('.textarea').wysihtml5();

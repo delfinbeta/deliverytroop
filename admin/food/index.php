@@ -10,11 +10,12 @@ require("../../clases/clase_restaurante.php");
 $producto = new Producto($conexion);
 $restaurante = new Restaurante($conexion);
 
-if(isset($_GET['id'])) { $id_restaurante = $_GET['id']; } else { $id_restaurante = 0; }
+if(isset($_GET['tipo'])) { $tipo = $_GET['tipo']; } else { $tipo = 0; }
+if(isset($_GET['rest'])) { $id_restaurante = $_GET['rest']; } else { $id_restaurante = 0; }
 
 // Listar Productos
-$listado = $producto->listado($id_restaurante, -1, 1);
-$total = $producto->total_listado($id_restaurante, -1, 1);
+$listado = $producto->listado($tipo, 0, $id_restaurante, -1, 1);
+$total = $producto->total_listado($tipo, 0, $id_restaurante, -1, 1);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -69,6 +70,7 @@ $total = $producto->total_listado($id_restaurante, -1, 1);
 				        	<th width="100"></th>
                   <th>Food</th>
 				        	<th>Restaurant</th>
+				        	<th>Type</th>
                   <th width="26">&nbsp;</th>
                   <th width="26">&nbsp;</th>
                 </tr>
@@ -87,6 +89,7 @@ $total = $producto->total_listado($id_restaurante, -1, 1);
 	                </td>
 	                <td><a href="food.php?id=<?=$registro->obtener_id()?>"><?=$registro->nombre?></a></td>
 	                <td><?=$nombre_restaurante?></td>
+	                <td><?=$registro->obtener_tipo()?></td>
 	                <td><a href="food.php?id=<?=$registro->obtener_id()?>"><i class="icono fa fa-file-text-o"></i></a></td>
 	                <td><a href="#" class="boton-eliminar" data-reg="<?=$registro->obtener_id()?>"><i class="icono fa fa-remove"></i></a></td>
 	              </tr>
@@ -115,6 +118,7 @@ $total = $producto->total_listado($id_restaurante, -1, 1);
 	    	"scrollX": true,
 	      "order": [[ 1, "asc" ]],
 	      "columns": [
+	        null,
 	        null,
 	        null,
 	        null,

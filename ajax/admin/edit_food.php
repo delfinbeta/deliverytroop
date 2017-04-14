@@ -3,12 +3,16 @@ require_once("../../configuracion/inicio_admin.php");
 
 // Clases
 require_once("../../clases/clase_producto.php");
+require_once("../../clases/clase_restaurante.php");
 
 // Objetos
 $producto = new Producto($conexion);
+$restaurante = new Restaurante($conexion);
 
 // Recibir Datos
 if(isset($_POST['id'])) { $id_producto = $_POST['id']; } else { $id_producto = ''; }
+if(isset($_POST['tipo'])) { $tipo = $_POST['tipo']; } else { $tipo = 0; }
+if(isset($_POST['categoria'])) { $id_categoria = $_POST['categoria']; } else { $id_categoria = 0; }
 if(isset($_POST['restaurante'])) { $id_restaurante = $_POST['restaurante']; } else { $id_restaurante = 0; }
 if(isset($_POST['nombre'])) { $nombre = $_POST['nombre']; } else { $nombre = ''; }
 if(isset($_POST['resumen'])) { $resumen = $_POST['resumen']; } else { $resumen = ''; }
@@ -58,8 +62,10 @@ if($producto->datos($id_producto)) {
 	$error = true;
 }
 
+if($restaurante->datos($id_restaurante)) { $id_categoria = $restaurante->obtener_categoria(); }
+
 if(!$error) {
-	if($producto->actualizar($id_producto, $id_restaurante, $nombre, $resumen, $descripcion, $recomendado, $nombre_imagen)) {
+	if($producto->actualizar($id_producto, $tipo, $id_categoria, $id_restaurante, $nombre, $resumen, $descripcion, $recomendado, $nombre_imagen)) {
 		echo json_encode(array("error" => false, "mensaje" => 'Producto Actualizado'));
 	} else {
 		echo json_encode(array("error" => true, "mensaje" => $producto->error));

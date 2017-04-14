@@ -15,15 +15,45 @@ $(document).ready(function() {
 		ev.preventDefault();
 
 		var enviar = true;
+		var $campoTipo = $(this).find('select[name="tipo"]');
 		var $campoNombre = $(this).find('input[name="nombre"]');
 		var $campoResumen = $(this).find('input[name="resumen"]');
 
+		var tipo = $campoTipo.val();
 		var nombre = $campoNombre.val();
 		var resumen = $campoResumen.val();
 		
 		$(".form-group").removeClass('has-error');
 		$(".help-block").html("");
 		$("#error").addClass('hidden');
+
+		if(!tipo) {
+			$campoTipo.parents('.form-group').addClass('has-error');
+			$("#bloqueErrorTipo").html("Type is required");
+			enviar = false;
+		} else {
+			if(tipo == 1) {
+				var $campoRestaurante = $(this).find('select[name="restaurante"]');
+				var restaurante = $campoRestaurante.val();
+
+				if(restaurante == 0) {
+					$campoRestaurante.parents('.form-group').addClass('has-error');
+					$("#bloqueErrorRestaurante").html("Restaurant is required");
+					enviar = false;
+				}
+			}
+
+			if(tipo == 2) {
+				var $campoCategoria = $(this).find('select[name="categoria"]');
+				var categoria = $campoCategoria.val();
+
+				if(categoria == 0) {
+					$campoCategoria.parents('.form-group').addClass('has-error');
+					$("#bloqueErrorCategoria").html("Category is required");
+					enviar = false;
+				}
+			}
+		}
 
 		if(nombre == '') {
 			$campoNombre.parents('.form-group').addClass('has-error');
@@ -73,15 +103,45 @@ $(document).ready(function() {
 		ev.preventDefault();
 
 		var enviar = true;
+		var $campoTipo = $(this).find('select[name="tipo"]');
 		var $campoNombre = $(this).find('input[name="nombre"]');
 		var $campoResumen = $(this).find('input[name="resumen"]');
 
+		var tipo = $campoTipo.val();
 		var nombre = $campoNombre.val();
 		var resumen = $campoResumen.val();
 		
 		$(".form-group").removeClass('has-error');
 		$(".help-block").html("");
 		$("#error").addClass('hidden');
+
+		if(!tipo) {
+			$campoTipo.parents('.form-group').addClass('has-error');
+			$("#bloqueErrorTipo").html("Type is required");
+			enviar = false;
+		} else {
+			if(tipo == 1) {
+				var $campoRestaurante = $(this).find('select[name="restaurante"]');
+				var restaurante = $campoRestaurante.val();
+
+				if(restaurante == 0) {
+					$campoRestaurante.parents('.form-group').addClass('has-error');
+					$("#bloqueErrorRestaurante").html("Restaurant is required");
+					enviar = false;
+				}
+			}
+
+			if(tipo == 2) {
+				var $campoCategoria = $(this).find('select[name="categoria"]');
+				var categoria = $campoCategoria.val();
+
+				if(categoria == 0) {
+					$campoCategoria.parents('.form-group').addClass('has-error');
+					$("#bloqueErrorCategoria").html("Category is required");
+					enviar = false;
+				}
+			}
+		}
 
 		if(nombre == '') {
 			$campoNombre.parents('.form-group').addClass('has-error');

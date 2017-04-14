@@ -29,13 +29,14 @@ if(($hora_servidor < $hora_inicio) || ($hora_servidor > $hora_fin)) { header("lo
 
 $menu[0] = '';
 $menu[2] = 'class="active"';
+$navegacion[0] = 'class="active"';
 
 if($restaurante->imagen != '') { $restaurante_img = "archivos_restaurantes/".$restaurante->imagen; }
 else { $restaurante_img = "img/no_img.jpg"; }
 
 // Listar Productos
-$listado_productos = $producto->listado($id_restaurante, -1, 1);
-$total_productos = $producto->total_listado($id_restaurante, -1, 1);
+$listado_productos = $producto->listado(1, 0, $id_restaurante, -1, 1);
+$total_productos = $producto->total_listado(1, 0, $id_restaurante, -1, 1);
 ?>
 <!DOCTYPE html>
 <html lang="en">
