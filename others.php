@@ -4,10 +4,14 @@ require("configuracion/inicio.php");
 // Clases
 require("clases/clase_zipcode.php");
 require("clases/clase_categoria.php");
+require("clases/clase_producto.php");
+require("clases/clase_presentacion.php");
 
 // Objetos
 $zipcode = new Zipcode($conexion);
 $categoria = new Categoria($conexion);
+$producto = new Producto($conexion);
+$presentacion = new Presentacion($conexion);
 
 if(!$zipcode->datos2($_SESSION['zipcode'])) { header("location: index.php"); }
 
@@ -16,6 +20,10 @@ $menu[2] = 'class="active"';
 $navegacion[2] = 'class="active"';
 
 if(isset($_GET['cat'])) { $id_categoria = $_GET['cat']; } else { $id_categoria = 0; }
+
+// Listar Productos
+$listado_productos = $producto->listado(3, $id_categoria, 0, -1, 1);
+$total_productos = $producto->total_listado(3, $id_categoria, 0, -1, 1);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -59,18 +67,61 @@ if(isset($_GET['cat'])) { $id_categoria = $_GET['cat']; } else { $id_categoria =
 				</div>
 			</div>
 			<hr class="separador2" />
+			<?php if($total_productos > 0) { ?>
 			<div class="row">
+				<?php foreach($listado_productos as $reg_producto) {
+								$id_producto = $reg_producto->obtener_id();
+
+								if($reg_producto->imagen != '') { $producto_img = "archivos_productos/".$reg_producto->imagen; }
+								else { $producto_img = "img/no_img.jpg"; }
+
+								$precio = $presentacion->precio_minimo($id_producto); ?>
 				<div class="col-sm-6 col-md-3">
-					<article>
-						<img src="img/no_img.jpg" alt="No IMG" title="No IMG" class="img-responsive center-block" />
+					<article class="producto-grilla">
+						<div class="imagen">
+							<img src="<?=$producto_img?>" alt="<?=$reg_producto->nombre?>" title="<?=$reg_producto->nombre?>" class="img-responsive center-block" />
+							<button type="button" class="boton_foto" name="ordenar" data-id="<?=$id_producto?>">Order Now</button>
+						</div>
+						<div class="info">
+							<div class="titulo"><?=$reg_producto->nombre?></div>
+							<div class="precio">$<?=number_format($precio, 2)?></div>
+							<div class="resumen">
+								<?=$reg_producto->resumen?><br />
+								<a href="#" data-id="<?=$id_producto?>" class="food-details">More Details</a>
+							</div>
+						</div>
 					</article>
 				</div>
+				<?php } ?>
 			</div>
+			<?php } ?>
 		</div>
 	</section>
 
 	<?php require("plantillas/contacto.php"); ?>
 	<?php require("plantillas/piepag.php"); ?>
+
+	<div id="ProductoDetalles" class="modal fade" tabindex="-1" role="dialog">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title">#PRODUCTO-NOMBRE#</h4>
+	      </div>
+	      <div class="modal-body">
+	        <div class="row">
+	        	<div class="col-xs-12 col-sm-6 col-sm-offset-3 prod-img">#PRODUCTO-IMG#</div>
+	        </div>
+	        <div class="row">
+	        	<div class="col-xs-12 prod-desc">#PRODUCTO-DESCRIPCION#</div>
+	        </div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
 
 	<!-- jQuery -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>

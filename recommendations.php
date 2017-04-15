@@ -17,19 +17,16 @@ if(!$zipcode->datos2($_SESSION['zipcode'])) { header("location: index.php"); }
 
 $menu[0] = '';
 $menu[2] = 'class="active"';
-$navegacion[1] = 'class="active"';
-
-if(isset($_GET['cat'])) { $id_categoria = $_GET['cat']; } else { $id_categoria = 0; }
 
 // Listar Productos
-$listado_productos = $producto->listado(2, $id_categoria, 0, -1, 1);
-$total_productos = $producto->total_listado(2, $id_categoria, 0, -1, 1);
+$listado_productos = $producto->listado(0, 0, 0, 1, 1);
+$total_productos = $producto->total_listado(0, 0, 0, 1, 1);
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
-	<title>Drinks :: Delivery Troop</title>
+	<title>Recommendations :: Delivery Troop</title>
 	<meta name="description" content="Delivery Troop, On Demand Delivery Service" />
 	<meta name="creator" content="www.delfinbeta.com.ve" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -48,24 +45,7 @@ $total_productos = $producto->total_listado(2, $id_categoria, 0, -1, 1);
 
 	<section class="franja-gris">
 		<div class="container">
-			<h1>Drinks</h1>
-			<hr class="separador2" />
-			<div class="row">
-				<div class="col-xs-12">
-					<select name="categoria" class="form-control menu_select" data-url="drinks.php?cat">
-						<option value="0">Select Category</option>
-            <?php // Listar Categorias
-                  $listado_categorias = $categoria->listado(2, 1);
-                  $total_categorias = $categoria->total_listado(2, 1);
-
-                  if($total_categorias > 0) {
-                    foreach($listado_categorias as $reg_categoria) { ?>
-            <option value="<?=$reg_categoria->obtener_id()?>" <?php if($reg_categoria->obtener_id() == $id_categoria) { echo 'selected'; } ?>><?=$reg_categoria->nombre?></option>
-            <?php   }
-                  } ?>
-          </select>
-				</div>
-			</div>
+			<h1>Recommendations</h1>
 			<hr class="separador2" />
 			<?php if($total_productos > 0) { ?>
 			<div class="row">
