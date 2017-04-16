@@ -3,7 +3,7 @@
 		<form id="form_shopping" class="form_shopping" method="post">
 			<div class="col-sm-6 col-md-2">
 				<p><strong>Your info</strong></p>
-				<a src="hotels.php" class="btn btn-default boton-naranja1 col-xs-12"><i class="fa fa-building"></i> I'm staying at a hotel</a>
+				<a src="<?=$GLOBALS['domain_root']?>/hotels.php" class="btn btn-default boton-naranja1 col-xs-12"><i class="fa fa-bed" style="font-size: .8em;"></i> I'm staying at a hotel</a>
 			</div>
 			<div class="col-sm-6 col-md-2">
 				<label for="zipcode" class="control-label">Zipcode:</label>
