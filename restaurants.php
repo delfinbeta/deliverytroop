@@ -42,6 +42,7 @@ $total_restaurantes = $restaurante->total_listado($id_categoria, '', 1);
 <body>
 	<?php require("plantillas/menu.php"); ?>
 	<?php require("plantillas/encabezado.php"); ?>
+	<?php require("plantillas/compra.php"); ?>
 	<?php require("plantillas/navegacion.php"); ?>
 
 	<section class="franja-gris">

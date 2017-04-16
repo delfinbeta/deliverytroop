@@ -36,6 +36,7 @@ if($contenido->datos(3)) {
 <body>
 	<?php require("plantillas/menu.php"); ?>
 	<?php require("plantillas/encabezado.php"); ?>
+	<?php require("plantillas/compra.php"); ?>
 	<?php require("plantillas/navegacion.php"); ?>
 
 	<section class="franja-gris">

@@ -57,6 +57,7 @@ $total_productos = $producto->total_listado(1, 0, $id_restaurante, -1, 1);
 <body>
 	<?php require("plantillas/menu.php"); ?>
 	<?php require("plantillas/encabezado.php"); ?>
+	<?php require("plantillas/compra.php"); ?>
 	<?php require("plantillas/navegacion.php"); ?>
 
 	<section class="franja-gris">

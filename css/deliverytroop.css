@@ -75,6 +75,30 @@ h1, h2, h3, h4, h5, h6 {
 	color: #FFBE00 !important;
 }
 
+.boton-naranja1 {
+	background-color: #D93600;
+	border: 2px solid #D93600;
+	color: #FFFFFF !important;
+}
+
+.boton-naranja1:hover {
+	background-color: transparent;
+	border: 2px solid #D93600;
+	color: #D93600 !important;
+}
+
+.boton-naranja2 {
+	background-color: #F89400;
+	border: 2px solid #F89400;
+	color: #FFFFFF !important;
+}
+
+.boton-naranja2:hover {
+	background-color: transparent;
+	border: 2px solid #F89400;
+	color: #F89400 !important;
+}
+
 .separador {
 	border: 0;
 	height: 2px;
@@ -184,6 +208,18 @@ h1, h2, h3, h4, h5, h6 {
   background-color: #D93600;
   color: #FFFFFF;
   font-weight: normal;
+}
+
+/*********************************************/
+/*****               Compra              *****/
+/*********************************************/
+.compra {
+	padding: 1em;
+}
+
+.compra label {
+	font-weight: normal;
+	margin-bottom: .6em;
 }
 
 /*********************************************/

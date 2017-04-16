@@ -44,6 +44,7 @@ $total_productos = $producto->total_listado(3, $id_categoria, 0, -1, 1);
 <body>
 	<?php require("plantillas/menu.php"); ?>
 	<?php require("plantillas/encabezado.php"); ?>
+	<?php require("plantillas/compra.php"); ?>
 	<?php require("plantillas/navegacion.php"); ?>
 
 	<section class="franja-gris">

@@ -19,6 +19,7 @@ $menu = array('class="active"', '', '', '');
 $navegacion = array('', '', '');
 
 if(!isset($_SESSION['zipcode'])) { $_SESSION['zipcode'] = ''; }
+if(!isset($_SESSION['direccion'])) { $_SESSION['direccion'] = ''; }
 
 // Clases Obligatorias
 require_once($GLOBALS['app_root']."/clases/clase_seguridad.php");
