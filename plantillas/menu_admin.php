@@ -22,6 +22,7 @@
 	</ul>
 	<ul class="nav nav-pills nav-stacked">
 		<li><a href="<?=$GLOBALS['domain_root']?>/admin/zipcodes"><i class="fa fa-map-marker pull-right"></i> Zipcodes</a></li>
+		<li><a href="<?=$GLOBALS['domain_root']?>/admin/hotels"><i class="fa fa-bed pull-right"></i> Hotels</a></li>
 		<li><a href="<?=$GLOBALS['domain_root']?>/admin/restaurants"><i class="fa fa-coffee pull-right"></i> Restaurants</a></li>
 		<li><a href="<?=$GLOBALS['domain_root']?>/admin/food"><i class="fa fa-cutlery pull-right"></i> Food</a></li>
 	</ul>

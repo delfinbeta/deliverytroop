@@ -13,7 +13,7 @@ $restaurante = new Restaurante($conexion);
 $producto = new Producto($conexion);
 $presentacion = new Presentacion($conexion);
 
-if(!$zipcode->datos2($_SESSION['zipcode'])) { header("location: index.php"); }
+if(!$zipcode->datos2($_SESSION['orden']['zipcode'])) { header("location: index.php"); }
 
 if(isset($_GET['id'])) { $id_restaurante = $_GET['id']; } else { $id_restaurante = 0; }
 

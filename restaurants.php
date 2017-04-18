@@ -11,7 +11,7 @@ $zipcode = new Zipcode($conexion);
 $restaurante = new Restaurante($conexion);
 $categoria = new Categoria($conexion);
 
-if(!$zipcode->datos2($_SESSION['zipcode'])) { header("location: index.php"); }
+if(!$zipcode->datos2($_SESSION['orden']['zipcode'])) { header("location: index.php"); }
 
 $menu[0] = '';
 $menu[2] = 'class="active"';

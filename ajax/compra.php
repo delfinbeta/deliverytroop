@@ -9,6 +9,7 @@ $zipcode = new Zipcode($conexion);
 
 // Recibir Datos
 if(isset($_POST['zipcode'])) { $_SESSION['orden']['zipcode'] = $_POST['zipcode']; }
+if(isset($_POST['direccion'])) { $_SESSION['orden']['direccion'] = $_POST['direccion']; }
 
 if($zipcode->datos2($_SESSION['zipcode'])) {
 	echo json_encode(array("error" => false, "mensaje" => 'Zipcode Aceptado'));

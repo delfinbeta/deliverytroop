@@ -58,6 +58,63 @@ $(document).ready(function() {
 	//----------------------------------------------------
 
 	//----------------------------------------------------
+	//  Compra
+	//----------------------------------------------------
+	$("#form_compra").submit(function(ev) {
+		ev.preventDefault();
+
+		var enviar = true;
+		var $campoZipcode = $(this).find('input[name="zipcode"]');
+		var $campoDireccion = $(this).find('input[name="direccion"]');
+
+		var zipcode = $campoZipcode.val();
+		var direccion = $campoDireccion.val();
+
+		$(".form-group").removeClass('has-error');
+		$(".help-block").html("");
+		$("#errorZipcode").addClass('hidden');
+
+		if(zipcode == '') {
+			$campoZipcode.parents('.form-group').addClass('has-error');
+			$("#bloqueErrorOZipcode").html("Zipcode is required");
+			enviar = false;
+		}
+
+		if(direccion == '') {
+			$campoDireccion.parents('.form-group').addClass('has-error');
+			$("#bloqueErrorODireccion").html("Address is required");
+			enviar = false;
+		}
+
+		if(enviar) {
+			var formData = new FormData(this);  // Creamos los datos a enviar con el formulario
+
+			$.ajax({
+        url: "ajax/compra.php",      // URL destino
+        type: "POST",
+        data: formData,               // Datos del Formulario
+        dataType: "JSON",
+        processData: false,           // Evitamos que JQuery procese los datos, daría error
+        contentType: false,           // No especificamos ningún tipo de dato
+        cache: false
+	    }).done(function(data) {
+	    	console.log("Error: " + data.error);
+				console.log("Mensaje: " + data.mensaje);
+
+				if(data.error) {
+					console.log(data.mensaje);
+				} else {
+					location.href = "order.php";
+				}
+		  }).fail(function() {
+		    $('#error').removeClass('hidden');
+		    $('#msjError').html("Ha ocurrido un error. Contacte a Sistemas.");
+		  });
+		}
+	});
+	//----------------------------------------------------
+
+	//----------------------------------------------------
 	//  Contacto
 	//----------------------------------------------------
 	$("#form_contact").submit(function(ev) {
@@ -153,6 +210,28 @@ $(document).ready(function() {
 				$('#ProductoDetalles .modal-title').html(data.nombre);
 				$('#ProductoDetalles .prod-img').html('<img src="archivos_productos/' + data.imagen + '" alt="' + data.nombre + '" title="' + data.nombre + '" class="img-responsive center-block" />');
 				$('#ProductoDetalles .prod-desc').html(data.descripcion);
+			}
+		}, "json");
+
+		$('#ProductoDetalles').modal('show');
+	});
+	//----------------------------------------------------
+
+	//----------------------------------------------------
+	//  Hotels
+	//----------------------------------------------------
+	$(".hotel").click(function(ev) {
+		ev.preventDefault();
+
+		var hotel = $(this).data('id');
+		console.log("Hotel = " + hotel);
+
+		$.post("ajax/hotel.php", { id: hotel }, function(data) {
+			console.log("Error: " + data.error);
+			console.log("Mensaje: " + data.mensaje);
+
+			if(!data.error) {
+				location.href = "order.php";
 			}
 		}, "json");
 

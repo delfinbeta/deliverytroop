@@ -34,7 +34,7 @@
 							<label for="zipcode" class="control-label sr-only">Zipcode</label>
 							<div class="input-group">
 								<div class="input-group-addon"><i class="fa fa-map-marker" style="font-size: 1.4em;"></i></div>
-								<input type="text" class="form-control" name="zipcode" value="<?=$_SESSION['zipcode']?>" placeholder="Zipcode" aria-describedby="bloqueErrorZipcode" />
+								<input type="text" class="form-control" name="zipcode" value="<?=$_SESSION['orden']['zipcode']?>" placeholder="Zipcode" aria-describedby="bloqueErrorZipcode" />
 								<span class="input-group-btn">
 									<button type="submit" name="enviar" class="btn btn-default boton-amarillo">Enter Your Zipcode <i class="fa fa-chevron-right"></i></button>
 								</span>
