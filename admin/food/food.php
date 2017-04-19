@@ -194,8 +194,8 @@ if(isset($_GET['id'])) { $id_producto = $_GET['id']; } else { $id_producto = 0; 
 							</thead>
 							<tbody>
 								<?php // Listar Presentaciones
-											$listado_presentaciones = $presentacion->listado($id_producto, 0, 0);
-											$total_presentaciones = $presentacion->total_listado($id_producto, 0, 0);
+											$listado_presentaciones = $presentacion->listado($id_producto, -1, -1);
+											$total_presentaciones = $presentacion->total_listado($id_producto, -1, -1);
 
 											if($total_presentaciones > 0) {
 												foreach($listado_presentaciones as $reg_presentacion) {

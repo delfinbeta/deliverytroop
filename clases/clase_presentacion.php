@@ -148,7 +148,7 @@ class Presentacion {
 	}
 	
 	// Obtener listado de todos los Presentaciones
-	public function listado($producto=0, $opcion1=0, $opcion2=0) {
+	public function listado($producto=0, $opcion1=-1, $opcion2=-1) {
 		if(!is_int($producto = $this->seguridad->entero_seguro($producto))) {
 			$this->error = "Producto no es Seguro";
 			return false;
@@ -172,12 +172,12 @@ class Presentacion {
 			$argumentos[] = $producto;
 		}
 		
-		if($opcion1 > 0) {
+		if($opcion1 > -1) {
 			$formato .= "AND opcion1='%d' ";
 			$argumentos[] = $opcion1;
 		}
 		
-		if($opcion2 > 0) {
+		if($opcion2 > -1) {
 			$formato .= "AND opcion2='%d' ";
 			$argumentos[] = $opcion2;
 		}
@@ -198,7 +198,7 @@ class Presentacion {
 	}
 	
 	// Obtener listado de todos los Presentacions paginados
-	public function listado_paginado($producto=0, $opcion1=0, $opcion2=0, $inicio, $fin) {
+	public function listado_paginado($producto=0, $opcion1=-1, $opcion2=-1, $inicio, $fin) {
 		if(!is_int($producto = $this->seguridad->entero_seguro($producto))) {
 			$this->error = "Producto no es Seguro";
 			return false;
@@ -232,12 +232,12 @@ class Presentacion {
 			$argumentos[] = $producto;
 		}
 		
-		if($opcion1 > 0) {
+		if($opcion1 > -1) {
 			$formato .= "AND opcion1='%d' ";
 			$argumentos[] = $opcion1;
 		}
 		
-		if($opcion2 > 0) {
+		if($opcion2 > -1) {
 			$formato .= "AND opcion2='%d' ";
 			$argumentos[] = $opcion2;
 		}
@@ -261,7 +261,7 @@ class Presentacion {
 	}
 	
 	// Contar el total de Presentacions
-	public function total_listado($producto=0, $opcion1=0, $opcion2=0) {
+	public function total_listado($producto=0, $opcion1=-1, $opcion2=-1) {
 		if(!is_int($producto = $this->seguridad->entero_seguro($producto))) {
 			$this->error = "Producto no es Seguro";
 			return false;
@@ -285,12 +285,12 @@ class Presentacion {
 			$argumentos[] = $producto;
 		}
 		
-		if($opcion1 > 0) {
+		if($opcion1 > -1) {
 			$formato .= "AND opcion1='%d' ";
 			$argumentos[] = $opcion1;
 		}
 		
-		if($opcion2 > 0) {
+		if($opcion2 > -1) {
 			$formato .= "AND opcion2='%d' ";
 			$argumentos[] = $opcion2;
 		}
@@ -301,6 +301,44 @@ class Presentacion {
 		} else {
 			return 0;
 		}
+	}
+	
+	// Obtener listado de Opciones 1
+	public function opciones1($producto) {
+		if(!$producto = $this->seguridad->entero_seguro($producto)) {
+			$this->error = "Producto no es Seguro";
+			return false;
+		}
+		
+		$sql = sprintf("SELECT DISTINCT(opcion1) FROM presentaciones WHERE producto='%d'", $producto);
+		
+		$arreglo = array();
+		if($query = mysqli_query($this->conexion, $sql)) {
+			while($lista = mysqli_fetch_assoc($query)) {
+				$arreglo[] = $lista['opcion1'];
+			}
+		}
+		
+		return $arreglo;
+	}
+	
+	// Obtener listado de Opciones 2
+	public function opciones2($producto) {
+		if(!$producto = $this->seguridad->entero_seguro($producto)) {
+			$this->error = "Producto no es Seguro";
+			return false;
+		}
+		
+		$sql = sprintf("SELECT DISTINCT(opcion2) FROM presentaciones WHERE producto='%d'", $producto);
+		
+		$arreglo = array();
+		if($query = mysqli_query($this->conexion, $sql)) {
+			while($lista = mysqli_fetch_assoc($query)) {
+				$arreglo[] = $lista['opcion2'];
+			}
+		}
+		
+		return $arreglo;
 	}
 }
 ?>

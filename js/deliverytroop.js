@@ -238,4 +238,34 @@ $(document).ready(function() {
 		$('#ProductoDetalles').modal('show');
 	});
 	//----------------------------------------------------
+
+	//----------------------------------------------------
+	//  Product Details
+	//----------------------------------------------------
+	$('button[name="ordenar"]').click(function(ev) {
+		ev.preventDefault();
+
+		var producto = $(this).data('id');
+		console.log("Producto = " + producto);
+
+		var $campoOpcion1 = $('#form_ordenar').find('select[name="opcion1"]');
+		var $campoOpcion2 = $('#form_ordenar').find('select[name="opcion2"]');
+		var $campoPrecio = $('#form_ordenar').find('input[name="precio"]');
+
+		$.post("ajax/order.php", { id: producto }, function(data) {
+			console.log("Error: " + data.error);
+			console.log("Mensaje: " + data.mensaje);
+
+			if(!data.error) {
+				$('#ProductoOrdenar .modal-title').html(data.nombre);
+				$('#precio').html(data.precio);
+				$campoPrecio.val(data.precio);
+				$campoOpcion1.html(data.selects1);
+				$campoOpcion2.html(data.selects2);
+			}
+		}, "json");
+
+		$('#ProductoOrdenar').modal('show');
+	});
+	//----------------------------------------------------
 });

@@ -65,8 +65,7 @@ $total_hoteles = $hotel->total_listado($_SESSION['orden']['zipcode'], 1);
 	<?php require("plantillas/piepag.php"); ?>
 
 	<!-- jQuery -->
-	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
-	<script src="js/jquery-1.10.2.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <!-- Bootstrap -->
   <script src="js/bootstrap.min.js"></script>
   <!-- Custom -->
