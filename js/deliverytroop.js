@@ -248,6 +248,7 @@ $(document).ready(function() {
 		var producto = $(this).data('id');
 		console.log("Producto = " + producto);
 
+		var $campoProducto = $('#form_ordenar').find('input[name="producto"]');
 		var $campoOpcion1 = $('#form_ordenar').find('select[name="opcion1"]');
 		var $campoOpcion2 = $('#form_ordenar').find('select[name="opcion2"]');
 		var $campoPrecio = $('#form_ordenar').find('input[name="precio"]');
@@ -257,6 +258,7 @@ $(document).ready(function() {
 			console.log("Mensaje: " + data.mensaje);
 
 			if(!data.error) {
+				$campoProducto.val(producto);
 				$('#ProductoOrdenar .modal-title').html(data.nombre);
 				$('#precio').html(data.precio);
 				$campoPrecio.val(data.precio);
@@ -266,6 +268,108 @@ $(document).ready(function() {
 		}, "json");
 
 		$('#ProductoOrdenar').modal('show');
+
+		//----------------------------------------------------
+		//  Options Change 1
+		//----------------------------------------------------
+		$campoOpcion1.change(function() {
+			var valor = $(this).val();
+
+			console.log("Producto = " + producto);
+			console.log("Opcion 1 = " + valor);
+			console.log("Opcion 2 = " + $campoOpcion2.val());
+
+			$.post("ajax/price.php", { producto: producto, opcion1: valor, opcion2: $campoOpcion2.val() }, function(data) {
+				$('#precio').html(data);
+				$campoPrecio.val(data);
+			});
+		});
+		//----------------------------------------------------
+
+		//----------------------------------------------------
+		//  Options Change 2
+		//----------------------------------------------------
+		$campoOpcion2.change(function() {
+			var valor = $(this).val();
+
+			console.log("Producto = " + producto);
+			console.log("Opcion 1 = " + $campoOpcion1.val());
+			console.log("Opcion 2 = " + valor);
+
+			$.post("ajax/price.php", { producto: producto, opcion1: $campoOpcion1.val(), opcion2: valor }, function(data) {
+				$('#precio').html(data);
+				$campoPrecio.val(data);
+			});
+		});
+		//----------------------------------------------------
+	});
+	//----------------------------------------------------
+
+	//----------------------------------------------------
+	//  Order
+	//----------------------------------------------------
+	$("#form_ordenar").submit(function(ev) {
+		ev.preventDefault();
+
+		var enviar = true;
+		var $campoProducto = $(this).find('input[name="producto"]');
+		var $campoPrecio = $(this).find('input[name="precio"]');
+		var $campoCantidad = $(this).find('input[name="cantidad"]');
+
+		var producto = $campoProducto.val();
+		var precio = $campoPrecio.val();
+		var cantidad = $campoCantidad.val();
+		
+		$(".form-group").removeClass('has-error');
+		$(".help-block").html("");
+		$("#error").addClass('hidden');
+
+		if(producto <= 0) {
+			$("#error").removeClass('hidden');
+			$("#msjError").html("Product is required");
+			enviar = false;
+		}
+
+		if(precio == '---') {
+			$("#error").removeClass('hidden');
+			$("#msjError").html("Price is required");
+			enviar = false;
+		}
+
+		if((cantidad == '') || (!/^([0-9])*$/.test(cantidad))) {
+			$campoCantidad.parents('.form-group').addClass('has-error');
+			$("#bloqueErrorCantidad").html("Quantity is required");
+			enviar = false;
+		}
+
+		if(enviar) {
+			console.log("Enviado");
+			var formData = new FormData(this);  // Creamos los datos a enviar con el formulario
+
+			$.ajax({
+        url: "ajax/order_add.php",      // URL destino
+        type: "POST",
+        data: formData,               // Datos del Formulario
+        dataType: "JSON",
+        processData: false,           // Evitamos que JQuery procese los datos, daría error
+        contentType: false,           // No especificamos ningún tipo de dato
+        cache: false
+	    }).done(function(data) {
+	    	console.log("Error: " + data.error);
+				console.log("Mensaje: " + data.mensaje);
+
+				if(data.error) {
+					$("#error").removeClass('hidden');
+					$("#msjError").html(data.mensaje);
+				} else {
+					document.getElementById("form_ordenar").reset();
+					location.href = "order.php";
+				}
+		  }).fail(function() {
+		    $('#error').removeClass('hidden');
+		    $('#msjError').html("Ha ocurrido un error. Contacte a Sistemas.");
+		  });
+		}
 	});
 	//----------------------------------------------------
 });

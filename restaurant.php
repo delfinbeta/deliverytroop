@@ -135,13 +135,18 @@ $total_productos = $producto->total_listado(1, 0, $id_restaurante, -1, 1);
 	<div id="ProductoOrdenar" class="modal fade" tabindex="-1" role="dialog">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	        <h4 class="modal-title">#PRODUCTO-NOMBRE#</h4>
-	      </div>
-	      <div class="modal-body">
-	        <form id="form_ordenar" class="form_ordenar" method="post">
-	        	<input type="hidden" name="precio" value="0" />
+	      <form id="form_ordenar" class="form_ordenar" method="post">
+	      	<input type="hidden" name="producto" value="0" />
+	      	<input type="hidden" name="precio" value="---" />
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title">#PRODUCTO-NOMBRE#</h4>
+		      </div>
+		      <div class="modal-body">
+	        	<div id="error" class="alert alert-danger hidden" role="alert">
+		          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+		          <i class="fa fa-times"></i> <span id="msjError">Error</span>
+		        </div>
 	        	<div class="form-group">
 							<label for="opcion1" class="control-label">Option 1:</label>
 							<select name="opcion1" class="form-control">
@@ -164,11 +169,12 @@ $total_productos = $producto->total_listado(1, 0, $id_restaurante, -1, 1);
 							<label for="instrucciones" class="control-label">Special Instructions:</label>
 							<textarea name="instrucciones" cols="30" rows="4" class="form-control" placeholder="Special Instructions"></textarea>
 						</div>
-	        </form>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	      </div>
+		      </div>
+		      <div class="modal-footer">
+		      	<button type="submit" class="btn btn-success">Add to Cart</button>
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		      </div>
+		    </form>
 	    </div><!-- /.modal-content -->
 	  </div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->

@@ -131,7 +131,38 @@ $menu[2] = 'class="active"';
 				</fieldset>
 				<fieldset>
 					<legend>Your Bag</legend>
-					<p>----</p>
+					<?php if(isset($_SESSION['orden']['pedido']) && (count($_SESSION['orden']['pedido']) > 0)) { ?>
+					<div class="table-responsive">
+						<table class="table">
+							<thead>
+								<tr>
+									<th width="80">&nbsp;</th>
+									<th>Item</th>
+									<th>Option 1</th>
+									<th>Option 2</th>
+									<th>Qty</th>
+									<th>Price</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php $subtotal = 0;
+											$total = 0;
+											foreach($_SESSION['orden']['pedido'] as $item) { ?>
+								<tr>
+									<td>foto</td>
+									<td><?=$item['producto']?></td>
+									<td><?=$item['opcion1']?></td>
+									<td><?=$item['opcion2']?></td>
+									<td class="precio"><?=$item['cantidad']?></td>
+									<td class="precio">$<?=$item['precio']?></td>
+								</tr>
+								<?php } ?>
+							</tbody>
+						</table>
+					</div>
+					<?php } else { ?>
+					<p>You currently do not have any items. Please add items to your cart before checking out.</p>
+					<?php } ?>
 				</fieldset>
 				<button type="submit" class="btn btn-default boton-naranja2 col-xs-12 col-md-6 col-md-offset-3"><i class="fa fa-shopping-cart"></i> Checkout</button>
 			</form>
