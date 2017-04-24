@@ -1,6 +1,16 @@
 <?php
 require("configuracion/inicio.php");
 
+// Clases
+require("clases/clase_producto.php");
+require("clases/clase_opcion1.php");
+require("clases/clase_opcion2.php");
+
+// Objetos
+$producto = new Producto($conexion);
+$opcion1 = new Opcion1($conexion);
+$opcion2 = new Opcion2($conexion);
+
 $menu[0] = '';
 $menu[2] = 'class="active"';
 ?>
@@ -133,30 +143,82 @@ $menu[2] = 'class="active"';
 					<legend>Your Bag</legend>
 					<?php if(isset($_SESSION['orden']['pedido']) && (count($_SESSION['orden']['pedido']) > 0)) { ?>
 					<div class="table-responsive">
-						<table class="table">
+						<table id="tabla-pedido" class="table">
 							<thead>
 								<tr>
 									<th width="80">&nbsp;</th>
 									<th>Item</th>
 									<th>Option 1</th>
 									<th>Option 2</th>
-									<th>Qty</th>
-									<th>Price</th>
+									<th width="60" style="text-align: right;">Qty</th>
+									<th width="100" style="text-align: right;">Price</th>
+									<th width="100" style="text-align: right;">Subtotal</th>
+									<th width="20">&nbsp;</th>
 								</tr>
 							</thead>
 							<tbody>
 								<?php $subtotal = 0;
 											$total = 0;
-											foreach($_SESSION['orden']['pedido'] as $item) { ?>
+											foreach($_SESSION['orden']['pedido'] as $item) {
+												if($producto->datos($item['producto'])) {
+													$producto_img = "archivos_productos/".$producto->imagen;
+													$producto_nombre = $producto->nombre;
+												} else {
+													$producto_img = 'img/no_img.jpg';
+													$producto_nombre = '---';
+												}
+
+												if($opcion1->datos($item['opcion1'])) { $opcion1_nombre = $opcion1->nombre; } else { $opcion1_nombre = '---'; }
+												if($opcion2->datos($item['opcion2'])) { $opcion2_nombre = $opcion2->nombre; } else { $opcion2_nombre = '---'; }
+
+												$subtotal = $item['cantidad'] * $item['precio'];
+												$total += $subtotal; ?>
 								<tr>
-									<td>foto</td>
-									<td><?=$item['producto']?></td>
-									<td><?=$item['opcion1']?></td>
-									<td><?=$item['opcion2']?></td>
-									<td class="precio"><?=$item['cantidad']?></td>
-									<td class="precio">$<?=$item['precio']?></td>
+									<td><img src="<?=$producto_img?>" alt="<?=$producto_nombre?>" title="<?=$producto_nombre?>" class="img-responsive center-block" /></td>
+									<td>
+										<strong><?=$producto_nombre?></strong>
+										<?php if($item['instrucciones'] != '') { ?>
+										<br />Special Instructions: <?=$item['instrucciones']?>
+										<?php } ?>
+									</td>
+									<td><?=$opcion1_nombre?></td>
+									<td><?=$opcion2_nombre?></td>
+									<td align="right"><?=$item['cantidad']?></td>
+									<td align="right">$<?=$item['precio']?></td>
+									<td align="right">$<?=number_format($subtotal, 2)?></td>
+									<td><a href="#" class="eliminar-pedido" data-pos="<?=$item['posicion']?>"><i class="icono fa fa-remove"></i></a></td>
 								</tr>
-								<?php } ?>
+								<?php }
+											
+											$subtotal = $total;
+
+											$delivery_fee = 0;
+
+											// Definir costo de Tax (Impuesto)
+											$tax = ($subtotal * $porcentaje_tax) / 100;
+
+											// Definir Total
+											$total = $subtotal + $delivery_fee + $tax; ?>
+								<tr>
+									<td align="right" colspan="6"><strong>Subtotal</strong></td>
+									<td align="right">$<?=number_format($subtotal, 2)?></td>
+									<td>&nbsp;</td>
+								</tr>
+								<tr>
+									<td align="right" colspan="6"><strong>Delivery Fee</strong></td>
+									<td align="right">$<?=number_format($delivery_fee, 2)?></td>
+									<td>&nbsp;</td>
+								</tr>
+								<tr>
+									<td align="right" colspan="6"><strong>Tax</strong></td>
+									<td align="right">$<?=number_format($tax, 2)?></td>
+									<td>&nbsp;</td>
+								</tr>
+								<tr>
+									<td align="right" colspan="6"><strong>Total</strong></td>
+									<td align="right"><strong>$<?=number_format($total, 2)?></strong></td>
+									<td>&nbsp;</td>
+								</tr>
 							</tbody>
 						</table>
 					</div>
@@ -176,6 +238,8 @@ $menu[2] = 'class="active"';
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <!-- Bootstrap -->
   <script src="js/bootstrap.min.js"></script>
+  <!-- Custom -->
+  <script src="js/deliverytroop.js"></script>
   <!-- Google Analytics -->
   <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

@@ -35,17 +35,4 @@ if($presentacion->datos($id_producto, $id_opcion1, $id_opcion2)) {
 } else {
 	echo json_encode(array("error" => true, "mensaje" => $presentacion->error));
 }
-
-
-
-
-// if($hotel->datos($id_hotel)) {
-// 	$_SESSION['orden']['hotel_id'] = $id_hotel;
-// 	$_SESSION['orden']['hotel_nombre'] = $hotel->nombre;
-// 	$_SESSION['orden']['direccion'] = $hotel->direccion;
-
-// 	echo json_encode(array("error" => false, "mensaje" => 'Hotel Aceptado'));
-// } else {
-// 	echo json_encode(array("error" => true, "mensaje" => $hotel->error));
-// }
 ?>

@@ -347,12 +347,12 @@ $(document).ready(function() {
 			var formData = new FormData(this);  // Creamos los datos a enviar con el formulario
 
 			$.ajax({
-        url: "ajax/order_add.php",      // URL destino
+        url: "ajax/order_add.php",        // URL destino
         type: "POST",
-        data: formData,               // Datos del Formulario
+        data: formData,                   // Datos del Formulario
         dataType: "JSON",
-        processData: false,           // Evitamos que JQuery procese los datos, daría error
-        contentType: false,           // No especificamos ningún tipo de dato
+        processData: false,               // Evitamos que JQuery procese los datos, daría error
+        contentType: false,               // No especificamos ningún tipo de dato
         cache: false
 	    }).done(function(data) {
 	    	console.log("Error: " + data.error);
@@ -370,6 +370,27 @@ $(document).ready(function() {
 		    $('#msjError').html("Ha ocurrido un error. Contacte a Sistemas.");
 		  });
 		}
+	});
+	//----------------------------------------------------
+
+	//----------------------------------------------------
+	//  Delete Order
+	//----------------------------------------------------
+	$(".eliminar-pedido").click(function(ev) {
+		ev.preventDefault();
+
+		var $boton = $(this);
+		var posicion = $boton.data('pos');
+		console.log("Posicion = " + posicion);
+
+		$.post("ajax/order_remove.php", { posicion: posicion }, function(data) {
+			console.log("Error: " + data.error);
+			console.log("Mensaje: " + data.mensaje);
+
+			if(!data.error) {
+				$boton.closest('tr').remove();
+			}
+		}, "json");
 	});
 	//----------------------------------------------------
 });
