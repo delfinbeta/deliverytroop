@@ -274,7 +274,7 @@ class Orden {
 			case 0: $estado = "Eliminado"; break;
 			case 1: $estado = "Pendiente"; break;
 			case 2: $estado = "Pagado"; break;
-			case 3: $estado = "Pago Rechazaado"; break;
+			case 3: $estado = "Pago Rechazado"; break;
 			case 4: $estado = "Despachado"; break;
 			default: $estado = "---"; break;
 		}

@@ -157,12 +157,18 @@ $menu[2] = 'class="active"';
 								</tr>
 							</thead>
 							<tbody>
-								<?php $subtotal = 0;
+								<?php $listado_restaurantes = array();
+											$subtotal = 0;
 											$total = 0;
 											foreach($_SESSION['orden']['pedido'] as $item) {
 												if($producto->datos($item['producto'])) {
 													$producto_img = "archivos_productos/".$producto->imagen;
 													$producto_nombre = $producto->nombre;
+
+													$id_restaurante = $producto->obtener_restaurante();
+													$id_categoria = $producto->obtener_categoria();
+
+													if(!in_array($id_restaurante, $listado_restaurantes, true)) { $listado_restaurantes[] = $id_restaurante; }
 												} else {
 													$producto_img = 'img/no_img.jpg';
 													$producto_nombre = '---';
