@@ -198,7 +198,8 @@ $menu[2] = 'class="active"';
 											
 											$subtotal = $total;
 
-											$delivery_fee = 0;
+											// Definir costo por Delivery
+											$delivery_fee = count($_SESSION['orden']['restaurantes']) * 5;  // 5$USD por parada
 
 											// Definir costo de Tax (Impuesto)
 											$tax = ($subtotal * $porcentaje_tax) / 100;
