@@ -13,6 +13,8 @@ $opcion2 = new Opcion2($conexion);
 
 $menu[0] = '';
 $menu[2] = 'class="active"';
+
+if(isset($_SESSION['orden']['pedido'])) { $pedido = count($_SESSION['orden']['pedido']); } else { $pedido = 0; }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -49,6 +51,7 @@ $menu[2] = 'class="active"';
           <i class="fa fa-times"></i> <span id="msjError">Error</span>
         </div>
         <input type="hidden" name="hotel_id" value="<?=$_SESSION['orden']['hotel_id']?>" />
+        <input type="hidden" name="pedido" value="<?=$pedido?>" />
 				<fieldset>
 					<legend>Your Info</legend>
 					<div class="row">
@@ -114,7 +117,7 @@ $menu[2] = 'class="active"';
 							<label for="hotel_nombre" class="control-label sr-only">Hotel</label>
 							<div class="input-group">
 								<div class="input-group-addon"><i class="fa fa-bed"></i></div>
-								<input type="text" class="form-control" name="hotel_nombre" placeholder="Hotel" value="<?=$_SESSION['orden']['hotel_nombre']?>" aria-describedby="bloqueErrorHotel" />
+								<input type="text" class="form-control" name="hotel_nombre" placeholder="Hotel" value="<?=$_SESSION['orden']['hotel_nombre']?>" readonly aria-describedby="bloqueErrorHotel" />
 							</div>
 							<span class="help-block" id="bloqueErrorHotel"></span>
 						</div>
@@ -208,7 +211,7 @@ $menu[2] = 'class="active"';
 											$total = $subtotal + $delivery_fee + $tax; ?>
 								<tr>
 									<td align="right" colspan="6"><strong>Subtotal</strong></td>
-									<td align="right">$<?=number_format($subtotal, 2)?></td>
+									<td align="right">$<?=number_format($subtotal, 2)?><input type="hidden" name="subtotal" value="<?=$subtotal?>" /></td>
 									<td>&nbsp;</td>
 								</tr>
 								<tr>
@@ -223,11 +226,12 @@ $menu[2] = 'class="active"';
 								</tr>
 								<tr>
 									<td align="right" colspan="6"><strong>Total</strong></td>
-									<td align="right"><strong>$<?=number_format($total, 2)?></strong></td>
+									<td align="right"><strong>$<?=number_format($total, 2)?></strong><input type="hidden" name="total" value="<?=$total?>" /></td>
 									<td>&nbsp;</td>
 								</tr>
 							</tbody>
 						</table>
+
 					</div>
 					<?php } else { ?>
 					<p>You currently do not have any items. Please add items to your cart before checking out.</p>

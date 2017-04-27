@@ -50,7 +50,7 @@ h1, h2, h3, h4, h5, h6 {
 	padding: 15px 20px;
 }
 
-.boton-transparente:hover {
+.boton-transparente:hover, .boton-transparente:focus {
 	border: 2px solid #FFFFFF;
 	color: #FFBE00;
 }
@@ -60,7 +60,7 @@ h1, h2, h3, h4, h5, h6 {
 	color: #FFFFFF !important;
 }
 
-.boton-amarillo:hover {
+.boton-amarillo:hover, .boton-amarillo:focus {
 	background-color: transparent;
 	color: #FFBE00 !important;
 }
@@ -70,7 +70,7 @@ h1, h2, h3, h4, h5, h6 {
 	color: #FFFFFF !important;
 }
 
-.boton-amarillo2:hover {
+.boton-amarillo2:hover, .boton-amarillo2:focus {
 	background-color: #FFFFFF;
 	color: #FFBE00 !important;
 }
@@ -81,7 +81,7 @@ h1, h2, h3, h4, h5, h6 {
 	color: #FFFFFF !important;
 }
 
-.boton-naranja1:hover {
+.boton-naranja1:hover, .boton-naranja1:focus {
 	background-color: transparent;
 	border: 2px solid #D93600;
 	color: #D93600 !important;
@@ -93,7 +93,7 @@ h1, h2, h3, h4, h5, h6 {
 	color: #FFFFFF !important;
 }
 
-.boton-naranja2:hover {
+.boton-naranja2:hover, .boton-naranja2:focus {
 	background-color: transparent;
 	border: 2px solid #F89400;
 	color: #F89400 !important;
