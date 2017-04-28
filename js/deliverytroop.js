@@ -388,7 +388,8 @@ $(document).ready(function() {
 			console.log("Mensaje: " + data.mensaje);
 
 			if(!data.error) {
-				$boton.closest('tr').remove();
+				// $boton.closest('tr').remove();
+				location.href = "order.php";
 			}
 		}, "json");
 	});
