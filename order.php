@@ -143,6 +143,19 @@ if(isset($_SESSION['orden']['pedido'])) { $pedido = count($_SESSION['orden']['pe
 					</div>
 				</fieldset>
 				<fieldset>
+					<legend>Tip</legend>
+					<div class="row">
+						<div class="col-xs-12 form-group">
+							<div class="btn-group" role="group">
+								<button type="button" class="btn btn-default propina boton-amarillo2" data-valor="0">0%</button>
+								<button type="button" class="btn btn-default propina" data-valor="10">10%</button>
+								<button type="button" class="btn btn-default propina" data-valor="15">15%</button>
+								<button type="button" class="btn btn-default propina" data-valor="20">20%</button>
+							</div>
+						</div>
+					</div>
+				</fieldset>
+				<fieldset>
 					<legend>Your Bag</legend>
 					<?php if(isset($_SESSION['orden']['pedido']) && (count($_SESSION['orden']['pedido']) > 0)) { ?>
 					<div class="table-responsive">
@@ -202,7 +215,7 @@ if(isset($_SESSION['orden']['pedido'])) { $pedido = count($_SESSION['orden']['pe
 											$subtotal = $total;
 
 											// Definir costo por Delivery
-											$delivery_fee = count($_SESSION['orden']['restaurantes']) * 5;  // 5$USD por parada
+											$delivery_fee = count($_SESSION['orden']['restaurantes']) * $cuota_parada;  // 5$USD por parada
 
 											// Definir costo de Tax (Impuesto)
 											$tax = ($subtotal * $porcentaje_tax) / 100;
@@ -211,22 +224,42 @@ if(isset($_SESSION['orden']['pedido'])) { $pedido = count($_SESSION['orden']['pe
 											$total = $subtotal + $delivery_fee + $tax; ?>
 								<tr>
 									<td align="right" colspan="6"><strong>Subtotal</strong></td>
-									<td align="right">$<?=number_format($subtotal, 2)?><input type="hidden" name="subtotal" value="<?=$subtotal?>" /></td>
+									<td align="right">
+										$<?=number_format($subtotal, 2)?>
+										<input type="hidden" name="subtotal" value="<?=$subtotal?>" />
+									</td>
 									<td>&nbsp;</td>
 								</tr>
 								<tr>
 									<td align="right" colspan="6"><strong>Delivery Fee</strong></td>
-									<td align="right">$<?=number_format($delivery_fee, 2)?></td>
+									<td align="right">
+										$<?=number_format($delivery_fee, 2)?>
+										<input type="hidden" name="delivery" value="<?=$delivery_fee?>" />
+									</td>
 									<td>&nbsp;</td>
 								</tr>
 								<tr>
 									<td align="right" colspan="6"><strong>Tax</strong></td>
-									<td align="right">$<?=number_format($tax, 2)?></td>
+									<td align="right">
+										$<?=number_format($tax, 2)?>
+										<input type="hidden" name="tax" value="<?=$tax?>" />
+									</td>
+									<td>&nbsp;</td>
+								</tr>
+								<tr>
+									<td align="right" colspan="6"><strong>Tip</strong></td>
+									<td align="right">
+										$<span id="msjPropina">0.00</span>
+										<input type="hidden" name="propina" value="0" />
+									</td>
 									<td>&nbsp;</td>
 								</tr>
 								<tr>
 									<td align="right" colspan="6"><strong>Total</strong></td>
-									<td align="right"><strong>$<?=number_format($total, 2)?></strong><input type="hidden" name="total" value="<?=$total?>" /></td>
+									<td align="right">
+										<strong>$ <span id="msjTotal"><?=number_format($total, 2)?></span></strong>
+										<input type="hidden" name="total" value="<?=$total?>" />
+									</td>
 									<td>&nbsp;</td>
 								</tr>
 							</tbody>

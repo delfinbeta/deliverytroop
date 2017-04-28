@@ -395,6 +395,33 @@ $(document).ready(function() {
 	//----------------------------------------------------
 
 	//----------------------------------------------------
+	//  Tips
+	//----------------------------------------------------
+	$(".propina").click(function(ev) {
+		ev.preventDefault();
+
+		var $campoSubtotal = $("#form_order").find('input[name="subtotal"]');
+		var $campoDelivery = $("#form_order").find('input[name="delivery"]');
+		var $campoTax = $("#form_order").find('input[name="tax"]');
+		var $campoTotal = $("#form_order").find('input[name="total"]');
+
+		var valor = $(this).data('valor');
+		var subtotal = parseFloat($campoSubtotal.val());
+		var delivery = parseFloat($campoDelivery.val());
+		var tax = parseFloat($campoTax.val());
+		var propina = (subtotal * valor) / 100;
+		var total = parseFloat(subtotal.toFixed(2)) + parseFloat(delivery.toFixed(2)) + parseFloat(tax.toFixed(2)) + parseFloat(propina.toFixed(2));
+
+		$(".propina").removeClass('boton-amarillo2');  // Desmarcar Todos (anterior)
+		$(this).addClass('boton-amarillo2');  // Marcar actual
+
+		$("#msjPropina").html(propina.toFixed(2));
+		$("#msjTotal").html(total.toFixed(2));
+		$campoTotal.val(total.toFixed(2));
+	});
+	//----------------------------------------------------
+
+	//----------------------------------------------------
 	//  Checkout
 	//----------------------------------------------------
 	$("#form_order").submit(function(ev) {
