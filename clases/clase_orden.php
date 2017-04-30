@@ -13,6 +13,9 @@ class Orden {
 	private $hotel_id;
 	public  $hotel_nombre;
 	public  $hotel_habitacion;
+	public  $delivery_fee;
+	public  $tax;
+	public  $propina;
 	public  $total;
 	private $estado;
 	private $fecha_registro;
@@ -29,7 +32,7 @@ class Orden {
 	}
 	
 	// Insertar un Orden a la Base de Datos
-	public function insertar($nombre, $email, $telefono, $direccion, $zipcode, $ciudad, $instrucciones, $hotel_id, $hotel_nombre, $hotel_habitacion, $total) {
+	public function insertar($nombre, $email, $telefono, $direccion, $zipcode, $ciudad, $instrucciones, $hotel_id, $hotel_nombre, $hotel_habitacion, $delivery_fee, $tax, $propina, $total) {
 		if(!$nombre = $this->seguridad->texto_seguro($this->conexion, $nombre)) {
 			$this->error = "Nombre no es Seguro";
 			return false;
@@ -80,87 +83,32 @@ class Orden {
 			return false;
 		}
 
+		if(!is_float($delivery_fee = $this->seguridad->float_seguro($delivery_fee))) {
+			$this->error = "Delivery Fee no es Seguro";
+			return false;
+		}
+
+		if(!is_float($tax = $this->seguridad->float_seguro($tax))) {
+			$this->error = "Tax no es Seguro";
+			return false;
+		}
+
+		if(!is_float($propina = $this->seguridad->float_seguro($propina))) {
+			$this->error = "Propina no es Seguro";
+			return false;
+		}
+
 		if(!is_float($total = $this->seguridad->float_seguro($total))) {
 			$this->error = "Total no es Seguro";
 			return false;
 		}
-
-		$id_usuario = 0;
-		if(isset($_SESSION['usuario_id'])) { $id_usuario = $_SESSION['usuario_id']; }
 		
-		$sql = sprintf("INSERT INTO ordenes(nombre, email, telefono, direccion, zipcode, ciudad, instrucciones, hotel_id, hotel_nombre, hotel_habitacion, total, estado, fecha_registro) VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%s', '%s', '%f', 1, CURDATE())", $nombre, $email, $telefono, $direccion, $zipcode, $ciudad, $instrucciones, $hotel_id, $hotel_nombre, $hotel_habitacion, $total);
+		$sql = sprintf("INSERT INTO ordenes(nombre, email, telefono, direccion, zipcode, ciudad, instrucciones, hotel_id, hotel_nombre, hotel_habitacion, delivery_fee, tax, propina, total, estado, fecha_registro) VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%s', '%s', '%f', '%f', '%f', '%f', 1, CURDATE())", $nombre, $email, $telefono, $direccion, $zipcode, $ciudad, $instrucciones, $hotel_id, $hotel_nombre, $hotel_habitacion, $delivery_fee, $tax, $propina, $total);
 		
 		if($inserto = mysqli_query($this->conexion, $sql)) {
 			return true;
 		} else {
 			$this->error = "No se puede Insertar";
-			return false;
-		}
-	}
-	
-	// Actualizar un Orden a la Base de Datos identificado por su id
-	public function actualizar($id, $nombre, $email, $telefono, $direccion, $zipcode, $ciudad, $instrucciones, $hotel_id, $hotel_nombre, $hotel_habitacion, $total) {
-		if(!$nombre = $this->seguridad->texto_seguro($this->conexion, $nombre)) {
-			$this->error = "Nombre no es Seguro";
-			return false;
-		}
-
-		if(!$email = $this->seguridad->texto_seguro($this->conexion, $email)) {
-			$this->error = "Email no es Seguro";
-			return false;
-		}
-
-		if(!$telefono = $this->seguridad->texto_seguro($this->conexion, $telefono)) {
-			$this->error = "Telefono no es Seguro";
-			return false;
-		}
-
-		if(!$direccion = $this->seguridad->texto_seguro($this->conexion, $direccion)) {
-			$this->error = "Direccion no es Seguro";
-			return false;
-		}
-
-		if(!$zipcode = $this->seguridad->texto_seguro($this->conexion, $zipcode)) {
-			$this->error = "Zipcode no es Seguro";
-			return false;
-		}
-
-		if(!$ciudad = $this->seguridad->texto_seguro($this->conexion, $ciudad)) {
-			$this->error = "Ciudad no es Seguro";
-			return false;
-		}
-
-		if(!is_string($instrucciones = $this->seguridad->texto_seguro($this->conexion, $instrucciones))) {
-			$this->error = "Instrucciones no es Seguro";
-			return false;
-		}
-
-		if(!is_int($hotel_id = $this->seguridad->entero_seguro($hotel_id))) {
-			$this->error = "Hotel ID no es Seguro";
-			return false;
-		}
-
-		if(!is_string($hotel_nombre = $this->seguridad->texto_seguro($this->conexion, $hotel_nombre))) {
-			$this->error = "Hotel Nombre no es Seguro";
-			return false;
-		}
-
-		if(!is_string($hotel_habitacion = $this->seguridad->texto_seguro($this->conexion, $hotel_habitacion))) {
-			$this->error = "Hotel Habitacion no es Seguro";
-			return false;
-		}
-
-		if(!is_float($total = $this->seguridad->float_seguro($total))) {
-			$this->error = "Total no es Seguro";
-			return false;
-		}
-
-		$sql = sprintf("UPDATE ordenes SET nombre='%s', email='%s', telefono='%s', direccion='%s', zipcode='%s', ciudad='%s', instrucciones='%s', hotel_id='%d', hotel_nombre='%s', hotel_habitacion='%s', total='%f' WHERE id='%d'", $nombre, $email, $telefono, $direccion, $zipcode, $ciudad, $instrucciones, $hotel_id, $hotel_nombre, $hotel_habitacion, $total, $id);
-		
-		if($actualizo = mysqli_query($this->conexion, $sql)) {
-			return true;
-		} else {
-			$this->error = "No se puede Modificar";
 			return false;
 		}
 	}
@@ -243,6 +191,9 @@ class Orden {
 				$this->hotel_id = $rorden['hotel_id'];
 				$this->hotel_nombre = $rorden['hotel_nombre'];
 				$this->hotel_habitacion = $rorden['hotel_habitacion'];
+				$this->delivery_fee = $rorden['delivery_fee'];
+				$this->tax = $rorden['tax'];
+				$this->propina = $rorden['propina'];
 				$this->total = $rorden['total'];
 				$this->estado = $rorden['estado'];
 				$this->fecha_registro = $rorden['fecha_registro'];
@@ -312,7 +263,7 @@ class Orden {
 		$argumentos = array();
 		
 		if($nombre != '') {
-			$formato .= "AND (nombre LIKE %%%s%% OR apellido LIKE %%%s%%) ";
+			$formato .= "AND nombre LIKE %%%s%% ";
 			$argumentos[] = $nombre;
 			$argumentos[] = $nombre;
 		}
@@ -385,7 +336,7 @@ class Orden {
 		$argumentos = array();
 		
 		if($nombre != '') {
-			$formato .= "AND (nombre LIKE %%%s%% OR apellido LIKE %%%s%%) ";
+			$formato .= "AND nombre LIKE %%%s%% ";
 			$argumentos[] = $nombre;
 			$argumentos[] = $nombre;
 		}
@@ -451,7 +402,7 @@ class Orden {
 		$argumentos = array();
 		
 		if($nombre != '') {
-			$formato .= "AND (nombre LIKE %%%s%% OR apellido LIKE %%%s%%) ";
+			$formato .= "AND nombre LIKE %%%s%% ";
 			$argumentos[] = $nombre;
 			$argumentos[] = $nombre;
 		}

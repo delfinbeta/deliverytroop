@@ -19,7 +19,7 @@ $menu = array('class="active"', '', '', '');
 $navegacion = array('', '', '');
 
 if(!isset($_SESSION['orden'])) {
-	$_SESSION['orden'] = array('nombre' => '', 'email' => '', 'telefono' => '', 'direccion' => '', 'zipcode' => '', 'ciudad' => '', 'hotel_id' => '', 'hotel_nombre' => '', 'habitacion' => '', 'instrucciones' => '');
+	$_SESSION['orden'] = array('nombre' => '', 'email' => '', 'telefono' => '', 'direccion' => '', 'zipcode' => '', 'ciudad' => '', 'hotel_id' => 0, 'hotel_nombre' => '', 'habitacion' => '', 'instrucciones' => '');
 }
 
 // Clases Obligatorias

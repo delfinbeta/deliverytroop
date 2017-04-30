@@ -404,6 +404,7 @@ $(document).ready(function() {
 		var $campoSubtotal = $("#form_order").find('input[name="subtotal"]');
 		var $campoDelivery = $("#form_order").find('input[name="delivery"]');
 		var $campoTax = $("#form_order").find('input[name="tax"]');
+		var $campoPropina = $("#form_order").find('input[name="propina"]');
 		var $campoTotal = $("#form_order").find('input[name="total"]');
 
 		var valor = $(this).data('valor');
@@ -418,6 +419,7 @@ $(document).ready(function() {
 
 		$("#msjPropina").html(propina.toFixed(2));
 		$("#msjTotal").html(total.toFixed(2));
+		$campoPropina.val(propina.toFixed(2));
 		$campoTotal.val(total.toFixed(2));
 	});
 	//----------------------------------------------------
@@ -457,7 +459,7 @@ $(document).ready(function() {
 		$(".help-block").html("");
 		$("#error").addClass('hidden');
 
-		if((hotel_id != '') && (habitacion == '')) {
+		if((hotel_id != 0) && (habitacion == '')) {
 			$campoHabitacion.parents('.form-group').addClass('has-error');
 			$("#bloqueErrorHabitacion").html("Room is required");
 			$campoHabitacion.focus();
@@ -527,36 +529,37 @@ $(document).ready(function() {
 			}
 		}
 
-		console.log("CHECKOUT 3");
+		if(enviar) {
+			console.log("Enviado");
+			var formData = new FormData(this);  // Creamos los datos a enviar con el formulario
 
-		// if(enviar) {
-		// 	console.log("Enviado");
-		// 	var formData = new FormData(this);  // Creamos los datos a enviar con el formulario
+			$.ajax({
+        url: "ajax/checkout.php",        // URL destino
+        type: "POST",
+        data: formData,                   // Datos del Formulario
+        dataType: "JSON",
+        processData: false,               // Evitamos que JQuery procese los datos, daría error
+        contentType: false,               // No especificamos ningún tipo de dato
+        cache: false
+	    }).done(function(data) {
+	    	console.log("Error: " + data.error);
+				console.log("Mensaje: " + data.mensaje);
 
-		// 	$.ajax({
-  //       url: "ajax/order_add.php",        // URL destino
-  //       type: "POST",
-  //       data: formData,                   // Datos del Formulario
-  //       dataType: "JSON",
-  //       processData: false,               // Evitamos que JQuery procese los datos, daría error
-  //       contentType: false,               // No especificamos ningún tipo de dato
-  //       cache: false
-	 //    }).done(function(data) {
-	 //    	console.log("Error: " + data.error);
-		// 		console.log("Mensaje: " + data.mensaje);
-
-		// 		if(data.error) {
-		// 			$("#error").removeClass('hidden');
-		// 			$("#msjError").html(data.mensaje);
-		// 		} else {
-		// 			document.getElementById("form_ordenar").reset();
-		// 			location.href = "order.php";
-		// 		}
-		//   }).fail(function() {
-		//     $('#error').removeClass('hidden');
-		//     $('#msjError').html("Ha ocurrido un error. Contacte a Sistemas.");
-		//   });
-		// }
+				if(data.error) {
+					$("#error").removeClass('hidden');
+					$("#msjError").html(data.mensaje);
+					$(window).scrollTop(0);
+				} else {
+					document.getElementById("form_order").reset();
+					$("#exito").removeClass('hidden');
+					$("#form_order").hide();
+					$(window).scrollTop(0);
+				}
+		  }).fail(function() {
+		    $('#error').removeClass('hidden');
+		    $('#msjError').html("Ha ocurrido un error. Contacte a Sistemas.");
+		  });
+		}
 	});
 	//----------------------------------------------------
 });

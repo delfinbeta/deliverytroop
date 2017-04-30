@@ -43,7 +43,7 @@ if(isset($_SESSION['orden']['pedido'])) { $pedido = count($_SESSION['orden']['pe
 			<hr class="separador2" />
 			<div id="exito" class="alert alert-success hidden" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-        <i class="fa fa-check"></i> <span id="msjExito">Exito</span>
+        <i class="fa fa-check"></i> <span id="msjExito">Thanks for your order</span>
       </div>
 			<form id="form_order" class="form_order" method="post">
         <div id="error" class="alert alert-danger hidden" role="alert">
