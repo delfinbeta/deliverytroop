@@ -213,7 +213,7 @@ class Orden {
 	}
 	
 	public function obtener_hotel() {
-		return $this->hotel;
+		return $this->hotel_id;
 	}
 	
 	public function obtener_codEstado() {
@@ -222,11 +222,11 @@ class Orden {
 	
 	public function obtener_estado() {
 		switch($this->estado) {
-			case 0: $estado = "Eliminado"; break;
-			case 1: $estado = "Pendiente"; break;
-			case 2: $estado = "Pagado"; break;
-			case 3: $estado = "Pago Rechazado"; break;
-			case 4: $estado = "Despachado"; break;
+			case 0: $estado = "Removed"; break;
+			case 1: $estado = "Pending"; break;
+			case 2: $estado = "Paid out"; break;
+			case 3: $estado = "Rejected Payment"; break;
+			case 4: $estado = "Delivery"; break;
 			default: $estado = "---"; break;
 		}
 		
@@ -285,7 +285,7 @@ class Orden {
 			$argumentos[] = $estado;
 		}
 		
-		$formato .= "ORDER BY id DESC";
+		$formato .= "ORDER BY fecha_registro DESC, id DESC";
 		$sql = vsprintf($formato, $argumentos);
 		
 		$arreglo = array();
@@ -358,7 +358,7 @@ class Orden {
 			$argumentos[] = $estado;
 		}
 		
-		$formato .= "ORDER BY id DESC LIMIT %d, %d";
+		$formato .= "ORDER BY fecha_registro DESC, id DESC LIMIT %d, %d";
 		$argumentos[] = $inicio;
 		$argumentos[] = $fin;
 		

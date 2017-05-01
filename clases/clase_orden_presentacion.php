@@ -162,12 +162,12 @@ class OrdenPresentacion {
 	
 	// Obtener listado de todos los OrdenPresentacions
 	public function listado($orden=0, $producto=0, $opcion1=-1, $opcion2=-1) {
-		if(!$orden = $this->seguridad->entero_seguro($orden)) {
+		if(!is_int($orden = $this->seguridad->entero_seguro($orden))) {
 			$this->error = "Orden no es Seguro";
 			return false;
 		}
 
-		if(!$producto = $this->seguridad->entero_seguro($producto)) {
+		if(!is_int($producto = $this->seguridad->entero_seguro($producto))) {
 			$this->error = "Producto no es Seguro";
 			return false;
 		}
@@ -222,12 +222,12 @@ class OrdenPresentacion {
 	
 	// Obtener listado de todos los OrdenPresentacions paginados
 	public function listado_paginado($orden=0, $producto=0, $opcion1=-1, $opcion2=-1, $inicio, $fin) {
-		if(!$orden = $this->seguridad->entero_seguro($orden)) {
+		if(!is_int($orden = $this->seguridad->entero_seguro($orden))) {
 			$this->error = "Orden no es Seguro";
 			return false;
 		}
 
-		if(!$producto = $this->seguridad->entero_seguro($producto)) {
+		if(!is_int($producto = $this->seguridad->entero_seguro($producto))) {
 			$this->error = "Producto no es Seguro";
 			return false;
 		}
@@ -295,12 +295,12 @@ class OrdenPresentacion {
 	
 	// Contar el total de OrdenPresentacions
 	public function total_listado($orden=0, $producto=0, $opcion1=-1, $opcion2=-1) {
-		if(!$orden = $this->seguridad->entero_seguro($orden)) {
+		if(!is_int($orden = $this->seguridad->entero_seguro($orden))) {
 			$this->error = "Orden no es Seguro";
 			return false;
 		}
 
-		if(!$producto = $this->seguridad->entero_seguro($producto)) {
+		if(!is_int($producto = $this->seguridad->entero_seguro($producto))) {
 			$this->error = "Producto no es Seguro";
 			return false;
 		}

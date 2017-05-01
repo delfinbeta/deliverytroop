@@ -25,6 +25,7 @@
 		<li><a href="<?=$GLOBALS['domain_root']?>/admin/hotels"><i class="fa fa-bed pull-right"></i> Hotels</a></li>
 		<li><a href="<?=$GLOBALS['domain_root']?>/admin/restaurants"><i class="fa fa-coffee pull-right"></i> Restaurants</a></li>
 		<li><a href="<?=$GLOBALS['domain_root']?>/admin/food"><i class="fa fa-cutlery pull-right"></i> Food</a></li>
+		<li><a href="<?=$GLOBALS['domain_root']?>/admin/orders"><i class="fa fa-car pull-right"></i> Orders</a></li>
 	</ul>
 	<ul class="nav nav-pills nav-stacked">
 		<li><a href="<?=$GLOBALS['domain_root']?>/admin/users"><i class="fa fa-users pull-right"></i> Admin Users</a></li>

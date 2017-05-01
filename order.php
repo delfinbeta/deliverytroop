@@ -109,7 +109,7 @@ if(isset($_SESSION['orden']['pedido'])) { $pedido = count($_SESSION['orden']['pe
 						</div>
 					</div>
 				</fieldset>
-				<?php if($_SESSION['orden']['hotel_id'] != '') { ?>
+				<?php if($_SESSION['orden']['hotel_id'] > 0) { ?>
 				<fieldset>
 					<legend>Hotel</legend>
 					<div class="row">
