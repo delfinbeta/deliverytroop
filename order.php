@@ -45,7 +45,7 @@ if(isset($_SESSION['orden']['pedido'])) { $pedido = count($_SESSION['orden']['pe
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
         <i class="fa fa-check"></i> <span id="msjExito">Thanks for your order</span>
       </div>
-			<form id="form_order" class="form_order" method="post">
+			<form id="form_order" class="form_order" method="post" action="ajax/checkout.php">
         <div id="error" class="alert alert-danger hidden" role="alert">
           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
           <i class="fa fa-times"></i> <span id="msjError">Error</span>
@@ -132,26 +132,74 @@ if(isset($_SESSION['orden']['pedido'])) { $pedido = count($_SESSION['orden']['pe
 					</div>
 				</fieldset>
 				<?php } ?>
-				<fieldset>
-					<legend>Instructions</legend>
-					<div class="row">
-						<div class="col-xs-12 form-group">
-							<label for="instrucciones" class="control-label sr-only">Instructions</label>
-							<textarea name="instrucciones" class="form-control" cols="30" rows="6" placeholder="Delivery Instructions" aria-describedby="bloqueErrorInstrucciones"><?=$_SESSION['orden']['instrucciones']?></textarea>
-							<span class="help-block" id="bloqueErrorInstrucciones"></span>
-						</div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-6">
+						<fieldset>
+							<legend>Instructions</legend>
+							<div class="form-group">
+								<label for="instrucciones" class="control-label sr-only">Instructions</label>
+								<textarea name="instrucciones" class="form-control" cols="30" rows="6" placeholder="Delivery Instructions" aria-describedby="bloqueErrorInstrucciones"><?=$_SESSION['orden']['instrucciones']?></textarea>
+								<span class="help-block" id="bloqueErrorInstrucciones"></span>
+							</div>
+						</fieldset>
 					</div>
-				</fieldset>
+					<div class="col-xs-12 col-sm-6">
+						<fieldset>
+							<legend>Payment</legend>
+							<div class="form-group">
+								<label for="tarjeta" class="control-label sr-only">Card Number</label>
+								<div class="input-group">
+									<div class="input-group-addon"><i class="fa fa-credit-card"></i></div>
+									<input type="text" class="form-control" name="tarjeta" data-stripe="number" placeholder="Card Number" aria-describedby="bloqueErrorTarjeta" />
+								</div>
+								<span class="help-block" id="bloqueErrorTarjeta"></span>
+							</div>
+							<div class="row">
+								<label class="control-label sr-only">Expiration MM/YY</label>
+								<div class="col-xs-6 form-group">
+									<div class="input-group">
+										<div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+										<input type="text" class="form-control" name="mes" data-stripe="exp_month" placeholder="MM" maxlength="2" aria-describedby="bloqueErrorMes" />
+									</div>
+									<span class="help-block" id="bloqueErrorMes"></span>
+								</div>
+								<div class="col-xs-6 form-group">
+									<div class="input-group">
+										<div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+										<input type="text" class="form-control" name="ano" data-stripe="exp_year" placeholder="YY" maxlength="2" aria-describedby="bloqueErrorAno" />
+									</div>
+									<span class="help-block" id="bloqueErrorAno"></span>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-6 form-group">
+									<label for="cvc" class="control-label sr-only">CVC</label>
+									<div class="input-group">
+										<div class="input-group-addon"><i class="fa fa-lock"></i></div>
+										<input type="text" class="form-control" name="cvc" data-stripe="cvc" placeholder="CVC" maxlength="4" aria-describedby="bloqueErrorCVC" />
+									</div>
+									<span class="help-block" id="bloqueErrorCVC"></span>
+								</div>
+								<div class="col-xs-6 form-group">
+									<label for="billing_zip" class="control-label sr-only">Billing Zip</label>
+									<div class="input-group">
+										<div class="input-group-addon"><i class="fa fa-map-marker"></i></div>
+										<input type="text" class="form-control" name="billing_zip" data-stripe="billing_zip" placeholder="Billing Zip" maxlength="6" aria-describedby="bloqueErrorBillingZip" />
+									</div>
+									<span class="help-block" id="bloqueErrorBillingZip"></span>
+								</div>
+							</div>
+						</fieldset>
+					</div>
+				</div>
 				<fieldset>
 					<legend>Tip</legend>
-					<div class="row">
-						<div class="col-xs-12 form-group">
-							<div class="btn-group" role="group">
-								<button type="button" class="btn btn-default propina boton-amarillo2" data-valor="0">0%</button>
-								<button type="button" class="btn btn-default propina" data-valor="10">10%</button>
-								<button type="button" class="btn btn-default propina" data-valor="15">15%</button>
-								<button type="button" class="btn btn-default propina" data-valor="20">20%</button>
-							</div>
+					<div class="form-group">
+						<div class="btn-group" role="group">
+							<button type="button" class="btn btn-default propina boton-amarillo2" data-valor="0">0%</button>
+							<button type="button" class="btn btn-default propina" data-valor="10">10%</button>
+							<button type="button" class="btn btn-default propina" data-valor="15">15%</button>
+							<button type="button" class="btn btn-default propina" data-valor="20">20%</button>
 						</div>
 					</div>
 				</fieldset>
@@ -282,8 +330,11 @@ if(isset($_SESSION['orden']['pedido'])) { $pedido = count($_SESSION['orden']['pe
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <!-- Bootstrap -->
   <script src="js/bootstrap.min.js"></script>
+  <!-- Stripe -->
+  <script src="https://js.stripe.com/v2/"></script>
   <!-- Custom -->
   <script src="js/deliverytroop.js"></script>
+  <script src="js/checkout.js"></script>
   <!-- Google Analytics -->
   <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -294,5 +345,20 @@ if(isset($_SESSION['orden']['pedido'])) { $pedido = count($_SESSION['orden']['pe
   ga('create', 'UA-62920042-1', 'auto');
   ga('send', 'pageview');
   </script>
+  <?php if(isset($_GET['msjError']) && ($_GET['msjError'] == 'E')) { ?>
+  <script>
+  $(document).ready(function() {
+  	$('#exito').removeClass('hidden');
+  });
+  </script>
+  <?php } ?>
+  <?php if(isset($_GET['msjError']) && ($_GET['msjError'] != 'E')) { ?>
+  <script>
+  $(document).ready(function() {
+  	$('#error').removeClass('hidden');
+  	$('#msjError').html(<?=$_GET['msjError']?>);
+  });
+  </script>
+  <?php } ?>
 </body>
 </html>
