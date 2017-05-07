@@ -39,9 +39,9 @@ class Email {
     $headers = "MIME-Version: 1.0\r\n";
     $headers .= "Content-type: text/html; charset=utf-8\r\n";
     $headers .= "From: Delivery Troop <hello@deliverytroop.com>\r\n";
-    mail('dkbetancourt@gmail.com', $asunto, $contenido, $headers); #ENVIO DEL EMAIL CON LOS DATOS#
+    mail('hello@deliverytroop.com', $asunto, $contenido, $headers); #ENVIO DEL EMAIL CON LOS DATOS#
   }
-    
+
   public function enviar_respuesta_comentario($email, $usuario, $respuesta) {
     $arrhtml_mail = file($GLOBALS['app_root'].'/plantillas/email_respuesta_comentario.html');
         
@@ -61,7 +61,7 @@ class Email {
     $headers .= "From: Delivery Troop <hello@deliverytroop.com>\r\n";
     mail($email, $asunto, $contenido, $headers); #ENVIO DEL EMAIL CON LOS DATOS#
   }
-    
+  
   public function enviar_orden($id_orden, $nombre, $email, $telefono, $direccion, $zipcode, $ciudad, $instrucciones, $html_carrito) {
     $arrhtml_mail = file($GLOBALS['app_root'].'/plantillas/email_orden.html');
         
