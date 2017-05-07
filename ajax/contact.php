@@ -3,9 +3,11 @@ require_once("../configuracion/inicio.php");
 
 // Clases
 require_once("../clases/clase_comentario.php");
+require_once("../clases/clase_email.php");
 
 // Objetos
 $comentario = new Comentario($conexion);
+$eemail = new Email();
 
 $error = false;
 
@@ -18,6 +20,7 @@ if(isset($_POST['mensaje'])) { $mensaje = $_POST['mensaje']; } else { $mensaje =
 
 if(!$error) {
 	if($comentario->insertar($nombre, $email, $mensaje)) {
+		$eemail->enviar_comentario($nombre, $email, $mensaje);
 		echo json_encode(array("error" => false, "mensaje" => 'Message sent'));
 	} else {
 		echo json_encode(array("error" => true, "mensaje" => $comentario->error));

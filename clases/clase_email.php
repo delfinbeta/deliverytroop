@@ -20,7 +20,7 @@ class Email {
     $headers .= "From: Delivery Troop <hello@deliverytroop.com>\r\n";
     mail($correo, $asunto, $contenido, $headers); #ENVIO DEL EMAIL CON LOS DATOS#
   }
-    
+
   public function enviar_comentario($nombre, $email, $comentario) {
     $arrhtml_mail = file($GLOBALS['app_root'].'/plantillas/email_comentario.html');
         
@@ -34,12 +34,12 @@ class Email {
     $html_mail = str_replace("#COMENTARIO#",$comentario,$html_mail);
     
     $contenido = $html_mail;
-    $asunto = "Delivery Troop - Comentario";
+    $asunto = "Delivery Troop - Comment";
     
     $headers = "MIME-Version: 1.0\r\n";
     $headers .= "Content-type: text/html; charset=utf-8\r\n";
     $headers .= "From: Delivery Troop <hello@deliverytroop.com>\r\n";
-    mail('hello@deliverytroop.com', $asunto, $contenido, $headers); #ENVIO DEL EMAIL CON LOS DATOS#
+    mail('dkbetancourt@gmail.com', $asunto, $contenido, $headers); #ENVIO DEL EMAIL CON LOS DATOS#
   }
     
   public function enviar_respuesta_comentario($email, $usuario, $respuesta) {
@@ -54,7 +54,7 @@ class Email {
     $html_mail = str_replace("#RESPUESTA#",$respuesta,$html_mail);
     
     $contenido = $html_mail;
-    $asunto = "Delivery Troop - Comentario";
+    $asunto = "Delivery Troop - Comment";
     
     $headers = "MIME-Version: 1.0\r\n";
     $headers .= "Content-type: text/html; charset=utf-8\r\n";
