@@ -40,7 +40,7 @@ if(isset($_SESSION['autorizado']) && $_SESSION['autorizado']) { header("location
 
         <hr />
 
-        <p><a href="#">Forget your password?</a></p>
+        <p><a href="password.php">Forget your password?</a></p>
         <p>©2016 All Rights Reserved. Delivery Troop.</p>
       </form>
     </section>
@@ -64,7 +64,7 @@ if(isset($_SESSION['autorizado']) && $_SESSION['autorizado']) { header("location
 
 			$(".form-group").removeClass('has-error');
 			$(".help-block").html("");
-			$("#login_error").addClass('hidden');
+			$("#login-error").addClass('hidden');
 
 			if(usuario == '') {
 				$campoUsuario.parents('.form-group').addClass('has-error');

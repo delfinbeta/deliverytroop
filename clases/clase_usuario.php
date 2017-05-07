@@ -570,7 +570,7 @@ class Usuario extends Seguridad {
 		}
 	}
 	
-	// Recuperar Contrase�a de un Usuario
+	// Recuperar Contraseña de un Usuario
 	public function recuperar_contrasena($email, $contrasena) {
 		if(!$email = $this->seguridad->texto_seguro($this->conexion, $email)) {
 			$this->error = "Email no es Seguro";
@@ -578,7 +578,7 @@ class Usuario extends Seguridad {
 		}
 		
 		if(!$contrasena = $this->seguridad->texto_seguro($this->conexion, $contrasena)) {
-			$this->error = "Contrase&ntilde;a no es Segura";
+			$this->error = "Contraseña no es Segura";
 			return false;
 		}
 		
@@ -589,12 +589,12 @@ class Usuario extends Seguridad {
 				$this->nombre = $rusuario['nombre'];
 				$this->apellido = $rusuario['apellido'];
 				
-				$sql2 = sprintf("UPDATE usuarios SET contrasena=SHA1('%s'), fecha_actualizacion=CURDATE(), usuario_actualizacion='%d' WHERE id='%d'", $contrasena, $rusuario['id'], $rusuario['id']);
+				$sql2 = sprintf("UPDATE usuarios SET contrasena=SHA1('%s') WHERE id='%d'", $contrasena, $rusuario['id']);
 				
 				if($actualizo = mysqli_query($this->conexion, $sql2)) {
 					return true;
 				} else {
-					$this->error = "No se puede actualizar la Contrase&ntilde;a";
+					$this->error = "No se puede actualizar la Contraseña";
 					return false;
 				}
 			} else {
