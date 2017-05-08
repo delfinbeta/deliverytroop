@@ -99,5 +99,26 @@ class Email {
     mail('deliverytroop@gmail.com', $asunto, $contenido, $headers); #ENVIO DEL EMAIL CON LOS DATOS#
     mail($email, $asunto, $contenido, $headers);
   }
+
+  public function enviar_orden_status($email, $usuario, $id_orden, $status) {
+    $arrhtml_mail = file($GLOBALS['app_root'].'/plantillas/email_orden_status.html');
+        
+    $html_mail = '';
+    for($i = 0; $i < count($arrhtml_mail); $i++) {
+      $html_mail .= $arrhtml_mail[$i];
+    }
+    
+    $html_mail = str_replace("#USUARIO#",$usuario,$html_mail);
+    $html_mail = str_replace("#ORDEN_ID#",$id_orden,$html_mail);
+    $html_mail = str_replace("#STATUS#",$status,$html_mail);
+    
+    $contenido = $html_mail;
+    $asunto = "Delivery Troop - Order Status";
+    
+    $headers = "MIME-Version: 1.0\r\n";
+    $headers .= "Content-type: text/html; charset=utf-8\r\n";
+    $headers .= "From: Delivery Troop <hello@deliverytroop.com>\r\n";
+    mail($email, $asunto, $contenido, $headers); #ENVIO DEL EMAIL CON LOS DATOS#
+  }
 }
 ?>

@@ -64,6 +64,7 @@ $total = $orden->total_listado('', '', -1, -1);
 					    <thead>
 				        <tr>
                   <th>Date</th>
+                  <th>Code</th>
                   <th>Customer</th>
                   <th>Total</th>
                   <th>Status</th>
@@ -77,6 +78,7 @@ $total = $orden->total_listado('', '', -1, -1);
 					    	<?php foreach($listado as $registro) { ?>
 	              <tr>
 	              	<td><?=$general->muestrafecha($registro->obtener_fecha_registro())?></td>
+	                <td><a href="order.php?id=<?=$registro->obtener_id()?>"><?=str_pad($registro->obtener_id(), 5, "0", STR_PAD_LEFT);?></a></td>
 	                <td><a href="order.php?id=<?=$registro->obtener_id()?>"><?=$registro->nombre?></a></td>
 	                <td align="right">$<?=$registro->total?></td>
 	                <td><?=$registro->obtener_estado()?></td>
@@ -124,6 +126,7 @@ $total = $orden->total_listado('', '', -1, -1);
 	    	"scrollX": true,
 	      "order": [[ 0, "desc" ]],
 	      "columns": [
+	        null,
 	        null,
 	        null,
 	        null,
