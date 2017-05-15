@@ -104,6 +104,53 @@ $total_productos = $producto->total_listado(0, 0, 0, 1, 1);
 	  </div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
 
+	<div id="ProductoOrdenar" class="modal fade" tabindex="-1" role="dialog">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <form id="form_ordenar" class="form_ordenar" method="post">
+	      	<input type="hidden" name="producto" value="0" />
+	      	<input type="hidden" name="precio" value="---" />
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title">#PRODUCTO-NOMBRE#</h4>
+		      </div>
+		      <div class="modal-body">
+	        	<div id="error" class="alert alert-danger hidden" role="alert">
+		          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+		          <i class="fa fa-times"></i> <span id="msjError">Error</span>
+		        </div>
+	        	<div class="form-group">
+							<label for="opcion1" class="control-label">Option 1:</label>
+							<select name="opcion1" class="form-control">
+								<option value="0">Select</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="opcion2" class="control-label">Option 2:</label>
+							<select name="opcion2" class="form-control">
+								<option value="0">Select</option>
+							</select>
+						</div>
+						<div class="precio">Price: $<span id="precio">---</span></div>
+	        	<div class="form-group">
+							<label for="cantidad" class="control-label">Quantity:</label>
+							<input type="text" class="form-control" name="cantidad" placeholder="Quantity" aria-describedby="bloqueErrorCantidad" />
+							<span class="help-block" id="bloqueErrorCantidad"></span>
+						</div>
+						<div class="form-group">
+							<label for="instrucciones" class="control-label">Special Instructions:</label>
+							<textarea name="instrucciones" cols="30" rows="4" class="form-control" placeholder="Special Instructions"></textarea>
+						</div>
+		      </div>
+		      <div class="modal-footer">
+		      	<button type="submit" class="btn btn-success">Add to Cart</button>
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		      </div>
+		    </form>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
 	<!-- jQuery -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <!-- Bootstrap -->
