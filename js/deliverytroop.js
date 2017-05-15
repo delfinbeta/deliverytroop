@@ -231,7 +231,7 @@ $(document).ready(function() {
 			console.log("Mensaje: " + data.mensaje);
 
 			if(!data.error) {
-				location.href = "order.php";
+				location.href = "restaurants.php?msjH=1";
 			}
 		}, "json");
 
