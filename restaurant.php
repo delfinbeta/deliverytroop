@@ -29,7 +29,7 @@ if(($hora_servidor < $hora_inicio) || ($hora_servidor > $hora_fin)) { header("lo
 
 $menu[0] = '';
 $menu[2] = 'class="active"';
-$navegacion[0] = 'class="active"';
+$navegacion[1] = 'class="active"';
 
 if($restaurante->imagen != '') { $restaurante_img = "archivos_restaurantes/".$restaurante->imagen; }
 else { $restaurante_img = "img/no_img.jpg"; }

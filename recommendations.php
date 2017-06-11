@@ -17,6 +17,7 @@ if(!$zipcode->datos2($_SESSION['orden']['zipcode'])) { header("location: index.p
 
 $menu[0] = '';
 $menu[2] = 'class="active"';
+$navegacion[0] = 'class="active"';
 
 // Listar Productos
 $listado_productos = $producto->listado(0, 0, 0, 1, 1);

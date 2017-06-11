@@ -37,7 +37,7 @@ if(isset($_SESSION['orden']['pedido'])) { $pedido = count($_SESSION['orden']['pe
 	<?php require("plantillas/encabezado.php"); ?>
 	<?php require("plantillas/navegacion.php"); ?>
 
-	<section class="franja-gris">
+	<section>
 		<div class="container">
 			<h1>Order</h1>
 			<hr class="separador2" />

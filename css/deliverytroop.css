@@ -371,6 +371,8 @@ h1, h2, h3, h4, h5, h6 {
 .producto-grilla .info {
 	background-color: #FFBE00;
 	margin-top: 4px;
+	height: 140px;
+	overflow: hidden;
 	padding: 5px;
 	text-align: left;
 	vertical-align: top;

@@ -16,7 +16,7 @@ mysqli_set_charset($conexion, "utf8");
 
 // Menú
 $menu = array('class="active"', '', '', '');
-$navegacion = array('', '', '');
+$navegacion = array('', '', '', '');
 
 if(!isset($_SESSION['orden'])) {
 	$_SESSION['orden'] = array('nombre' => '', 'email' => '', 'telefono' => '', 'direccion' => '', 'zipcode' => '', 'ciudad' => '', 'hotel_id' => 0, 'hotel_nombre' => '', 'habitacion' => '', 'instrucciones' => '');

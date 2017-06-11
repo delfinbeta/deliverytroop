@@ -17,7 +17,7 @@ if(!$zipcode->datos2($_SESSION['orden']['zipcode'])) { header("location: index.p
 
 $menu[0] = '';
 $menu[2] = 'class="active"';
-$navegacion[1] = 'class="active"';
+$navegacion[2] = 'class="active"';
 
 if(isset($_GET['cat'])) { $id_categoria = $_GET['cat']; } else { $id_categoria = 0; }
 
@@ -49,10 +49,12 @@ $total_productos = $producto->total_listado(2, $id_categoria, 0, -1, 1);
 
 	<section class="franja-gris">
 		<div class="container">
-			<h1>Drinks</h1>
-			<hr class="separador2" />
 			<div class="row">
-				<div class="col-xs-12">
+				<div class="col-xs-12 col-md-8">
+					<h1>Drinks</h1>
+				</div>
+				<div class="col-xs-12 col-md-4">
+					<div>&nbsp;</div>
 					<select name="categoria" class="form-control menu_select" data-url="drinks.php?cat">
 						<option value="0">Select Category</option>
             <?php // Listar Categorias
