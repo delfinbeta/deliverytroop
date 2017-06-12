@@ -49,6 +49,14 @@ $total_productos = $producto->total_listado(2, $id_categoria, 0, -1, 1);
 
 	<section class="franja-gris">
 		<div class="container">
+			<?php if(($id_categoria == 0) || ($id_categoria == 27)) { ?>
+			<div class="row">
+				<div class="col-xs-12">
+					<img src="img/warning21.jpg" alt="Warning Alcohol" title="Warning Alcohol" class="img-responsive center-block" />
+				</div>
+			</div>
+			<hr class="separador2" />
+			<?php } ?>
 			<div class="row">
 				<div class="col-xs-12 col-md-8">
 					<h1>Drinks</h1>
@@ -103,6 +111,23 @@ $total_productos = $producto->total_listado(2, $id_categoria, 0, -1, 1);
 
 	<?php require("plantillas/contacto.php"); ?>
 	<?php require("plantillas/piepag.php"); ?>
+
+	<div id="warning" class="modal fade" tabindex="-1" role="dialog">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h4 class="modal-title">Terms of use</h4>
+	      </div>
+	      <div class="modal-body">
+	        <p>A person at least twenty one (21) years of age must be available and able to provide valid photo identification at the time of accepting delivery of any alcoholic beverages.</p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-success" data-dismiss="modal">Agree</button>
+	        <button type="button" class="btn btn-danger" id="disagree">Disagree</button>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
 
 	<div id="ProductoDetalles" class="modal fade" tabindex="-1" role="dialog">
 	  <div class="modal-dialog" role="document">
@@ -179,6 +204,15 @@ $total_productos = $producto->total_listado(2, $id_categoria, 0, -1, 1);
   <script src="js/bootstrap.min.js"></script>
   <!-- Custom -->
   <script src="js/deliverytroop.js"></script>
+  <?php if(($id_categoria == 0) || ($id_categoria == 27)) { ?>
+  <script>
+  $('#warning').modal('show');
+  $('#disagree').click(function() {
+  	$('#warning').modal('hide');
+  	location.href = 'index.php';
+  });
+  </script>
+  <?php } ?>
   <!-- Google Analytics -->
   <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
