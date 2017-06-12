@@ -132,6 +132,7 @@ $total_productos = $producto->total_listado(3, $id_categoria, 0, -1, 1);
 	      <form id="form_ordenar" class="form_ordenar" method="post">
 	      	<input type="hidden" name="producto" value="0" />
 	      	<input type="hidden" name="precio" value="---" />
+	      	<input type="hidden" name="url" value="others.php?msjC=1" />
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 		        <h4 class="modal-title">#PRODUCTO-NOMBRE#</h4>

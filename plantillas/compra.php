@@ -63,7 +63,17 @@
 			<div class="col-xs-12 text-center">
 				<div class="alert alert-success" role="alert">
           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-          <i class="fa fa-check"></i> <span id="msjExito">Hotel Selected, now start your order from the options below.</span>
+          <i class="fa fa-check"></i> Hotel Selected, now start your order from the options below.
+        </div>
+			</div>
+		</div>
+		<?php } ?>
+		<?php if(isset($_GET['msjC'])) { ?>
+		<div class="row">
+			<div class="col-xs-12 text-center">
+				<div class="alert alert-success" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+          <i class="fa fa-check"></i> Item added to your bag
         </div>
 			</div>
 		</div>

@@ -319,6 +319,7 @@ $(document).ready(function() {
 		var producto = $campoProducto.val();
 		var precio = $campoPrecio.val();
 		var cantidad = $campoCantidad.val();
+		var url = $(this).find('input[name="url"]').val();
 		
 		$(".form-group").removeClass('has-error');
 		$(".help-block").html("");
@@ -363,7 +364,7 @@ $(document).ready(function() {
 					$("#msjError").html(data.mensaje);
 				} else {
 					document.getElementById("form_ordenar").reset();
-					location.href = "order.php";
+					location.href = url;
 				}
 		  }).fail(function() {
 		    $('#error').removeClass('hidden');
