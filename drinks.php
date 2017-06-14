@@ -158,6 +158,8 @@ $total_productos = $producto->total_listado(2, $id_categoria, 0, -1, 1);
 	      	<input type="hidden" name="producto" value="0" />
 	      	<input type="hidden" name="precio" value="---" />
 	      	<input type="hidden" name="url" value="drinks.php?msjC=1" />
+	      	<input type="hidden" name="opch1" value="0" />
+	      	<input type="hidden" name="opch2" value="0" />
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 		        <h4 class="modal-title">#PRODUCTO-NOMBRE#</h4>
@@ -167,18 +169,8 @@ $total_productos = $producto->total_listado(2, $id_categoria, 0, -1, 1);
 		          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
 		          <i class="fa fa-times"></i> <span id="msjError">Error</span>
 		        </div>
-	        	<div class="form-group">
-							<label for="opcion1" class="control-label">Option 1:</label>
-							<select name="opcion1" class="form-control">
-								<option value="0">Select</option>
-							</select>
-						</div>
-						<div class="form-group">
-							<label for="opcion2" class="control-label">Option 2:</label>
-							<select name="opcion2" class="form-control">
-								<option value="0">Select</option>
-							</select>
-						</div>
+	        	<div class="form-group" id="gopc1"></div>
+						<div class="form-group" id="gopc2"></div>
 						<div class="precio">Price: $<span id="precio">---</span></div>
 	        	<div class="form-group">
 							<label for="cantidad" class="control-label">Quantity:</label>

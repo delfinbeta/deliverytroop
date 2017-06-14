@@ -249,9 +249,9 @@ $(document).ready(function() {
 		console.log("Producto = " + producto);
 
 		var $campoProducto = $('#form_ordenar').find('input[name="producto"]');
-		var $campoOpcion1 = $('#form_ordenar').find('select[name="opcion1"]');
-		var $campoOpcion2 = $('#form_ordenar').find('select[name="opcion2"]');
 		var $campoPrecio = $('#form_ordenar').find('input[name="precio"]');
+		var $campoOpcH1 = $('#form_ordenar').find('input[name="opch1"]');
+		var $campoOpcH2 = $('#form_ordenar').find('input[name="opch2"]');
 
 		$.post("ajax/order.php", { id: producto }, function(data) {
 			console.log("Error: " + data.error);
@@ -262,46 +262,42 @@ $(document).ready(function() {
 				$('#ProductoOrdenar .modal-title').html(data.nombre);
 				$('#precio').html(data.precio);
 				$campoPrecio.val(data.precio);
-				$campoOpcion1.html(data.selects1);
-				$campoOpcion2.html(data.selects2);
+				$campoOpcH1.val(data.opc1);
+				$campoOpcH2.val(data.opc2);
+				$('#gopc1').html(data.selects1);
+				$('#gopc2').html(data.selects2);
+
+				$("#opcion1").change(function() {
+					var valor = $(this).val();
+					$campoOpcH1.val(valor);
+
+					// console.log("Producto V1 = " + producto);
+					// console.log("Opcion 1 = " + valor);
+					// console.log("Opcion 2 = " + $campoOpcH2.val());
+
+					$.post("ajax/price.php", { producto: producto, opcion1: valor, opcion2: $campoOpcH2.val() }, function(data) {
+						$('#precio').html(data);
+						$campoPrecio.val(data);
+					});
+				});
+
+				$("#opcion2").change(function() {
+					var valor = $(this).val();
+					$campoOpcH2.val(valor);
+
+					// console.log("Producto V2 = " + producto);
+					// console.log("Opcion 1 = " + $campoOpcH1.val());
+					// console.log("Opcion 2 = " + valor);
+
+					$.post("ajax/price.php", { producto: producto, opcion1: $campoOpcH1.val(), opcion2: valor }, function(data) {
+						$('#precio').html(data);
+						$campoPrecio.val(data);
+					});
+				});
 			}
 		}, "json");
 
 		$('#ProductoOrdenar').modal('show');
-
-		//----------------------------------------------------
-		//  Options Change 1
-		//----------------------------------------------------
-		$campoOpcion1.change(function() {
-			var valor = $(this).val();
-
-			console.log("Producto = " + producto);
-			console.log("Opcion 1 = " + valor);
-			console.log("Opcion 2 = " + $campoOpcion2.val());
-
-			$.post("ajax/price.php", { producto: producto, opcion1: valor, opcion2: $campoOpcion2.val() }, function(data) {
-				$('#precio').html(data);
-				$campoPrecio.val(data);
-			});
-		});
-		//----------------------------------------------------
-
-		//----------------------------------------------------
-		//  Options Change 2
-		//----------------------------------------------------
-		$campoOpcion2.change(function() {
-			var valor = $(this).val();
-
-			console.log("Producto = " + producto);
-			console.log("Opcion 1 = " + $campoOpcion1.val());
-			console.log("Opcion 2 = " + valor);
-
-			$.post("ajax/price.php", { producto: producto, opcion1: $campoOpcion1.val(), opcion2: valor }, function(data) {
-				$('#precio').html(data);
-				$campoPrecio.val(data);
-			});
-		});
-		//----------------------------------------------------
 	});
 	//----------------------------------------------------
 
